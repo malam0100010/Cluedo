@@ -2,6 +2,7 @@ package test;
 
 import experiment.TestBoard;
 import experiment.TestBoardCell;
+import junit.framework.Assert;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,5 +48,15 @@ class BoardTestExp1 {
         Assertions.assertTrue(targets.contains(board.getCell(1, 2)));
         Assertions.assertTrue(targets.contains(board.getCell(2, 2)));
         Assertions.assertTrue(targets.contains(board.getCell(3, 3)));
+    }
+    
+    @Test
+    public void testAdjacency() 
+    {
+    	TestBoardCell cell = board.getCell(0,0);
+    	Set<TestBoardCell> testList = cell.getAdjList();
+    	Assertions.assertEquals(2, testList.size());
+    	Assertions.assertTrue(testList.contains(board.getCell(1, 0)));
+    	Assertions.assertTrue(testList.contains(board.getCell(0, 1)));
     }
 }

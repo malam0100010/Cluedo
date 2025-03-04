@@ -1,12 +1,13 @@
 package experiment;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class TestBoard 
 {
 	private static final int SIZE = 4;
     private TestBoardCell[][] board = new TestBoardCell[SIZE][SIZE];
-    Set<TestBoardCell> targets;
+    Set<TestBoardCell> targets = new HashSet<>();
 
     public TestBoard()
     {
@@ -17,7 +18,7 @@ public class TestBoard
         }
     }
 
-    public void calcTargets( TestBoardCell startCell, int pathlength)
+    public void calcTargets( TestBoardCell startCell, int pathLength)
     {
         targets.clear();
     }
