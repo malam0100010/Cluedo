@@ -43,7 +43,7 @@ public void testTargetsNormal() {
 	Assertions.assertTrue(targets.contains(board.getCell(1,0)));
 }
 
-// @Test
+@Test
 public void testTargetsRoom() {
 	TestBoardCell cell = board.getCell(0,0);
 	board.getCell(0,1).setRoom(true);

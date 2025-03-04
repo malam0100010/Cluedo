@@ -19,7 +19,7 @@ public class TestBoard {
     	//build grid
     	for (int row = 0; row < ROWS; row++) {
             for (int col = 0; col < COLS; col++) {
-                grid[row][col] = new TestBoardCell(row, col);
+                grid[row][col] = new TestBoardCell(row, col, false, false);
             }
         }
     	
@@ -68,9 +68,17 @@ public class TestBoard {
     		if (visited.contains(adjCell)) {
     			continue;
     		}
+    		
+    		if (adjCell.getOccupied()) {
+    			continue;
+    		}
+    		
+    		if (adjCell.isRoom() && remainingSteps > 1) {
+    			continue;
+    		}
     		visited.add(adjCell);
     		
-    		if (remainingSteps == 1) {
+    		if (remainingSteps == 1 || adjCell.isRoom()) {
     			targets.add(adjCell);
     		}
     		
