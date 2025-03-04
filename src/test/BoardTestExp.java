@@ -5,11 +5,11 @@ import experiment.TestBoardCell;
 public class BoardTestExp 
 {
     private BoardTestExp board;
-    
+
     @BeforeEach
     void setUp()
     {
-        board = new BoardTestExp(4,4);
+        board = new BoardTestExp();
     }
 
     @Test

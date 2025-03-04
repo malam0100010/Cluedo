@@ -4,11 +4,11 @@ import java.util.Set;
 
 public class TestBoard 
 {
-    private TestBoardCell[][] board;
-    private int numRows;
-    private int numCols;
-    TestBoardCell testBoardCell;
-    Set<TestBoardCell> targets;
+    private TestBoardCell[][] grid;
+    final static int COLS = 4;
+    final static int ROWS = 4;
+    private Set<TestBoardCell> visited; 
+    private Set<TestBoardCell> targets;
 
     TestBoard()
     {
@@ -22,7 +22,7 @@ public class TestBoard
 
     TestBoardCell getCell(int row, int col)
     {
-        return testBoardCell;
+        return grid[row][col];
     }
 
     Set<TestBoardCell> getTargets()
