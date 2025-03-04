@@ -7,8 +7,8 @@ public class TestBoardCell {
 	private int row;
 	private int col;
 	private Set<TestBoardCell> adjList;
-	private boolean isRoom;
-	private boolean isOccupied;
+	private boolean isRoom = false;
+	private boolean isOccupied = false;
 	
 
 	TestBoardCell(int row, int col) {
@@ -28,7 +28,7 @@ public class TestBoardCell {
 		
 	}
 
-	void setRoom(boolean isRoom)
+	public void setRoom(boolean isRoom)
 	{
 		return;
 	}
@@ -38,7 +38,7 @@ public class TestBoardCell {
 		return isRoom;
 	}
 
-	void setOccupied(boolean isOccupied)
+	public void setOccupied(boolean isOccupied)
 	{
 		return;
 	}

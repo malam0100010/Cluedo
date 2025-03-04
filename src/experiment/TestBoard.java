@@ -10,22 +10,22 @@ public class TestBoard
     private Set<TestBoardCell> visited; 
     private Set<TestBoardCell> targets;
 
-    TestBoard()
+    public TestBoard()
     {
 
     }
 
-    void calcTargets( TestBoardCell startCell, int pathlength)
+    public void calcTargets( TestBoardCell startCell, int pathlength)
     {
         return;
     }
 
-    TestBoardCell getCell(int row, int col)
+    public TestBoardCell getCell(int row, int col)
     {
         return grid[row][col];
     }
 
-    Set<TestBoardCell> getTargets()
+    public Set<TestBoardCell> getTargets()
     {
         return targets;
     }
