@@ -73,9 +73,6 @@ public class TestBoard {
     			continue;
     		}
     		
-    		if (adjCell.isRoom() && remainingSteps > 1) {
-    			continue;
-    		}
     		visited.add(adjCell);
     		
     		if (remainingSteps == 1 || adjCell.isRoom()) {
