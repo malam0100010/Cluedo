@@ -12,41 +12,37 @@ public class TestBoardCell {
 	private boolean isOccupied = false;
 	
 
-	public TestBoardCell(int row, int col) {
+	public TestBoardCell(int row, int col, boolean isRoom, boolean isOccupied) {
 		this.row = row;
 		this.col = col;
+		this.isRoom = isRoom;
+		this.isOccupied = isOccupied;
 		adjList = new HashSet<>();
 	}
 	
 	//setter to add a cell to this cells adjacency list
-	void addAdjacency(TestBoardCell cell) 
-	{
+	void addAdjacency(TestBoardCell cell) {
 		adjList.add(cell);
 	}
 
-	public Set<TestBoardCell> getAdjList()
-	{
+	public Set<TestBoardCell> getAdjList() {
 		return adjList;
 		
 	}
 
-	public void setRoom(boolean isRoom)
-	{
-		return; //return this.isRoom = isRoom;
+	public void setRoom(boolean isRoom) {
+		this.isRoom = isRoom;
 	}
 	
-	public boolean isRoom()
-	{
+	public boolean isRoom() {
 		return isRoom;
 	}
 
-	public void setOccupied(boolean isOccupied)
-	{
+	public void setOccupied(boolean isOccupied) {
 		this.isOccupied = isOccupied;
 	}
 
-	boolean getOccupied()
-	{
+	boolean getOccupied() {
 		return isOccupied;
 	}
 	
