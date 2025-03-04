@@ -11,7 +11,7 @@ public class TestBoardCell {
 	private boolean isOccupied = false;
 	
 
-	TestBoardCell(int row, int col) {
+	public TestBoardCell(int row, int col) {
 		this.row = row;
 		this.col = col;
 	}
@@ -22,7 +22,7 @@ public class TestBoardCell {
 		adjList.add(cell);
 	}
 
-	Set<TestBoardCell> getAdjList()
+	public Set<TestBoardCell> getAdjList()
 	{
 		return adjList;
 		
@@ -30,17 +30,17 @@ public class TestBoardCell {
 
 	public void setRoom(boolean isRoom)
 	{
-		return;
+		return; //return this.isRoom = isRoom;
 	}
 	
-	boolean isRoom()
+	public boolean isRoom()
 	{
 		return isRoom;
 	}
 
 	public void setOccupied(boolean isOccupied)
 	{
-		return;
+		this.isOccupied = isOccupied;
 	}
 
 	boolean getOccupied()
