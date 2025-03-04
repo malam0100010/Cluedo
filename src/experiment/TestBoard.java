@@ -25,11 +25,7 @@ public class TestBoard
 
     public TestBoardCell getCell(int row, int col)
     {
-<<<<<<< HEAD
-        return grid[row][col];
-=======
         return board[row][col];
->>>>>>> 9c5b22a228edec62dee0da9d73aaedb82eb177be
     }
 
     public Set<TestBoardCell> getTargets()
