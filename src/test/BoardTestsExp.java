@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import experiment.TestBoard;
-
 
 public class BoardTestsExp {
 TestBoard board;
@@ -28,7 +26,6 @@ public void testAdjacency() {
 	Assertions.assertTrue(testList.contains(board.getCell(1,2)));
 	Assertions.assertEquals(4, testList.size());
 }
-
 @Test
 public void testTargetsNormal() {
 	TestBoardCell cell = board.getCell(0,0);
@@ -46,6 +43,7 @@ public void testTargetsNormal() {
 @Test
 public void testTargetsRoom() {
 	TestBoardCell cell = board.getCell(0,0);
+	board.calcTargets(cell, 3);x
 	board.getCell(0,1).setRoom(true);
 	Set<TestBoardCell> targets = board.getTargets();
 	Assertions.assertEquals(2, targets.size());
