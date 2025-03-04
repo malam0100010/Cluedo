@@ -1,0 +1,41 @@
+commit 77309bcf74f0e8202181df143c0c4fef5f56e44e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 18:49:02 2025 -0700
+
+    Driver: Musad Alam. Made more function stubs and began adding JUnit tests
+
+commit 344b81520694446d258b65b63674ea6b77b0bb9c
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Thu Feb 27 17:41:40 2025 -0700
+
+    drvier: Valor created test classes
+
+commit 4aa3a154775843ddbc1ba74164b1f086539392f7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:12:26 2025 -0700
+
+    Updated .gitignore
+
+commit 582e3d68a4f212eb877f4b7e0973043147f65715
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:11:49 2025 -0700
+
+    Removed .json files
+
+commit 761ef76d9810d77060040d5b41e2dbecb31fbad7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:09:39 2025 -0700
+
+    Reconfiguring binary files
+
+commit 6bcfe307482f3911c9dd694cb694c4f89b7baf19
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:07:26 2025 -0700
+
+    Added .gitignore
+
+commit 325707c72d7617724af3109952a0f3bf719f059d
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:01:41 2025 -0700
+
+    Added necessary files

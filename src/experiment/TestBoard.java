@@ -9,6 +9,7 @@ public class TestBoard
     private TestBoardCell[][] board = new TestBoardCell[SIZE][SIZE];
     Set<TestBoardCell> targets = new HashSet<>();
 
+
     public TestBoard()
     {
     	for (int row = 0; row < SIZE; row++) {
