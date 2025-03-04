@@ -43,7 +43,7 @@ public void testTargetsNormal() {
 @Test
 public void testTargetsRoom() {
 	TestBoardCell cell = board.getCell(0,0);
-	board.calcTargets(cell, 3);x
+	board.calcTargets(cell, 3);
 	board.getCell(0,1).setRoom(true);
 	board.calcTargets(cell,  3);
 	Set<TestBoardCell> targets = board.getTargets();
