@@ -8,7 +8,9 @@ public class TestBoard
 	private static final int SIZE = 4;
     private TestBoardCell[][] grid = new TestBoardCell[SIZE][SIZE];
     Set<TestBoardCell> targets = new HashSet<>();
-    
+    private Set<TestBoardCell> visited;
+    final static int COLS = 4;
+    final static int ROWS = 4;
 
 
     public TestBoard()
@@ -34,6 +36,5 @@ public class TestBoard
     {
         return targets;
     }
-
 
 }
