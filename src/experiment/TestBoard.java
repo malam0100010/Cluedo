@@ -6,15 +6,16 @@ import java.util.Set;
 public class TestBoard 
 {
 	private static final int SIZE = 4;
-    private TestBoardCell[][] board = new TestBoardCell[SIZE][SIZE];
+    private TestBoardCell[][] grid = new TestBoardCell[SIZE][SIZE];
     Set<TestBoardCell> targets = new HashSet<>();
+    
 
 
     public TestBoard()
     {
     	for (int row = 0; row < SIZE; row++) {
             for (int col = 0; col < SIZE; col++) {
-                board[row][col] = new TestBoardCell(row, col);
+                grid[row][col] = new TestBoardCell(row, col);
             }
         }
     }
@@ -26,7 +27,7 @@ public class TestBoard
 
     public TestBoardCell getCell(int row, int col)
     {
-        return board[row][col];
+        return grid[row][col];
     }
 
     public Set<TestBoardCell> getTargets()
