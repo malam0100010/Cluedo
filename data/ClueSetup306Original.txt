@@ -1,0 +1,13 @@
+// Rooms and room cards
+Room, Kit Room, K
+Room, Locker Room, L
+Room, Manchester Suite, M
+Room, Benches, Bn
+Room, Bathroom, B
+Room, Concession Stand, C
+Room, Ticket Booth, T
+Room, Indoor Arcade, I
+Room, Press Box, P
+// Other spaces on board
+Space, Unused, X
+Space, Walkway, W
