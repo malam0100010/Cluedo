@@ -1,5 +1,7 @@
 package clueGame;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,7 +27,7 @@ public class Board
     private static Board theInstance = new Board();
     // constructor is private to ensure only one can be created
     private Board() {
-        super() ;
+        super();
         loadSetupConfig();
     }
     // this method returns the only Board
@@ -44,12 +46,14 @@ public class Board
 
     public void loadSetupConfig()
     {
-        roomMap.put('C', new Room("Conservatory"));
-        roomMap.put('B', new Room("Ballroom"));
-        roomMap.put('R', new Room("Billiard Room"));
-        roomMap.put('D', new Room("Dining Room"));
-        roomMap.put('W', new Room("Walkway"));
-
+        roomMap.put('K', new Room("Conservatory"));
+        roomMap.put('L', new Room("Ballroom"));
+        roomMap.put('M', new Room("Billiard Room"));
+        roomMap.put('B', new Room("Dining Room"));
+        roomMap.put('C', new Room("Walkway"));
+        roomMap.put('T', new Room("Walkway"));
+        roomMap.put('I', new Room("Walkway"));
+        roomMap.put('C', new Room("Walkway"));
     }
 
     public void loadLayoutConfig()

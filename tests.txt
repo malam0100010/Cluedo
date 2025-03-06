@@ -1,0 +1,25 @@
+testRoomLabel:
+This test just ensures that all generic rooms are read correctly and the value matches the keys.
+// Rooms and room cards
+Room, Kit Room, K
+Room, Locker Room, L
+Room, Manchester Suite, M
+Room, Benches, Bn
+Room, Bathroom, B
+Room, Concession Stand, C
+Room, Ticket Booth, T
+Room, Indoor Arcade, I
+Room, Press Box, P
+// Other spaces on board
+Space, Unused, X
+Space, Walkway, W
+
+
+testDoorDirection:
+This test ensures that each door direction opens in a given direction indicated by Clue_Layout_Original.csv:
+- The door to the concession stand opens left
+- The door to the Manchester Suite opens down 
+- The door to the Kit Room opens right 
+- The door to the Press Box opens up
+
+
