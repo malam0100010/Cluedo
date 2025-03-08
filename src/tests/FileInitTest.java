@@ -32,7 +32,8 @@ public class FileInitTest {
 	}
 
     @Test
-	public void testRoomLabels() {
+	public void testRoomLabels() 
+    {
 		// To ensure data is correctly loaded, test retrieving a few rooms
 		// from the hash, including the first and last in the file and a few others
 		assertEquals("Kit Room", board.getRoom('K').getName() );

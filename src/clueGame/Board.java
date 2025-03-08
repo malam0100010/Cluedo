@@ -1,7 +1,5 @@
 package clueGame;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -47,40 +45,43 @@ public class Board
        
     }
 
-    public void loadSetupConfig()
+    public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException
     {
-        roomMap.put('K', new Room("Conservatory"));
-        roomMap.put('L', new Room("Ballroom"));
-        roomMap.put('M', new Room("Billiard Room"));
-        roomMap.put('B', new Room("Dining Room"));
-        roomMap.put('C', new Room("Walkway"));
-        roomMap.put('T', new Room("Walkway"));
-        roomMap.put('I', new Room("Walkway"));
-        roomMap.put('C', new Room("Walkway"));
+        File file = new File(this.setupConfigFile);
+        Scanner scanner = new Scanner(file);
+        
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            // Skip blank lines or comments (if any)
+            if (line.isEmpty() || line.startsWith("//"))
+                continue;
+            
+            // Split the line by commas and trim each token.
+            String[] tokens = line.split(",\\s*");
+            if (tokens.length != 3) {
+                scanner.close();
+                throw new BadConfigFormatException();
+            }
+            String type = tokens[0];
+            String name = tokens[1];
+            char initial = tokens[2].charAt(0);
+            
+            // Add the room or space to the roomMap.
+            roomMap.put(initial, new Room(name));
+        }
+        scanner.close();
     }
 
     public void loadLayoutConfig()
     {
 
+    	
     }
 
     public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
     {
-        try 
-        {
-        File myObj = new File("filename.txt");
-        Scanner myReader = new Scanner(myObj);
-        while (myReader.hasNextLine()) {
-            String data = myReader.nextLine();
-            System.out.println(data);
-        }
-        myReader.close();
-        } catch (FileNotFoundException e) {
-
-        System.out.println("An error occurred.");
-        e.printStackTrace();
-        }
-
+        this.layoutConfigFiles = layOutConfigFiles;
+        this.setupConfigFile = setUpConfigFile;
 
     }
 
