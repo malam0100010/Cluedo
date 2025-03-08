@@ -7,6 +7,8 @@ package tests;
 // Assert.assertEquals
 import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,12 +27,20 @@ public class FileInitTests306 {
 
 	@BeforeAll
 	public static void setUp() {
-		// Board is singleton, get the only instance
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
-		// Initialize will load BOTH config files
-		board.initialize();
+		try {
+	        // Board is singleton, get the only instance
+	        board = Board.getInstance();
+	        // Set the file names to use my config files
+	        board.setConfigFiles("ClueLayout306.csv", "ClueSetup306.txt");
+	        // Initialize will load BOTH config files
+	        board.initialize();
+	    } catch (FileNotFoundException e) {
+	        e.printStackTrace();
+	        fail("File not found: " + e.getMessage());
+	    } catch (BadConfigFormatException e) {
+	        e.printStackTrace();
+	        fail("Bad configuration format: " + e.getMessage());
+	    }
 	}
 
 	@Test

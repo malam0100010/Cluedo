@@ -29,7 +29,6 @@ public class Board
     // constructor is private to ensure only one can be created
     private Board() {
         super();
-        loadSetupConfig();
     }
     // this method returns the only Board
     public static Board getInstance() {
@@ -38,16 +37,16 @@ public class Board
     /*
     * initialize the board (since we are using singleton pattern)
     */
-    public void initialize()
-    {
+    public void initialize() throws FileNotFoundException, BadConfigFormatException {
         targets = new HashSet<>();
         visited = new HashSet<>();
+        loadSetupConfig();
+        //loadLayoutConfig();
        
     }
 
-    public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException
-    {
-        File file = new File(".data/" + this.layoutConfigFiles);
+    public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
+        File file = new File("data/" + this.setupConfigFile);
         Scanner scanner = new Scanner(file);
         
         while (scanner.hasNextLine()) {
@@ -57,25 +56,41 @@ public class Board
                 continue;
             
             // Split the line by commas and trim each token.
-            String[] tokens = line.split(",\\s*");
+            String[] tokens = line.split(",");
             if (tokens.length != 3) {
-                scanner.close();
-                throw new BadConfigFormatException();
+            	scanner.close();
+            	throw new BadConfigFormatException();
             }
+            
             String type = tokens[0];
             String name = tokens[1];
             char initial = tokens[2].charAt(0);
-            
-            // Add the room or space to the roomMap.
+
             roomMap.put(initial, new Room(name));
         }
         scanner.close();
+        
     }
 
-    public void loadLayoutConfig()
-    {
+    public void loadLayoutConfig() throws FileNotFoundException {
+    	File file = new File(this.layoutConfigFiles);
+        Scanner scanner = new Scanner(file);
 
-    	
+        int rowCount = 0;
+        int colCount = 0;
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.isEmpty()) continue;
+
+            String[] cells = line.split(",");
+            colCount = Math.max(colCount, cells.length);
+            rowCount++;
+        }
+        scanner.close();
+
+        this.numRows = rowCount;
+        this.numColumns = colCount;
     }
 
     public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
