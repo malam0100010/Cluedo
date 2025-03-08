@@ -13,7 +13,7 @@ public class Room
 
     public String getName()
     {
-        return "";
+        return name;
     }
     
     public BoardCell getLabelCell()

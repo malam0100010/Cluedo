@@ -47,7 +47,7 @@ public class Board
 
     public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException
     {
-        File file = new File(this.setupConfigFile);
+        File file = new File(".data/" + this.layoutConfigFiles);
         Scanner scanner = new Scanner(file);
         
         while (scanner.hasNextLine()) {
