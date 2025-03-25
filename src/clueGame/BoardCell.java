@@ -54,4 +54,9 @@ public class BoardCell
         return '?';
     }
 
+	public void setSecretPassage(char charAt) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

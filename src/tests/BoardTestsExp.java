@@ -6,12 +6,13 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 
 
 public class BoardTestsExp {
 	TestBoard board;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		board = new TestBoard();
 	}

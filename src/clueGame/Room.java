@@ -6,7 +6,7 @@ public class Room
     BoardCell centerCell;
     BoardCell labelCell;
 
-    public Room(String name)
+    public Room(String name, char spaceSymbol, Object object, Object object2)
     {
         this.name = name;
     }

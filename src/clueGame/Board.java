@@ -1,7 +1,6 @@
 package clueGame;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -15,11 +14,11 @@ public class Board
     private BoardCell[][] grid;
     int numRows;
     int numColumns;
-    String layoutConfigFiles;
-    String setupConfigFile;
+    private String layoutConfigFiles;
+    private String setupConfigFile;
     private Set<TestBoardCell> targets;
     private Set<TestBoardCell> visited;
-    Map<Character, Room> roomMap = new HashMap<>();
+    private Map<Character, Room> roomMap = new HashMap<>();
 
 
     /*
@@ -37,68 +36,127 @@ public class Board
     /*
     * initialize the board (since we are using singleton pattern)
     */
-    public void initialize() throws FileNotFoundException, BadConfigFormatException {
-        targets = new HashSet<>();
-        visited = new HashSet<>();
-        loadSetupConfig();
-        //loadLayoutConfig();
+    public void initialize() {
+        //targets = new HashSet<>();
+        //visited = new HashSet<>();
+        try {
+        	loadLayoutConfig();
+			loadSetupConfig();
+		} catch (BadConfigFormatException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		} 
+        
        
     }
 
-    public void loadSetupConfig() throws FileNotFoundException, BadConfigFormatException {
-        File file = new File("data/" + this.setupConfigFile);
-        Scanner scanner = new Scanner(file);
-        
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            // Skip blank lines or comments (if any)
-            if (line.isEmpty() || line.startsWith("//"))
-                continue;
-            
-            // Split the line by commas and trim each token.
-            String[] tokens = line.split(",");
-            if (tokens.length != 3) {
-            	scanner.close();
-            	throw new BadConfigFormatException();
-            }
-            
-            String type = tokens[0];
-            String name = tokens[1];
-            char initial = tokens[2].charAt(0);
+    public void loadSetupConfig() throws BadConfigFormatException {
+    	try {
+    		Scanner myReader = new Scanner(new FileReader(this.setupConfigFile));
+    		
+    		while(myReader.hasNextLine()){
+    			String readLine = myReader.nextLine().trim();
+    			
+    			if(readLine.startsWith("//")) {
+    				continue;
+    			}
+    			
+        		String[] locationInfo = readLine.split(",");
+        		String spaceType = locationInfo[0].trim();
+        		String spaceName = locationInfo[1].trim();
+        		char spaceSymbol = locationInfo[2].trim().charAt(0);
+        		
+        		if(spaceType != "Room" || spaceType != "Space") {
+        			myReader.close();
+        			throw new BadConfigFormatExcpetion(spaceType);
+        		}else {
+        			roomMap.put(spaceSymbol, new Room(spaceName, spaceSymbol, null, null));
+        		}
+    			
+    		}
+    		
 
-            roomMap.put(initial, new Room(name));
-        }
-        scanner.close();
+    	} catch(FileNotFoundException e) {
+    		System.out.println(this.setupConfigFile + "could not be located");
+
+    	}
         
     }
 
     public void loadLayoutConfig() throws FileNotFoundException {
-    	File file = new File(this.layoutConfigFiles);
-        Scanner scanner = new Scanner(file);
-
-        int rowCount = 0;
-        int colCount = 0;
-
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine().trim();
-            if (line.isEmpty()) continue;
-
-            String[] cells = line.split(",");
-            colCount = Math.max(colCount, cells.length);
-            rowCount++;
-        }
-        scanner.close();
-
-        this.numRows = rowCount;
-        this.numColumns = colCount;
+    	int fileRows = 0;
+    	int fileCols = 0;
+    	
+    	try {
+    		Scanner myReader = new Scanner(new FileReader(this.layoutConfigFiles));
+    		
+    		while(myReader.hasNextLine()) {
+    			String readLine = myReader.nextLine().trim();
+    			String[] locationInfo = readLine.split(",");
+    			
+    			if (fileRows == 0) {
+    				numColumns = locationInfo.length;
+    			} else if(locationInfo.length != fileCols){
+    				myReader.close();
+    				throw new BadConfigFormatException();
+    			}
+    			++fileCols; 
+    		}
+    		myReader.close();
+    		numRows = fileRows;
+    		numColumns = fileCols;
+ 
+    		
+    	} catch(FileNotFoundException e) {
+    		System.out.println(e);
+    	}
+    	
+    	grid = new BoardCell[numRows][numColumns];
+    	
+    	for(int rows = 0; rows < numRows; ++rows) {
+    		for(int cols = 0; cols < numColumns; ++cols) {
+                BoardCell cell = grid[rows][cols];
+                if (rows > 0) { 
+                    cell.addAdj(grid[rows - 1][cols]);
+                }
+                if (rows < numRows - 1) {
+                    cell.addAdj(grid[rows + 1][cols]);
+                }
+                if (cols > 0) {
+                    cell.addAdj(grid[rows][cols - 1]);
+                }
+                if (cols < numColumns - 1) {
+                    cell.addAdj(grid[rows][cols + 1]);
+                }
+    		}
+    	}
+    	
+    	int rows = 0;
+    	int cols = 0;
+    	try {
+    		Scanner myRader = new Scanner(new FileReader(this.layoutConfigFiles));
+    		while(myReader.hasNextLine()) {
+    			String readLine = myReader.nextLine().trim();
+    			String[] locationInfo = readLine.split(",");
+    			
+    			for(String token : locationInfo) {
+    				if(roomMap.containsKey(token.charAt(0))) {
+    					grid[rows][cols].setIsRoom(true);
+    					grid[rows][cols].setInitial(token.charAt(0));
+    					
+    				}
+    			}
+    		}
+    	}
+    	
     }
 
-    public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
-    {
-        this.layoutConfigFiles = layOutConfigFiles;
-        this.setupConfigFile = setUpConfigFile;
-
-    }
+//    public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
+//    {
+//        this.layoutConfigFiles = layOutConfigFiles;
+//        this.setupConfigFile = setUpConfigFile;
+//
+//    }
 
     public Room getRoom(char initial) 
     {
