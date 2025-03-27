@@ -588,3 +588,222 @@ Author: malam0100010 <malam1@mines.edu>
 Date:   Thu Feb 27 17:01:41 2025 -0700
 
     Added necessary files
+commit eaf99c3c8b1e8afc7b655c6b2527d8351e0b6980
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 25 10:26:45 2025 -0600
+
+    Made changes to try and pass C15
+
+commit ea3f7996c9090b81103d34260366e1be52fd2ddb
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Fri Mar 7 17:59:30 2025 -0700
+
+    added to loadLayoutConfig
+
+commit cdf3a87fb8dd6c8e91e4e264f0412ce50b8cd150
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Mar 7 17:26:21 2025 -0700
+
+    Driver: Musad. All changes to IO not available on git
+
+commit 49934151f78234b978573e9deb26436fd26e3480
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Mar 7 17:07:13 2025 -0700
+
+    Mades changes to IO
+
+commit 20cdf23c46f9796b0cb6473f2ef112cd2c48c829
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Fri Mar 7 16:31:26 2025 -0700
+
+    Put clueGame into src
+
+commit cfa71adfa5aecfd6d1f728656b771fa81b0e357e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Mar 7 16:13:50 2025 -0700
+
+    Began process of implementing File IO
+
+commit 4aed5644d9c1fcb57669634bb0c7fbfa13c5111c
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Mar 6 16:48:17 2025 -0700
+
+    Added tests.txt and ExceptionTests
+
+commit ddd2407aedbbb3bf9ff22807dd036bd55d05ad79
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Mar 6 15:57:32 2025 -0700
+
+    Failed all necessary test cases for TDD
+
+commit af8bf71f946cb17eafa370376d0ec2a68eb04c63
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Mar 5 12:29:46 2025 -0700
+
+    "Driver: Musad. Configured files and completed all test cases in FileInitTest306"
+
+commit 9f63dd753cffca8f566c503e79a83a07162fee50
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Mar 5 08:20:38 2025 -0700
+
+    Added necessary files for C14A_2
+
+commit 63ae132f752539f3876e00341f32bf2c9764e8c9
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Mar 5 01:52:20 2025 -0700
+
+    Driver: Musad. Made testTargetsRoom pass
+
+commit a5ffe7da526f0320d854939d6bd443c597137de8
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 4 13:52:53 2025 -0700
+
+    Driver: Musad. Fixed typo
+
+commit fb2df4aaba70f460a51cfedcf8c9556dcc8d4b6f
+Merge: 218b888 f86f7df
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 4 13:51:57 2025 -0700
+
+    Merge branch 'main' of github.com:malam0100010/Cluedo
+
+commit 218b888bff053583b43350938134a0f6ac8afc1e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 4 13:50:59 2025 -0700
+
+    Driver: Musad. Fixed incompatabilities
+
+commit f86f7df7e5c6be60b06d6ae3b967172565225091
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Mar 4 13:49:39 2025 -0700
+
+    still working on that third test
+
+commit 5e03b6ac02b4aa0334f8816e1a30031de6a265db
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Mar 4 13:37:59 2025 -0700
+
+    two tests passing
+
+commit 1f3df74094f8a7f64329c72ec764e54e943c1cc8
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Mar 4 13:19:17 2025 -0700
+
+    test JUnit
+
+commit 665931baaec9a451cd5c58efba93c0f5b6d19e16
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:56:15 2025 -0700
+
+    driver valor
+
+commit 91987ecb05c88aa3ac28765ae11885f3de0b6b5e
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:51:08 2025 -0700
+
+    got 5 tests to fail
+
+commit 2ca47bc3b8c3e3f0abd324e481e9dba3ef97d219
+Merge: e2968f8 c1a7856
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:16:35 2025 -0700
+
+    Merge branch 'main' of https://github.com/malam0100010/Cluedo
+
+commit e2968f8726bf78454e29094839896dbeb178139d
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:16:13 2025 -0700
+
+    Driver Valor
+
+commit 05ce78469dde17237c518cd02f7008768c8ea72b
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:11:38 2025 -0700
+
+    got tests to fail
+
+commit c1a785625c4f1898c1b367a3e46307c5243d122b
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 18:01:35 2025 -0700
+
+    Continued to fix merging conflicts in TestBoard
+
+commit 9210047abf274f6c43b8acec322f153e98a7fcb3
+Merge: b0b3747 9c5b22a
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 18:00:12 2025 -0700
+
+    Fixed merge conflict
+
+commit b0b3747dbd6c8c89db8e6c39b37e26ddea25bea3
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 17:58:34 2025 -0700
+
+    Made constructor changes for test board cell
+
+commit 693ab06b6694ee582b0e4be51643a86d80dc677d
+Merge: 68b84ff a9ea119
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 17:48:29 2025 -0700
+
+    Driver: Musad. Deleted unecessary JUnit test file
+
+commit 68b84ff77c896a66a1e0677b7be209e86f5803af
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 17:44:22 2025 -0700
+
+    Driver: Musad. Made necessary variables changes to src files
+
+commit 9c5b22a228edec62dee0da9d73aaedb82eb177be
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 17:43:31 2025 -0700
+
+    worked on TestBoard
+
+commit a9ea119f4e20be04f14c20fd31cde564fe1da615
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 17:15:26 2025 -0700
+
+    for submittal
+
+commit 77309bcf74f0e8202181df143c0c4fef5f56e44e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 18:49:02 2025 -0700
+
+    Driver: Musad Alam. Made more function stubs and began adding JUnit tests
+
+commit 344b81520694446d258b65b63674ea6b77b0bb9c
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Thu Feb 27 17:41:40 2025 -0700
+
+    drvier: Valor created test classes
+
+commit 4aa3a154775843ddbc1ba74164b1f086539392f7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:12:26 2025 -0700
+
+    Updated .gitignore
+
+commit 582e3d68a4f212eb877f4b7e0973043147f65715
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:11:49 2025 -0700
+
+    Removed .json files
+
+commit 761ef76d9810d77060040d5b41e2dbecb31fbad7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:09:39 2025 -0700
+
+    Reconfiguring binary files
+
+commit 6bcfe307482f3911c9dd694cb694c4f89b7baf19
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:07:26 2025 -0700
+
+    Added .gitignore
+
+commit 325707c72d7617724af3109952a0f3bf719f059d
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:01:41 2025 -0700
+
+    Added necessary files

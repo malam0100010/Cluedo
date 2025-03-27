@@ -28,16 +28,7 @@ public class FileInitTest {
 		// set the file names to use my config files
 		board.setConfigFiles("Clue_Layout_Original.csv", "ClueSetup306Original.txt");
 		// Initialize will load BOTH config files
-		try {
-			board.initialize();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		board.initialize();
 
 	}
 

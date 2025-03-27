@@ -40,8 +40,8 @@ public class Board
         //targets = new HashSet<>();
         //visited = new HashSet<>();
         try {
-        	loadLayoutConfig();
 			loadSetupConfig();
+			loadLayoutConfig();
 		} catch (BadConfigFormatException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
@@ -134,7 +134,7 @@ public class Board
     	int rows = 0;
     	int cols = 0;
     	try {
-    		Scanner myRader = new Scanner(new FileReader(this.layoutConfigFiles));
+    		Scanner myReader = new Scanner(new FileReader(this.layoutConfigFiles));
     		while(myReader.hasNextLine()) {
     			String readLine = myReader.nextLine().trim();
     			String[] locationInfo = readLine.split(",");
@@ -142,8 +142,7 @@ public class Board
     			for(String token : locationInfo) {
     				if(roomMap.containsKey(token.charAt(0))) {
     					grid[rows][cols].setIsRoom(true);
-    					grid[rows][cols].setInitial(token.charAt(0));
-    					
+    					grid[rows][cols].setCellInitial(token.charAt(0));
     				}
     			}
     		}
@@ -151,12 +150,12 @@ public class Board
     	
     }
 
-//    public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
-//    {
-//        this.layoutConfigFiles = layOutConfigFiles;
-//        this.setupConfigFile = setUpConfigFile;
-//
-//    }
+    public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
+    {
+        this.layoutConfigFiles = layOutConfigFiles;
+        this.setupConfigFile = setUpConfigFile;
+
+    }
 
     public Room getRoom(char initial) 
     {

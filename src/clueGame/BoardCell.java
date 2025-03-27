@@ -13,50 +13,103 @@ public class BoardCell
     boolean roomCenter;
     boolean isRoom;
     boolean isOccupied;
+    boolean isDoorway;
     char secretPassage;
-    Set<BoardCell> adjList;
+    char cellInitial;
+    private Set<BoardCell> adjList;
 
-    public BoardCell(int row, int col, boolean isRoom, boolean isOccupied) {
+    public BoardCell(int row, int col) {
 		this.row = row;
 		this.col = col;
-		this.isRoom = isRoom;
-		this.isOccupied = isOccupied;
+		this.roomLabel = false;
+	    this.roomCenter = false;
+	    this.isRoom = false;
+	    this.isOccupied = false;
+		this.isDoorway = false;
 		adjList = new HashSet<>();
 	}
-
-    public void addAdj(BoardCell adj)
-    {
-        
+    
+    public int getColumn(){
+    	return this.col;
+    }
+    
+    public int getRow(){
+    	return this.row;
+    }
+    
+    public boolean getRoomLabel(){
+    	return this.roomLabel;
+    }
+    
+    public boolean getRoomCenter() {
+    	return this.roomCenter;
+    }
+    
+    public boolean getIsRoom(){
+    	return this.isRoom;
+    }
+    
+    
+    public boolean getIsOccupied() {
+    	return this.isOccupied;
+    }
+    
+    public boolean getIsDoorway() {
+    	return this.isDoorway;
+    }
+    
+    public void setRoomLabel(boolean roomLabel) {
+    	this.roomLabel = roomLabel;
+    }
+    
+    public void setRoomCenter(boolean roomCenter){
+    	this.roomCenter = roomCenter;
+    }
+    
+    public void setIsRoom(boolean isRoom){
+    	this.isRoom = isRoom;
+    }
+    
+    public void setIsOccupied(boolean isOccupied) {
+    	this.isOccupied = isOccupied;
+    }
+    
+    public void setIsDoorway(boolean isDoorway){
+    	this.isDoorway = isDoorway;
+    }
+    
+    public void addAdj(BoardCell someCell) {
+        adjList.add(someCell);
+    }
+    
+    public Set<BoardCell> getAdjList() {
+    	return adjList;
     }
 
-    public boolean isDoorway()
-    {
-        return false;
+    public void setDoorDirection(DoorDirection doorDirection) {
+    	this.doorDirection = doorDirection;
     }
 
     public DoorDirection getDoorDirection()
     {
-        return DoorDirection.NONE;
+        return this.doorDirection;
     } 
-    
-    public boolean isLabel()
-    {
-        return false;
-    }
-
-    public boolean isRoomCenter()
-    {
-        return false;
-    }
 
     public char getSecretPassage()
     {
-        return '?';
+        return secretPassage;
+    }
+    
+    public void setSecretPassage(char secretPass) {
+    	secretPassage = secretPass;
+    }
+    
+    public char getCellInital() {
+    	return cellInitial;
     }
 
-	public void setSecretPassage(char charAt) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setCellInitial(char roomInitial) {
+    	cellInitial = roomInitial;
+    }
 
 }
