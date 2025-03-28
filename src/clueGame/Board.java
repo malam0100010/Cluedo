@@ -143,6 +143,23 @@ public class Board
     				if(roomMap.containsKey(token.charAt(0))) {
     					grid[rows][cols].setIsRoom(true);
     					grid[rows][cols].setCellInitial(token.charAt(0));
+    					
+    					if( token.length() == 2 && roomMap.containsKey(token.charAt(0))) {
+    						grid[rows][cols].setIsRoom(true);
+    						grid[rows][cols].setCellInitial(token.charAt(0));
+    					}
+    					
+    				} else {
+    					
+    					myReader.close();
+    					throw new BadConfigFormatException("Invalid token: " + token);
+    					
+    				}
+    				
+    				if(token.length() == 2) {
+    					if(token.charAt(1) == '#') {
+    						
+    					}
     				}
     			}
     		}
