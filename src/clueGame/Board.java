@@ -202,13 +202,13 @@ public class Board
 			if (visited.contains(adjCell) || adjCell.getIsOccupied()) {
 				continue;
 			}
-			//If room, add to targets
+
 			if (adjCell.getIsRoom()) {
 				targets.add(adjCell);
 				continue;
 			}
 			visited.add(adjCell);
-			//If pathlength is 1, then add our adjCell, otherwise, recurse
+			
 			if (pathlength == 1) {
 				targets.add(adjCell);
 			} else {
