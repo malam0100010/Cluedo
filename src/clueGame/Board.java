@@ -67,7 +67,7 @@ public class Board
         		String spaceName = locationInfo[1].trim();
         		char spaceSymbol = locationInfo[2].trim().charAt(0);
         		
-        		if(spaceType != "Room" || spaceType != "Space") {
+        		if(!spaceType.equals("Room") && !spaceType.equals("Space")) {
         			myReader.close();
         			throw new BadConfigFormatException(spaceType);
         		}else {
@@ -85,108 +85,70 @@ public class Board
     }
 
     public void loadLayoutConfig() throws FileNotFoundException, BadConfigFormatException {
-    	int fileRows = 0;
-    	int fileCols = 0;
-    	
-    	try {
-    		Scanner myReader = new Scanner(new FileReader(this.layoutConfigFiles));
-    		
-    		while(myReader.hasNextLine()) {
-    			String readLine = myReader.nextLine().trim();
-    			String[] locationInfo = readLine.split(",");
-    			
-    			if (fileRows == 0) {
-    				numColumns = locationInfo.length;
-    			} else if(locationInfo.length != fileCols){
-    				myReader.close();
-    				throw new BadConfigFormatException("Error occured at" + readLine);
-    			}
-    			++fileCols; 
-    		}
-    		myReader.close();
-    		numRows = fileRows;
-    		numColumns = fileCols;
- 
-    		
-    	} catch(FileNotFoundException e) {
-    		System.out.println(e);
-    	}
-    	
-    	grid = new BoardCell[numRows][numColumns];
-    	
-    	for(int rows = 0; rows < numRows; ++rows) {
-    		for(int cols = 0; cols < numColumns; ++cols) {
-                BoardCell cell = grid[rows][cols];
-                if (rows > 0) { 
-                    cell.addAdj(grid[rows - 1][cols]);
+        int fileRows = 0;
+        
+        try (Scanner myReader = new Scanner(new FileReader(this.layoutConfigFiles))) {
+            while (myReader.hasNextLine()) {
+                String readLine = myReader.nextLine().trim();
+                
+                if (readLine.isEmpty()) continue;  // Skip empty lines
+                
+                String[] locationInfo = readLine.split(",");
+                
+                if (fileRows == 0) {
+                    numColumns = locationInfo.length;
+                } else if (locationInfo.length != numColumns) {  // Compare correctly
+                    throw new BadConfigFormatException("Inconsistent column count at: " + readLine);
                 }
-                if (rows < numRows - 1) {
-                    cell.addAdj(grid[rows + 1][cols]);
+                ++fileRows;  // Correctly track row count
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(this.layoutConfigFiles + " could not be located.");
+        }
+
+        if (fileRows == 0 || numColumns == 0) {
+            throw new BadConfigFormatException("Layout file is empty or improperly formatted.");
+        }
+        
+        numRows = fileRows;
+        grid = new BoardCell[numRows][numColumns];  // Ensure valid initialization
+
+        int rows = 0;
+        
+        try (Scanner myReaderNew = new Scanner(new FileReader(this.layoutConfigFiles))) {
+            while (myReaderNew.hasNextLine()) {
+                String readLine = myReaderNew.nextLine().trim();
+                
+                if (readLine.isEmpty()) continue;  // Skip empty lines
+                
+                String[] locationInfo = readLine.split(",");
+                int cols = 0;  // Reset column counter for each row
+
+                for (String token : locationInfo) {
+                    if (roomMap.containsKey(token.charAt(0))) {
+                        grid[rows][cols] = new BoardCell(rows, cols);  // Ensure grid cell exists
+                        grid[rows][cols].setIsRoom(true);
+                        grid[rows][cols].setCellInitial(token.charAt(0));
+
+                        if (token.length() == 2) {
+                            if (token.charAt(1) == '>') grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
+                            else if (token.charAt(1) == '<') grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
+                            else if (token.charAt(1) == '^') grid[rows][cols].setDoorDirection(DoorDirection.UP);
+                            else if (token.charAt(1) == 'v') grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
+                            else if (token.charAt(1) == '#') roomMap.get(token.charAt(0)).setLabelCell(grid[rows][cols]);
+                            else if (token.charAt(1) == '*') roomMap.get(token.charAt(0)).setCenterCell(grid[rows][cols]);
+                            grid[rows][cols].setIsDoorway(true);
+                        }
+                    } else {
+                        throw new BadConfigFormatException("Invalid token: " + token);
+                    }
+                    ++cols;
                 }
-                if (cols > 0) {
-                    cell.addAdj(grid[rows][cols - 1]);
-                }
-                if (cols < numColumns - 1) {
-                    cell.addAdj(grid[rows][cols + 1]);
-                }
-    		}
-    	}
-    	
-    	int rows = 0;
-    	int cols = 0;
-    	try {
-    		Scanner myReaderNew = new Scanner(new FileReader(this.layoutConfigFiles));
-    		while(myReaderNew.hasNextLine()) {
-    			String readLine = myReaderNew.nextLine().trim();
-    			String[] locationInfo = readLine.split(",");
-    			
-    			for(String token : locationInfo) {
-    				if(roomMap.containsKey(token.charAt(0))) {
-    					grid[rows][cols].setIsRoom(true);
-    					grid[rows][cols].setCellInitial(token.charAt(0));
-    					
-    					if( token.length() == 2 && roomMap.containsKey(token.charAt(0))) {
-    						grid[rows][cols].setIsRoom(true);
-    						grid[rows][cols].setCellInitial(token.charAt(0));
-    					}
-    					
-    				} else {
-    					
-    					myReaderNew.close();
-    					throw new BadConfigFormatException("Invalid token: " + token);
-    					
-    				}
-    				
-    				if(token.length() == 2) {
-    					if(token.charAt(1) == '>') {
-    						grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
-    						grid[rows][cols].setIsDoorway(true);
-    					} else if(token.charAt(1) == '<') {
-    						grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
-    						grid[rows][cols].setIsDoorway(true);
-    					} else if(token.charAt(1) == '^') {
-    						grid[rows][cols].setDoorDirection(DoorDirection.UP);
-    						grid[rows][cols].setIsDoorway(true);
-    					} else if(token.charAt(1) == 'v') {
-    						grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
-    						grid[rows][cols].setIsDoorway(true);
-    					} else if(token.charAt(1) == '#') {
-    						roomMap.get(token.charAt(0)).setLabelCell(grid[rows][cols]);
-    						grid[rows][cols].setRoomLabel(true);	
-    					} else if(token.charAt(1) == '*') {
-    						roomMap.get(token.charAt(0)).setCenterCell(grid[rows][cols]);
-    						grid[rows][cols].setRoomCenter(true);
-    					}
-    				}
-    				++cols;
-    			}
-    			++rows;
-    		}
-    		myReaderNew.close();
-    	} catch(FileNotFoundException e) {
-    		System.out.println(e.getMessage());
-    	}
-    	
+                ++rows;
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     public void calctargets(BoardCell someCell, int lengthToPath)
