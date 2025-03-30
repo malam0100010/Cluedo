@@ -70,11 +70,11 @@ public class BoardCell
     	this.isRoom = isRoom;
     }
     
-    public void setIsOccupied(boolean isOccupied) {
+    public void setOccupied(boolean isOccupied) {
     	this.isOccupied = isOccupied;
     }
     
-    public void setIsDoorway(boolean isDoorway){
+    public void setDoorway(boolean isDoorway){
     	this.isDoorway = isDoorway;
     }
     
@@ -104,7 +104,7 @@ public class BoardCell
     	secretPassage = secretPass;
     }
     
-    public char getCellInital() {
+    public char getCellInitial() {
     	return cellInitial;
     }
 

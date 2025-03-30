@@ -8,12 +8,14 @@ package tests;
 import static org.junit.Assert.*;
 
 import java.io.FileNotFoundException;
+//
 
-import org.junit.Assert;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.*;
+import org.junit.jupiter.api.*;
 
+//
 import clueGame.*;
+import junit.framework.*;
 
 public class FileInitTest {
 	// Constants that I will use to test whether the file was loaded correctly
@@ -29,7 +31,7 @@ public class FileInitTest {
 	public static void setUp() {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
-		// Set the file names to use my config files
+		// Set the file names to use my config file
 		board.setConfigFiles("./data/Clue_Layout.csv", "./data/ClueSetup.txt");
 		// Initialize will load BOTH config files
 		board.initialize();

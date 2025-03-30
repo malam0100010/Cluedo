@@ -7,13 +7,8 @@ package tests;
 // Assert.assertEquals
 import static org.junit.Assert.*;
 
-import java.io.FileNotFoundException;
-
-import org.junit.Assert;
+import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import clueGame.*;
 
 public class FileInitTests306 {
 	// Constants that I will use to test whether the file was loaded correctly
@@ -30,7 +25,7 @@ public class FileInitTests306 {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// Set the file names to use my config files
-		board.setConfigFiles("./data/ClueLayout306.csv", "./data/ClueSetup306.txt");
+		board.setConfigFiles("../data/ClueLayout306.csv", "./data/ClueSetup306.txt");
 		// Initialize will load BOTH config files
 		board.initialize();
 	}

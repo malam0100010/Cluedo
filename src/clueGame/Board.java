@@ -133,19 +133,19 @@ public class Board
                         if (token.length() == 2) {
                             if (token.charAt(1) == '>') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
-                                grid[rows][cols].setIsDoorway(true);
+                                grid[rows][cols].setDoorway(true);
                                 //numDoorWays++;
                             } else if (token.charAt(1) == '<') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
-                                grid[rows][cols].setIsDoorway(true);
+                                grid[rows][cols].setDoorway(true);
                                 //numDoorWays++;
                             } else if (token.charAt(1) == '^') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.UP);
-                                grid[rows][cols].setIsDoorway(true);
+                                grid[rows][cols].setDoorway(true);
                                 //numDoorWays++;
                             } else if (token.charAt(1) == 'v') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
-                                grid[rows][cols].setIsDoorway(true);
+                                grid[rows][cols].setDoorway(true);
                                 //numDoorWays++;
                             }
                             else if (token.charAt(1) == '#') {
@@ -187,26 +187,34 @@ public class Board
     	
     	visited.add(someCell);
     	
-		for (BoardCell adjCell : someCell.getAdjList()) {
-			if (visited.contains(adjCell) || adjCell.getIsOccupied()) {
-				continue;
-			}
-
-			if (adjCell.getIsRoom()) {
-				targets.add(adjCell);
-				continue;
-			}
-			visited.add(adjCell);
-			
-			if (lengthToPath == 1) {
-				targets.add(adjCell);
-			} else {
-				calcTargets(adjCell, lengthToPath - 1);
-			}
-			visited.remove(adjCell);
-		}
+    	 for (BoardCell adjCell : getAdjList(someCell.getRow(), someCell.getColumn())) {
+             if (visited.contains(adjCell) || adjCell.getIsOccupied()) {
+                 continue;
+             }
+             if (adjCell.getIsRoom()) {
+                 targets.add(adjCell);
+                 continue;
+             }
+             visited.add(adjCell);
+             if (lengthToPath == 1) {
+                 targets.add(adjCell);
+             } else {
+                 calcTargets(adjCell, lengthToPath - 1);
+             }
+             visited.remove(adjCell);
+         }
     	
     }
+    
+    public Set<BoardCell> getAdjList(int row, int col) {
+        return new HashSet<>();
+    }
+    
+    public Set<BoardCell> getTargets() {
+        return (targets == null) ? new HashSet<>() : targets;
+    }
+    
+    
 
     public void setConfigFiles(String layOutConfigFiles, String setUpConfigFile)
     {
