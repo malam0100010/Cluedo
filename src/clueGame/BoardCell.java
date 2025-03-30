@@ -16,7 +16,7 @@ public class BoardCell
     boolean isDoorway;
     char secretPassage;
     char cellInitial;
-    private Set<BoardCell> adjList;
+    public Set<BoardCell> adjList;
 
     public BoardCell(int row, int col) {
 		this.row = row;

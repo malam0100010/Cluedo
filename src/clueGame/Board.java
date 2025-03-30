@@ -68,7 +68,7 @@ public class Board
         		
         		if(spaceType != "Room" || spaceType != "Space") {
         			myReader.close();
-        			throw new BadConfigFormatExcpetion(spaceType);
+        			throw new BadConfigFormatException(spaceType);
         		}else {
         			roomMap.put(spaceSymbol, new Room(spaceName, spaceSymbol, null, null));
         		}
@@ -83,7 +83,7 @@ public class Board
         
     }
 
-    public void loadLayoutConfig() throws FileNotFoundException {
+    public void loadLayoutConfig() throws FileNotFoundException, BadConfigFormatException {
     	int fileRows = 0;
     	int fileCols = 0;
     	
@@ -98,7 +98,7 @@ public class Board
     				numColumns = locationInfo.length;
     			} else if(locationInfo.length != fileCols){
     				myReader.close();
-    				throw new BadConfigFormatException();
+    				throw new BadConfigFormatException("Error occured at" + readLine);
     			}
     			++fileCols; 
     		}
@@ -157,13 +157,65 @@ public class Board
     				}
     				
     				if(token.length() == 2) {
-    					if(token.charAt(1) == '#') {
-    						
+    					if(token.charAt(1) == '>') {
+    						grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
+    						grid[rows][cols].setIsDoorway(true);
+    					} else if(token.charAt(1) == '<') {
+    						grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
+    						grid[rows][cols].setIsDoorway(true);
+    					} else if(token.charAt(1) == '^') {
+    						grid[rows][cols].setDoorDirection(DoorDirection.UP);
+    						grid[rows][cols].setIsDoorway(true);
+    					} else if(token.charAt(1) == 'v') {
+    						grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
+    						grid[rows][cols].setIsDoorway(true);
+    					} else if(token.charAt(1) == '#') {
+    						roomMap.get(token.charAt(0)).setLabelCell(grid[rows][cols]);
+    						grid[rows][cols].setRoomLabel(true);	
+    					} else if(token.charAt(1) == '*') {
+    						roomMap.get(token.charAt(0)).setCenterCell(grid[rows][cols]);
+    						grid[rows][cols].setRoomCenter(true);
     					}
     				}
+    				++cols;
     			}
+    			++rows;
     		}
+    	} catch(FileNotFoundException e) {
+    		System.out.println(e.getMessage());
     	}
+    	
+    }
+    
+    public void calctargets(BoardCell someCell, int pathLength)
+    {
+    	if(targets == null) {
+    		targets = new HashSet<>();
+    	} 
+    	if(visited == null) {
+    		visited = new HashSet<>();
+    	}
+    	
+    	visited.add(someCell);
+    	
+		for (BoardCell adjCell : startCell.getAdjList()) {
+			if (visited.contains(adjCell) || adjCell.getIsOccupied()) {
+				continue;
+			}
+			//If room, add to targets
+			if (adjCell.getIsRoom()) {
+				targets.add(adjCell);
+				continue;
+			}
+			visited.add(adjCell);
+			//If pathlength is 1, then add our adjCell, otherwise, recurse
+			if (pathlength == 1) {
+				targets.add(adjCell);
+			} else {
+				calcTargets(adjCell, pathlength-1);
+			}
+			visited.remove(adjCell);
+		}
     	
     }
 
@@ -191,12 +243,12 @@ public class Board
 
     public BoardCell getCell(int rowNum, int colNum)
     {
-        return new BoardCell(rowNum, colNum, false, false);
+        return new BoardCell(rowNum, colNum);
     }
 
-    public Room getRoom(BoardCell cell)
+    public Room getRoom(BoardCell someCell)
     {
-        return new Room("");
+        return roomMap.get(someCell.cellInitial);
     }
 
     
