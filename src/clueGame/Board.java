@@ -211,7 +211,11 @@ public class Board
     }
     
     public Set<BoardCell> getTargets() {
-        return (targets == null) ? new HashSet<>() : targets;
+    	if (targets == null) {
+    	    return new HashSet<>();
+    	} else {
+    	    return targets;
+    	}
     }
     
     
