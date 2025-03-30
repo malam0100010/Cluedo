@@ -91,16 +91,16 @@ public class Board
             while (myReader.hasNextLine()) {
                 String readLine = myReader.nextLine().trim();
                 
-                if (readLine.isEmpty()) continue;  // Skip empty lines
+                if (readLine.isEmpty()) continue; 
                 
                 String[] locationInfo = readLine.split(",");
                 
                 if (fileRows == 0) {
                     numColumns = locationInfo.length;
-                } else if (locationInfo.length != numColumns) {  // Compare correctly
+                } else if (locationInfo.length != numColumns) {  
                     throw new BadConfigFormatException("Inconsistent column count at: " + readLine);
                 }
-                ++fileRows;  // Correctly track row count
+                ++fileRows;  
             }
         } catch (FileNotFoundException e) {
             System.out.println(this.layoutConfigFiles + " could not be located.");
@@ -111,33 +111,56 @@ public class Board
         }
         
         numRows = fileRows;
-        grid = new BoardCell[numRows][numColumns];  // Ensure valid initialization
+        grid = new BoardCell[numRows][numColumns]; 
 
         int rows = 0;
-        
+        //int numDoorWays = 0;
         try (Scanner myReaderNew = new Scanner(new FileReader(this.layoutConfigFiles))) {
             while (myReaderNew.hasNextLine()) {
                 String readLine = myReaderNew.nextLine().trim();
                 
-                if (readLine.isEmpty()) continue;  // Skip empty lines
+                if (readLine.isEmpty()) continue;  
                 
                 String[] locationInfo = readLine.split(",");
-                int cols = 0;  // Reset column counter for each row
+                int cols = 0;  
 
                 for (String token : locationInfo) {
                     if (roomMap.containsKey(token.charAt(0))) {
-                        grid[rows][cols] = new BoardCell(rows, cols);  // Ensure grid cell exists
+                        grid[rows][cols] = new BoardCell(rows, cols);  
                         grid[rows][cols].setIsRoom(true);
                         grid[rows][cols].setCellInitial(token.charAt(0));
-
+                        
                         if (token.length() == 2) {
-                            if (token.charAt(1) == '>') grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
-                            else if (token.charAt(1) == '<') grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
-                            else if (token.charAt(1) == '^') grid[rows][cols].setDoorDirection(DoorDirection.UP);
-                            else if (token.charAt(1) == 'v') grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
-                            else if (token.charAt(1) == '#') roomMap.get(token.charAt(0)).setLabelCell(grid[rows][cols]);
-                            else if (token.charAt(1) == '*') roomMap.get(token.charAt(0)).setCenterCell(grid[rows][cols]);
-                            grid[rows][cols].setIsDoorway(true);
+                            if (token.charAt(1) == '>') {
+                                grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
+                                grid[rows][cols].setIsDoorway(true);
+                                //numDoorWays++;
+                            } else if (token.charAt(1) == '<') {
+                                grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
+                                grid[rows][cols].setIsDoorway(true);
+                                //numDoorWays++;
+                            } else if (token.charAt(1) == '^') {
+                                grid[rows][cols].setDoorDirection(DoorDirection.UP);
+                                grid[rows][cols].setIsDoorway(true);
+                                //numDoorWays++;
+                            } else if (token.charAt(1) == 'v') {
+                                grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
+                                grid[rows][cols].setIsDoorway(true);
+                                //numDoorWays++;
+                            }
+                            else if (token.charAt(1) == '#') {
+                            	grid[rows][cols].setRoomLabel(true);
+                            	roomMap.get(token.charAt(0)).setLabelCell(grid[rows][cols]);
+                            }
+                            else if (token.charAt(1) == '*') {
+                            	grid[rows][cols].setRoomCenter(true);
+                            	roomMap.get(token.charAt(0)).setCenterCell(grid[rows][cols]);
+                            }
+                            
+                            //secret passage
+                            else if (roomMap.containsKey(token.charAt(1))) {
+                            	grid[rows][cols].setSecretPassage(token.charAt(1));
+                            }
                         }
                     } else {
                         throw new BadConfigFormatException("Invalid token: " + token);
@@ -146,12 +169,14 @@ public class Board
                 }
                 ++rows;
             }
+            //System.out.println(numDoorWays);
+
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
     
-    public void calctargets(BoardCell someCell, int lengthToPath)
+    public void calcTargets(BoardCell someCell, int lengthToPath)
     {
     	if(targets == null) {
     		targets = new HashSet<>();
@@ -176,7 +201,7 @@ public class Board
 			if (lengthToPath == 1) {
 				targets.add(adjCell);
 			} else {
-				calcTargets(adjCell, pathlength-1);
+				calcTargets(adjCell, lengthToPath - 1);
 			}
 			visited.remove(adjCell);
 		}
@@ -207,7 +232,7 @@ public class Board
 
     public BoardCell getCell(int rowNum, int colNum)
     {
-        return new BoardCell(rowNum, colNum);
+        return grid[rowNum][colNum];
     }
 
     public Room getRoom(BoardCell someCell)

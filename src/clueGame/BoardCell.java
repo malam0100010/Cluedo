@@ -37,11 +37,11 @@ public class BoardCell
     	return this.row;
     }
     
-    public boolean getRoomLabel(){
+    public boolean isLabel(){
     	return this.roomLabel;
     }
     
-    public boolean getRoomCenter() {
+    public boolean isRoomCenter() {
     	return this.roomCenter;
     }
     
@@ -54,8 +54,8 @@ public class BoardCell
     	return this.isOccupied;
     }
     
-    public boolean getIsDoorway() {
-    	return this.isDoorway;
+    public boolean isDoorway() {
+    	return isDoorway;
     }
     
     public void setRoomLabel(boolean roomLabel) {
