@@ -16,8 +16,8 @@ public class Board
     int numColumns;
     private String layoutConfigFiles;
     private String setupConfigFile;
-    private Set<TestBoardCell> targets;
-    private Set<TestBoardCell> visited;
+    private Set<BoardCell> targets;
+    private Set<BoardCell> visited;
     private Map<Character, Room> roomMap = new HashMap<>();
 
 
@@ -40,12 +40,13 @@ public class Board
         //targets = new HashSet<>();
         //visited = new HashSet<>();
         try {
-			loadSetupConfig();
-			loadLayoutConfig();
-		} catch (BadConfigFormatException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e);
-		} 
+            loadSetupConfig();
+            loadLayoutConfig();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found! " + e.getMessage());
+        } catch (BadConfigFormatException e) {
+            System.out.println(e);
+        }
         
        
     }
@@ -134,9 +135,9 @@ public class Board
     	int rows = 0;
     	int cols = 0;
     	try {
-    		Scanner myReader = new Scanner(new FileReader(this.layoutConfigFiles));
-    		while(myReader.hasNextLine()) {
-    			String readLine = myReader.nextLine().trim();
+    		Scanner myReaderNew = new Scanner(new FileReader(this.layoutConfigFiles));
+    		while(myReaderNew.hasNextLine()) {
+    			String readLine = myReaderNew.nextLine().trim();
     			String[] locationInfo = readLine.split(",");
     			
     			for(String token : locationInfo) {
@@ -151,7 +152,7 @@ public class Board
     					
     				} else {
     					
-    					myReader.close();
+    					myReaderNew.close();
     					throw new BadConfigFormatException("Invalid token: " + token);
     					
     				}
@@ -181,13 +182,14 @@ public class Board
     			}
     			++rows;
     		}
+    		myReaderNew.close();
     	} catch(FileNotFoundException e) {
     		System.out.println(e.getMessage());
     	}
     	
     }
     
-    public void calctargets(BoardCell someCell, int pathLength)
+    public void calctargets(BoardCell someCell, int lengthToPath)
     {
     	if(targets == null) {
     		targets = new HashSet<>();
@@ -198,7 +200,7 @@ public class Board
     	
     	visited.add(someCell);
     	
-		for (BoardCell adjCell : startCell.getAdjList()) {
+		for (BoardCell adjCell : someCell.getAdjList()) {
 			if (visited.contains(adjCell) || adjCell.getIsOccupied()) {
 				continue;
 			}
@@ -209,7 +211,7 @@ public class Board
 			}
 			visited.add(adjCell);
 			
-			if (pathlength == 1) {
+			if (lengthToPath == 1) {
 				targets.add(adjCell);
 			} else {
 				calcTargets(adjCell, pathlength-1);
