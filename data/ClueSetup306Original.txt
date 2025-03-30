@@ -2,7 +2,7 @@
 Room, Kit Room, K
 Room, Locker Room, L
 Room, Manchester Suite, M
-Room, Benches, Bn
+Room, Benches, S
 Room, Bathroom, B
 Room, Concession Stand, C
 Room, Ticket Booth, T
