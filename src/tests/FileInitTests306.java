@@ -3,12 +3,17 @@ package tests;
  * This program tests that config files are loaded properly.
  */
 
-// Doing a static import allows me to write assertEquals rather than
-// Assert.assertEquals
+
 import static org.junit.Assert.*;
 
-import org.junit.Test;
+// Doing a static import allows me to write assertEquals rather than
+// Assert.assertEquals
+import org.junit.Assert;
+
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
+
+import clueGame.*;
 
 public class FileInitTests306 {
 	// Constants that I will use to test whether the file was loaded correctly
@@ -25,7 +30,7 @@ public class FileInitTests306 {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// Set the file names to use my config files
-		board.setConfigFiles("../data/ClueLayout306.csv", "./data/ClueSetup306.txt");
+		board.setConfigFiles("./data/ClueLayout306.csv", "./data/ClueSetup306.txt");
 		// Initialize will load BOTH config files
 		board.initialize();
 	}
