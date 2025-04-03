@@ -214,33 +214,48 @@ public class Board
         // 1) ROOM CENTER CASE
         // -------------------------------------
         if (cell.isRoomCenter()) {
-            // 1a) Add secret passage (if any)
-            if (cell.getSecretPassage() != '\0') {
-                Room secretRoom = getRoom(cell.getSecretPassage());
-                if (secretRoom != null && secretRoom.getCenterCell() != null) {
-                    adjList.add(secretRoom.getCenterCell());
+            // (a) Secret Passage: Check if the room center (or another cell in the room) has a secret passage.
+            char secret = cell.getSecretPassage();
+            if (secret == '\0') {
+                for (int r = 0; r < numRows; r++) {
+                    for (int c = 0; c < numColumns; c++) {
+                        BoardCell other = getCell(r, c);
+                        if (other.getCellInitial() == cell.getCellInitial() && other.getSecretPassage() != '\0') {
+                            secret = other.getSecretPassage();
+                            break;
+                        }
+                    }
+                    if (secret != '\0') break;
                 }
             }
-            // 1b) Find all door cells that lead INSIDE this room center
+            if (secret != '\0') {
+                BoardCell destCenter = findRoomCenter(secret);
+                if (destCenter != null) {
+                    adjList.add(destCenter);
+                }
+            }
+            
+            // (b) Add door cells that lead inside this room.
+            // For each cell on the board that is a doorway, we compute its "inside" cell
+            // (one step in the same direction as the door's arrow) and if that cell belongs
+            // to the same room, we add the door cell.
             for (int r = 0; r < numRows; r++) {
                 for (int c = 0; c < numColumns; c++) {
                     BoardCell potentialDoor = getCell(r, c);
                     if (potentialDoor.isDoorway()) {
-                        // The "inside" of a door is one step opposite its arrow.
                         int doorRow = potentialDoor.getRow();
                         int doorCol = potentialDoor.getColumn();
-                        int insideRow = doorRow, insideCol = doorCol;
+                        int insideRow = doorRow;
+                        int insideCol = doorCol;
                         switch (potentialDoor.getDoorDirection()) {
-                            case UP:    insideRow = doorRow + 1; break;
-                            case DOWN:  insideRow = doorRow - 1; break;
-                            case LEFT:  insideCol = doorCol + 1; break;
-                            case RIGHT: insideCol = doorCol - 1; break;
+                            case UP:    insideRow = doorRow - 1; break;
+                            case DOWN:  insideRow = doorRow + 1; break;
+                            case LEFT:  insideCol = doorCol - 1; break;
+                            case RIGHT: insideCol = doorCol + 1; break;
                             default:    break;
                         }
-                        if (insideRow >= 0 && insideRow < numRows &&
-                            insideCol >= 0 && insideCol < numColumns) {
+                        if (isValid(insideRow, insideCol)) {
                             BoardCell insideCell = getCell(insideRow, insideCol);
-                            // If insideCell's initial matches this room center's initial, add the door.
                             if (insideCell.getCellInitial() == cell.getCellInitial()) {
                                 adjList.add(potentialDoor);
                             }
@@ -253,64 +268,67 @@ public class Board
         // 2) DOOR CASE
         // -------------------------------------
         else if (cell.isDoorway()) {
-            // 2a) First try: Use the door's own letter to find the room.
+            // (a) Add the room center for this door.
             Room doorRoom = getRoom(cell.getCellInitial());
-            // If that fails or there's no valid center, do the "inside-cell" fallback.
-            if (doorRoom == null || doorRoom.getCenterCell() == null) {
-                int insideRow = row, insideCol = col;
-                // Move opposite the door arrow to find the inside cell.
-                switch (cell.getDoorDirection()) {
-                    case UP:    insideRow = row + 1; break;
-                    case DOWN:  insideRow = row - 1; break;
-                    case LEFT:  insideCol = col + 1; break;
-                    case RIGHT: insideCol = col - 1; break;
-                    default:    break;
-                }
-                if (insideRow >= 0 && insideRow < numRows &&
-                    insideCol >= 0 && insideCol < numColumns) {
-                    BoardCell insideCell = getCell(insideRow, insideCol);
-                    doorRoom = getRoom(insideCell.getCellInitial());
-                }
-            }
-            // If we found a valid room center, add it.
             if (doorRoom != null && doorRoom.getCenterCell() != null) {
                 adjList.add(doorRoom.getCenterCell());
             }
-            // 2b) Outside neighbor: move 1 step in the direction of the door's arrow.
-            int outRow = row, outCol = col;
-            switch (cell.getDoorDirection()) {
-                case UP:    outRow = row - 1; break;
-                case DOWN:  outRow = row + 1; break;
-                case LEFT:  outCol = col - 1; break;
-                case RIGHT: outCol = col + 1; break;
-                default:    break;
-            }
-            if (outRow >= 0 && outRow < numRows &&
-                outCol >= 0 && outCol < numColumns) {
-                adjList.add(getCell(outRow, outCol));
+            // (b) Then add all adjacent (up, down, left, right) walkway cells.
+            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+            for (int[] d : dirs) {
+                int r = row + d[0];
+                int c = col + d[1];
+                if (isValid(r, c)) {
+                    BoardCell neighbor = getCell(r, c);
+                    if (!neighbor.getIsRoom()) { // only add walkway cells
+                        adjList.add(neighbor);
+                    }
+                }
             }
         }
         // -------------------------------------
         // 3) WALKWAY CASE
         // -------------------------------------
         else if (!cell.getIsRoom()) {
-            // Standard walkway adjacency: check up, down, left, and right.
             int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
             for (int[] d : dirs) {
-                int r = row + d[0], c = col + d[1];
-                if (r >= 0 && r < numRows && c >= 0 && c < numColumns) {
+                int r = row + d[0];
+                int c = col + d[1];
+                if (isValid(r, c)) {
                     BoardCell neighbor = getCell(r, c);
-                    // Only add neighbor if it is a walkway.
                     if (!neighbor.getIsRoom()) {
                         adjList.add(neighbor);
                     }
-                    // (Do not add door cells in the walkway case.)
                 }
             }
         }
-
         return adjList;
     }
+
+    /**
+     * Helper method: Checks if (r,c) is within board boundaries.
+     */
+    private boolean isValid(int r, int c) {
+        return r >= 0 && r < numRows && c >= 0 && c < numColumns;
+    }
+
+    /**
+     * Helper method: Scans the grid for a room center cell with the given room initial.
+     */
+    private BoardCell findRoomCenter(char roomInitial) {
+        for (int r = 0; r < numRows; r++) {
+            for (int c = 0; c < numColumns; c++) {
+                BoardCell candidate = getCell(r, c);
+                if (candidate.isRoomCenter() && candidate.getCellInitial() == roomInitial) {
+                    return candidate;
+                }
+            }
+        }
+        return null;
+    }
+
+
+
 
 
     public Set<BoardCell> getTargets() {
