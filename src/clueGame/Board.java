@@ -205,11 +205,114 @@ public class Board
          }
     	
     }
-    
+
     public Set<BoardCell> getAdjList(int row, int col) {
-        return new HashSet<>();
+        Set<BoardCell> adjList = new HashSet<>();
+        BoardCell cell = getCell(row, col);
+
+        // -------------------------------------
+        // 1) ROOM CENTER CASE
+        // -------------------------------------
+        if (cell.isRoomCenter()) {
+            // 1a) Add secret passage (if any)
+            if (cell.getSecretPassage() != '\0') {
+                Room secretRoom = getRoom(cell.getSecretPassage());
+                if (secretRoom != null && secretRoom.getCenterCell() != null) {
+                    adjList.add(secretRoom.getCenterCell());
+                }
+            }
+            // 1b) Find all door cells that lead INSIDE this room center
+            for (int r = 0; r < numRows; r++) {
+                for (int c = 0; c < numColumns; c++) {
+                    BoardCell potentialDoor = getCell(r, c);
+                    if (potentialDoor.isDoorway()) {
+                        // The "inside" of a door is one step opposite its arrow.
+                        int doorRow = potentialDoor.getRow();
+                        int doorCol = potentialDoor.getColumn();
+                        int insideRow = doorRow, insideCol = doorCol;
+                        switch (potentialDoor.getDoorDirection()) {
+                            case UP:    insideRow = doorRow + 1; break;
+                            case DOWN:  insideRow = doorRow - 1; break;
+                            case LEFT:  insideCol = doorCol + 1; break;
+                            case RIGHT: insideCol = doorCol - 1; break;
+                            default:    break;
+                        }
+                        if (insideRow >= 0 && insideRow < numRows &&
+                            insideCol >= 0 && insideCol < numColumns) {
+                            BoardCell insideCell = getCell(insideRow, insideCol);
+                            // If insideCell's initial matches this room center's initial, add the door.
+                            if (insideCell.getCellInitial() == cell.getCellInitial()) {
+                                adjList.add(potentialDoor);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // -------------------------------------
+        // 2) DOOR CASE
+        // -------------------------------------
+        else if (cell.isDoorway()) {
+            // 2a) First try: Use the door's own letter to find the room.
+            Room doorRoom = getRoom(cell.getCellInitial());
+            // If that fails or there's no valid center, do the "inside-cell" fallback.
+            if (doorRoom == null || doorRoom.getCenterCell() == null) {
+                int insideRow = row, insideCol = col;
+                // Move opposite the door arrow to find the inside cell.
+                switch (cell.getDoorDirection()) {
+                    case UP:    insideRow = row + 1; break;
+                    case DOWN:  insideRow = row - 1; break;
+                    case LEFT:  insideCol = col + 1; break;
+                    case RIGHT: insideCol = col - 1; break;
+                    default:    break;
+                }
+                if (insideRow >= 0 && insideRow < numRows &&
+                    insideCol >= 0 && insideCol < numColumns) {
+                    BoardCell insideCell = getCell(insideRow, insideCol);
+                    doorRoom = getRoom(insideCell.getCellInitial());
+                }
+            }
+            // If we found a valid room center, add it.
+            if (doorRoom != null && doorRoom.getCenterCell() != null) {
+                adjList.add(doorRoom.getCenterCell());
+            }
+            // 2b) Outside neighbor: move 1 step in the direction of the door's arrow.
+            int outRow = row, outCol = col;
+            switch (cell.getDoorDirection()) {
+                case UP:    outRow = row - 1; break;
+                case DOWN:  outRow = row + 1; break;
+                case LEFT:  outCol = col - 1; break;
+                case RIGHT: outCol = col + 1; break;
+                default:    break;
+            }
+            if (outRow >= 0 && outRow < numRows &&
+                outCol >= 0 && outCol < numColumns) {
+                adjList.add(getCell(outRow, outCol));
+            }
+        }
+        // -------------------------------------
+        // 3) WALKWAY CASE
+        // -------------------------------------
+        else if (!cell.getIsRoom()) {
+            // Standard walkway adjacency: check up, down, left, and right.
+            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+            for (int[] d : dirs) {
+                int r = row + d[0], c = col + d[1];
+                if (r >= 0 && r < numRows && c >= 0 && c < numColumns) {
+                    BoardCell neighbor = getCell(r, c);
+                    // Only add neighbor if it is a walkway.
+                    if (!neighbor.getIsRoom()) {
+                        adjList.add(neighbor);
+                    }
+                    // (Do not add door cells in the walkway case.)
+                }
+            }
+        }
+
+        return adjList;
     }
-    
+
+
     public Set<BoardCell> getTargets() {
     	if (targets == null) {
     	    return new HashSet<>();

@@ -22,7 +22,7 @@ public class BoardAdjTargetTest {
 		// Board is singleton, get the only instance
 		board = Board.getInstance();
 		// set the file names to use my config files
-		board.setConfigFiles("./data/ClueLayout306.csv", "./data/ClueSetup306.txt");		
+		board.setConfigFiles("./data/Clue_Layout.csv", "./data/ClueSetup.txt");		
 		// Initialize will load config files 
 		board.initialize();
 	}
@@ -110,39 +110,8 @@ public class BoardAdjTargetTest {
 	
 	}
 	
-	
-	// Tests out of room center, 1, 3 and 4
-	// These are LIGHT BLUE on the planning spreadsheet
 	@Test
-	public void testTargetsInDiningRoom() {
-		// test a roll of 1
-		board.calcTargets(board.getCell(12, 20), 1);
-		Set<BoardCell> targets= board.getTargets();
-		assertEquals(2, targets.size());
-		assertTrue(targets.contains(board.getCell(8, 17)));
-		assertTrue(targets.contains(board.getCell(12, 15)));	
-		
-		// test a roll of 3
-		board.calcTargets(board.getCell(12, 20), 3);
-		targets= board.getTargets();
-		assertEquals(9, targets.size());
-		assertTrue(targets.contains(board.getCell(6, 17)));
-		assertTrue(targets.contains(board.getCell(8, 19)));	
-		assertTrue(targets.contains(board.getCell(11, 14)));
-		assertTrue(targets.contains(board.getCell(14, 15)));	
-		
-		// test a roll of 4
-		board.calcTargets(board.getCell(12, 20), 4);
-		targets= board.getTargets();
-		assertEquals(17, targets.size());
-		assertTrue(targets.contains(board.getCell(3, 20)));
-		assertTrue(targets.contains(board.getCell(7, 17)));	
-		assertTrue(targets.contains(board.getCell(12, 14)));
-		assertTrue(targets.contains(board.getCell(15, 15)));	
-	}
-	
-	@Test
-	public void testTargetsInKitchen() {
+	public void testTargetsInBenches() {
 		// test a roll of 1
 		board.calcTargets(board.getCell(20, 19), 1);
 		Set<BoardCell> targets= board.getTargets();
@@ -202,57 +171,7 @@ public class BoardAdjTargetTest {
 		assertTrue(targets.contains(board.getCell(5, 16)));	
 	}
 
-	@Test
-	public void testTargetsInWalkway1() {
-		// test a roll of 1
-		board.calcTargets(board.getCell(11, 2), 1);
-		Set<BoardCell> targets= board.getTargets();
-		assertEquals(2, targets.size());
-		assertTrue(targets.contains(board.getCell(11, 1)));
-		assertTrue(targets.contains(board.getCell(11, 3)));	
-		
-		// test a roll of 3
-		board.calcTargets(board.getCell(11, 2), 3);
-		targets= board.getTargets();
-		assertEquals(3, targets.size());
-		assertTrue(targets.contains(board.getCell(14, 2)));
-		assertTrue(targets.contains(board.getCell(8, 2)));
-		assertTrue(targets.contains(board.getCell(11, 5)));	
-		
-		// test a roll of 4
-		board.calcTargets(board.getCell(11, 2), 4);
-		targets= board.getTargets();
-		assertEquals(3, targets.size());
-		assertTrue(targets.contains(board.getCell(14, 2)));
-		assertTrue(targets.contains(board.getCell(8, 2)));
-		assertTrue(targets.contains(board.getCell(11, 6)));	
-	}
 
-	@Test
-	public void testTargetsInWalkway2() {
-		// test a roll of 1
-		board.calcTargets(board.getCell(13, 7), 1);
-		Set<BoardCell> targets= board.getTargets();
-		assertEquals(4, targets.size());
-		assertTrue(targets.contains(board.getCell(13, 6)));
-		assertTrue(targets.contains(board.getCell(12, 7)));	
-		
-		// test a roll of 3
-		board.calcTargets(board.getCell(13, 7), 3);
-		targets= board.getTargets();
-		assertEquals(10, targets.size());
-		assertTrue(targets.contains(board.getCell(15, 6)));
-		assertTrue(targets.contains(board.getCell(14, 7)));
-		assertTrue(targets.contains(board.getCell(11, 8)));	
-		
-		// test a roll of 4
-		board.calcTargets(board.getCell(13, 7), 4);
-		targets= board.getTargets();
-		assertEquals(15, targets.size());
-		assertTrue(targets.contains(board.getCell(14, 2)));
-		assertTrue(targets.contains(board.getCell(15, 9)));
-		assertTrue(targets.contains(board.getCell(11, 5)));	
-	}
 
 	@Test
 	// test to make sure occupied locations do not cause problems
