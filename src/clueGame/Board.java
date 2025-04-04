@@ -423,22 +423,45 @@ public class Board
         	}
         	
         }   
-        // -------------------------------------
-        // 3) WALKWAY CASE
-        // -------------------------------------
-//        else if (!cell.getIsRoom()) {
-//            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
-//            for (int[] d : dirs) {
-//                int r = row + d[0];
-//                int c = col + d[1];
-//                if (isValid(r, c)) {
-//                    BoardCell neighbor = getCell(r, c);
-//                    if (!neighbor.getIsRoom()) {
-//                        adjList.add(neighbor);
-//                    }
-//                }
-//            }
-//        }
+        // Is a walkway, but it is not a door
+        else if (cell.getCellInitial() == 'W' && !cell.isDoorway()) {
+    		int doorCellRow = cell.getRow();
+    		int doorCellCol = cell.getColumn();
+    		BoardCell tempBoardCell = getCell(doorCellRow, doorCellCol);
+    		
+    		// Add other walkway cells: check up, left, down
+    		// Down
+    		doorCellRow = cell.getRow() + 1;
+    		doorCellCol = cell.getColumn();
+    		tempBoardCell = getCell(doorCellRow, doorCellCol);
+    		if(tempBoardCell.getCellInitial() == 'W' && doorCellRow <= numRows) {
+    			adjList.add(tempBoardCell);
+    		}
+    		
+    		// left
+    		doorCellRow = cell.getRow();
+    		doorCellCol = cell.getColumn() - 1;
+    		tempBoardCell = getCell(doorCellRow, doorCellCol);
+    		if(tempBoardCell.getCellInitial() == 'W' && doorCellCol >= 0) {
+    			adjList.add(tempBoardCell);
+    		}
+    		
+    		// up
+    		doorCellRow = cell.getRow() - 1;
+    		doorCellCol = cell.getColumn();
+    		tempBoardCell = getCell(doorCellRow, doorCellCol);
+    		if(tempBoardCell.getCellInitial() == 'W' && doorCellRow >= 0) {
+    			adjList.add(tempBoardCell);
+    		}
+    		
+    		// Right
+    		doorCellRow = cell.getRow();
+    		doorCellCol = cell.getColumn() + 1;
+    		tempBoardCell = getCell(doorCellRow, doorCellCol);
+    		if(tempBoardCell.getCellInitial() == 'W' && doorCellCol <= 0) {
+    			adjList.add(tempBoardCell);
+    		}
+        }
         return adjList;
     }
 
