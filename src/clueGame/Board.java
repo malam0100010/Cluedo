@@ -263,27 +263,169 @@ public class Board
                 }
             }
         }
-        // -------------------------------------
-        // 2) DOOR CASE
-        // -------------------------------------
+        // Cell is a doorway
         else if (cell.isDoorway()) {
-        	switch(cell.getDoorDirection()) {
-	        	case UP:
-	        		
-	        		break;
-	        	case DOWN:
-	        		break;
-	        	case LEFT:
-	        		break;
-	        	case RIGHT:
-	        		break;
-	        	default:
-	        		break;
+        	// Add center cell as adjacency
+        	if(cell.getDoorDirection() == DoorDirection.UP)
+        	{
+        		// Go inside the door to the room
+        		int doorCellRow = cell.getRow() - 1;
+        		int doorCellCol = cell.getColumn();
+        		BoardCell tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		char targetCellInitial = tempBoardCell.getCellInitial();
+        		
+        		adjList.add(getRoom(targetCellInitial).getCenterCell());
+        		
+        		
+        		// Loop until cell initial && isRoomCenter
+        		for(int rows = 0; rows < numRows; ++rows) {
+        			for(int cols = 0; cols < numColumns; ++cols) {
+        				tempBoardCell = new BoardCell(rows, cols);
+        				if(tempBoardCell.getCellInitial() == targetCellInitial && tempBoardCell.isRoomCenter()) {
+        					adjList.add(tempBoardCell);
+        				}
+        			}
+        		}
+        		
+        		// Add other walkway cells: check left, right, down
+        		// Down
+        		doorCellRow = cell.getRow() + 1;
+        		doorCellCol = cell.getColumn();
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// Right
+        		doorCellRow = cell.getRow();
+        		doorCellCol = cell.getColumn() + 1;
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// Left
+        		doorCellRow = cell.getRow();
+        		doorCellCol = cell.getColumn() - 1;
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        	}else if(cell.getDoorDirection()== DoorDirection.DOWN){
+        		// Go inside the door to the room
+        		int doorCellRow = cell.getRow() + 1;
+        		int doorCellCol = cell.getColumn();
+        		BoardCell tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		char targetCellInitial = tempBoardCell.getCellInitial();
+        		
+        		
+        		// Loop until cell initial && isRoomCenter
+        		adjList.add(getRoom(targetCellInitial).getCenterCell());
+        		
+        		// Add other walkway cells: check left, right, up
+        		// Down
+        		doorCellRow = cell.getRow() + 1;
+        		doorCellCol = cell.getColumn();
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// Right
+        		doorCellRow = cell.getRow();
+        		doorCellCol = cell.getColumn() + 1;
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// Left
+        		doorCellRow = cell.getRow();
+        		doorCellCol = cell.getColumn() - 1;
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        	}else if(cell.getDoorDirection()== DoorDirection.LEFT){
+        		// Go inside the door to the room
+        		int doorCellRow = cell.getRow();
+        		int doorCellCol = cell.getColumn() - 1;
+        		BoardCell tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		char targetCellInitial = tempBoardCell.getCellInitial();
+        		
+        		
+        		// Loop until cell initial && isRoomCenter
+        		adjList.add(getRoom(targetCellInitial).getCenterCell());
+        		
+        		// Add other walkway cells: check up, right, down
+        		// Down
+        		doorCellRow = cell.getRow() + 1;
+        		doorCellCol = cell.getColumn();
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// Right
+        		doorCellRow = cell.getRow();
+        		doorCellCol = cell.getColumn() + 1;
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// up
+        		doorCellRow = cell.getRow() - 1;
+        		doorCellCol = cell.getColumn();
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        	}else if(cell.getDoorDirection()== DoorDirection.RIGHT){
+        		// Go inside the door to the room
+        		int doorCellRow = cell.getRow();
+        		int doorCellCol = cell.getColumn() + 1;
+        		BoardCell tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		char targetCellInitial = tempBoardCell.getCellInitial();
+        		
+        		
+        		// Loop until cell initial && isRoomCenter
+        		adjList.add(getRoom(targetCellInitial).getCenterCell());
+        		
+        		// Add other walkway cells: check up, left, down
+        		// Down
+        		doorCellRow = cell.getRow() - 1;
+        		doorCellCol = cell.getColumn();
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// left
+        		doorCellRow = cell.getRow();
+        		doorCellCol = cell.getColumn() - 1;
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
+        		// up
+        		doorCellRow = cell.getRow() + 1;
+        		doorCellCol = cell.getColumn();
+        		tempBoardCell = getCell(doorCellRow, doorCellCol);
+        		if(tempBoardCell.getCellInitial() == 'W') {
+        			adjList.add(tempBoardCell);
+        		}
+        		
         	}
-        }
-//        // -------------------------------------
-//        // 3) WALKWAY CASE
-//        // -------------------------------------
+        	
+        }   
+        // -------------------------------------
+        // 3) WALKWAY CASE
+        // -------------------------------------
 //        else if (!cell.getIsRoom()) {
 //            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
 //            for (int[] d : dirs) {
