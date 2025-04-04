@@ -114,7 +114,6 @@ public class Board
         grid = new BoardCell[numRows][numColumns]; 
 
         int rows = 0;
-        //int numDoorWays = 0;
         try (Scanner myReaderNew = new Scanner(new FileReader(this.layoutConfigFiles))) {
             while (myReaderNew.hasNextLine()) {
                 String readLine = myReaderNew.nextLine().trim();
@@ -268,40 +267,36 @@ public class Board
         // 2) DOOR CASE
         // -------------------------------------
         else if (cell.isDoorway()) {
-            // (a) Add the room center for this door.
-            Room doorRoom = getRoom(cell.getCellInitial());
-            if (doorRoom != null && doorRoom.getCenterCell() != null) {
-                adjList.add(doorRoom.getCenterCell());
-            }
-            // (b) Then add all adjacent (up, down, left, right) walkway cells.
-            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
-            for (int[] d : dirs) {
-                int r = row + d[0];
-                int c = col + d[1];
-                if (isValid(r, c)) {
-                    BoardCell neighbor = getCell(r, c);
-                    if (!neighbor.getIsRoom()) { // only add walkway cells
-                        adjList.add(neighbor);
-                    }
-                }
-            }
+        	switch(cell.getDoorDirection()) {
+	        	case UP:
+	        		
+	        		break;
+	        	case DOWN:
+	        		break;
+	        	case LEFT:
+	        		break;
+	        	case RIGHT:
+	        		break;
+	        	default:
+	        		break;
+        	}
         }
-        // -------------------------------------
-        // 3) WALKWAY CASE
-        // -------------------------------------
-        else if (!cell.getIsRoom()) {
-            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
-            for (int[] d : dirs) {
-                int r = row + d[0];
-                int c = col + d[1];
-                if (isValid(r, c)) {
-                    BoardCell neighbor = getCell(r, c);
-                    if (!neighbor.getIsRoom()) {
-                        adjList.add(neighbor);
-                    }
-                }
-            }
-        }
+//        // -------------------------------------
+//        // 3) WALKWAY CASE
+//        // -------------------------------------
+//        else if (!cell.getIsRoom()) {
+//            int[][] dirs = { {-1, 0}, {1, 0}, {0, -1}, {0, 1} };
+//            for (int[] d : dirs) {
+//                int r = row + d[0];
+//                int c = col + d[1];
+//                if (isValid(r, c)) {
+//                    BoardCell neighbor = getCell(r, c);
+//                    if (!neighbor.getIsRoom()) {
+//                        adjList.add(neighbor);
+//                    }
+//                }
+//            }
+//        }
         return adjList;
     }
 
