@@ -433,32 +433,38 @@ public class Board
     		// Down
     		doorCellRow = cell.getRow() + 1;
     		doorCellCol = cell.getColumn();
-    		tempBoardCell = getCell(doorCellRow, doorCellCol);
-    		if(tempBoardCell.getCellInitial() == 'W' && doorCellRow <= numRows) {
+    		
+    		
+    		if(doorCellRow < numRows && getCell(doorCellRow, doorCellCol).getCellInitial() == 'W') {
+    			tempBoardCell = getCell(doorCellRow, doorCellCol);
     			adjList.add(tempBoardCell);
     		}
     		
     		// left
     		doorCellRow = cell.getRow();
     		doorCellCol = cell.getColumn() - 1;
-    		tempBoardCell = getCell(doorCellRow, doorCellCol);
-    		if(tempBoardCell.getCellInitial() == 'W' && doorCellCol >= 0) {
+    		
+    		if(doorCellCol >= 0 && getCell(doorCellRow, doorCellCol).getCellInitial() == 'W') {
+    			
+    			tempBoardCell = getCell(doorCellRow, doorCellCol);
     			adjList.add(tempBoardCell);
     		}
     		
     		// up
     		doorCellRow = cell.getRow() - 1;
     		doorCellCol = cell.getColumn();
-    		tempBoardCell = getCell(doorCellRow, doorCellCol);
-    		if(tempBoardCell.getCellInitial() == 'W' && doorCellRow >= 0) {
+    
+    		if(doorCellCol >= 0 && getCell(doorCellRow, doorCellCol).getCellInitial() == 'W') {
+    			tempBoardCell = getCell(doorCellRow, doorCellCol);
     			adjList.add(tempBoardCell);
     		}
     		
     		// Right
     		doorCellRow = cell.getRow();
     		doorCellCol = cell.getColumn() + 1;
-    		tempBoardCell = getCell(doorCellRow, doorCellCol);
-    		if(tempBoardCell.getCellInitial() == 'W' && doorCellCol <= 0) {
+    		
+    		if(doorCellCol < numColumns && getCell(doorCellRow, doorCellCol).getCellInitial() == 'W') {
+    			tempBoardCell = getCell(doorCellRow, doorCellCol);
     			adjList.add(tempBoardCell);
     		}
         }
