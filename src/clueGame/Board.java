@@ -125,9 +125,13 @@ public class Board
 
                 for (String token : locationInfo) {
                     if (roomMap.containsKey(token.charAt(0))) {
-                        grid[rows][cols] = new BoardCell(rows, cols);  
-                        grid[rows][cols].setIsRoom(true);
+                        grid[rows][cols] = new BoardCell(rows, cols);
                         grid[rows][cols].setCellInitial(token.charAt(0));
+                        if(grid[rows][cols].getCellInitial() != ('W') && grid[rows][cols].getCellInitial() != 'X'){
+                        	grid[rows][cols].setIsRoom(true);
+                        }
+                        
+                        
                         
                         if (token.length() == 2) {
                             if (token.charAt(1) == '>') {
@@ -183,12 +187,16 @@ public class Board
     	if(visited == null) {
     		visited = new HashSet<>();
     	}
-    	
     	visited.add(someCell);
+    	findTargets(someCell, lengthToPath);
+    }
     	
+    	
+    public void findTargets(BoardCell someCell, int lengthToPath) {
     	 for (BoardCell adjCell : getAdjList(someCell.getRow(), someCell.getColumn())) {
-             if (visited.contains(adjCell) || adjCell.getIsOccupied()) {
+             if (visited.contains(adjCell) && (adjCell.getIsOccupied() || adjCell.isRoom())) {
                  continue;
+                 
              }
              if (adjCell.getIsRoom()) {
                  targets.add(adjCell);
@@ -498,11 +506,7 @@ public class Board
 
 
     public Set<BoardCell> getTargets() {
-    	if (targets == null) {
-    	    return new HashSet<>();
-    	} else {
-    	    return targets;
-    	}
+    	return targets;
     }
     
     
