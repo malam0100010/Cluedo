@@ -137,19 +137,20 @@ public class Board
                             if (token.charAt(1) == '>') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
                                 grid[rows][cols].setDoorway(true);
-                                //numDoorWays++;
+                               
                             } else if (token.charAt(1) == '<') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.LEFT);
                                 grid[rows][cols].setDoorway(true);
-                                //numDoorWays++;
+                               
                             } else if (token.charAt(1) == '^') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.UP);
                                 grid[rows][cols].setDoorway(true);
-                                //numDoorWays++;
+                                
+                                
                             } else if (token.charAt(1) == 'v') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.DOWN);
                                 grid[rows][cols].setDoorway(true);
-                                //numDoorWays++;
+                                
                             }
                             else if (token.charAt(1) == '#') {
                             	grid[rows][cols].setRoomLabel(true);
@@ -181,12 +182,9 @@ public class Board
     
     public void calcTargets(BoardCell someCell, int lengthToPath)
     {
-    	if(targets == null) {
-    		targets = new HashSet<>();
-    	} 
-    	if(visited == null) {
-    		visited = new HashSet<>();
-    	}
+    	visited = new HashSet<>();
+    	targets = new HashSet<>();
+    	
     	visited.add(someCell);
     	findTargets(someCell, lengthToPath);
     }
@@ -194,34 +192,43 @@ public class Board
     	
     public void findTargets(BoardCell someCell, int lengthToPath) {
     	 for (BoardCell adjCell : getAdjList(someCell.getRow(), someCell.getColumn())) {
-             if (visited.contains(adjCell) && (adjCell.getIsOccupied() || adjCell.isRoom())) {
-                 continue;
-                 
-             }
-             if (adjCell.getIsRoom()) {
-                 targets.add(adjCell);
-                 continue;
-             }
-             visited.add(adjCell);
-             if (lengthToPath == 1) {
-                 targets.add(adjCell);
-             } else {
-                 calcTargets(adjCell, lengthToPath - 1);
-             }
-             visited.remove(adjCell);
-         }
+  			if(!visited.contains(adjCell) && (!adjCell.getIsOccupied() || adjCell.getIsRoom()) ) {
+ 				visited.add(adjCell);
+ 				if(lengthToPath == 1 || adjCell.getIsRoom()) {
+ 					targets.add(adjCell);
+ 				} else {
+ 					findTargets(adjCell, lengthToPath -1);
+ 				}
+ 				visited.remove(adjCell);
+ 			}
+          }
+//             if (visited.contains(adjCell) && (adjCell.getIsOccupied() || adjCell.getIsRoom())) {
+//                 continue;
+//                 
+//             }
+//             if (adjCell.getIsRoom()) {
+//                 targets.add(adjCell);
+//                 continue;
+//             }
+//             visited.add(adjCell);
+//             if (lengthToPath == 1) {
+//                 targets.add(adjCell);
+//             } else {
+//                 calcTargets(adjCell, lengthToPath - 1);
+//             }
+//             visited.remove(adjCell);
+
     	
-    }
+	 }
+    
 
     public Set<BoardCell> getAdjList(int row, int col) {
         Set<BoardCell> adjList = new HashSet<>();
         BoardCell cell = getCell(row, col);
 
-        // -------------------------------------
-        // 1) ROOM CENTER CASE
-        // -------------------------------------
+        // In room center
         if (cell.isRoomCenter()) {
-            // (a) Secret Passage: Check if the room center (or another cell in the room) has a secret passage.
+            // Secret Passage check
             char secret = cell.getSecretPassage();
             if (secret == '\0') {
                 for (int r = 0; r < numRows; r++) {
@@ -242,10 +249,6 @@ public class Board
                 }
             }
             
-            // (b) Add door cells that lead inside this room.
-            // For each cell on the board that is a doorway, we compute its "inside" cell
-            // (one step in the same direction as the door's arrow) and if that cell belongs
-            // to the same room, we add the door cell.
             for (int r = 0; r < numRows; r++) {
                 for (int c = 0; c < numColumns; c++) {
                     BoardCell potentialDoor = getCell(r, c);
@@ -333,7 +336,7 @@ public class Board
         		
         		// Add other walkway cells: check left, right, up
         		// Down
-        		doorCellRow = cell.getRow() + 1;
+        		doorCellRow = cell.getRow() -1;
         		doorCellCol = cell.getColumn();
         		tempBoardCell = getCell(doorCellRow, doorCellCol);
         		if(tempBoardCell.getCellInitial() == 'W') {
