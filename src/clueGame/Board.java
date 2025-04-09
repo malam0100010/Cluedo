@@ -50,6 +50,13 @@ public class Board
         
        
     }
+    
+    /**
+     * Loads room and space data from the setup config file into roomMap.
+     * Skips comments and throws BadConfigFormatException for invalid types.
+     * 
+     * @throws BadConfigFormatException if an unrecognized space type is found
+     */
 
     public void loadSetupConfig() throws BadConfigFormatException {
     	try {
@@ -83,21 +90,33 @@ public class Board
     	}
         
     }
+    
+    /**
+     * Parses the layout config file and initializes the board grid
+     * Sets cell properties like rooms, doors, labels, and passages.
+     * 
+     * @throws FileNotFoundException if the file can't be found
+     * @throws BadConfigFormatException if the layout is invalid
+     */
 
     public void loadLayoutConfig() throws FileNotFoundException, BadConfigFormatException {
         int fileRows = 0;
         
+        //validate structure of the layout file and determine dimensions
         try (Scanner myReader = new Scanner(new FileReader(this.layoutConfigFiles))) {
             while (myReader.hasNextLine()) {
                 String readLine = myReader.nextLine().trim();
                 
+                //skip empty lines
                 if (readLine.isEmpty()) continue; 
                 
                 String[] locationInfo = readLine.split(",");
                 
                 if (fileRows == 0) {
+                //first row determines the number of columns
                     numColumns = locationInfo.length;
                 } else if (locationInfo.length != numColumns) {  
+                //all rows must have the same num of columns
                     throw new BadConfigFormatException("Inconsistent column count at: " + readLine);
                 }
                 ++fileRows;  
@@ -106,33 +125,40 @@ public class Board
             System.out.println(this.layoutConfigFiles + " could not be located.");
         }
 
+        //throw exception if file is empty or corrupted
         if (fileRows == 0 || numColumns == 0) {
             throw new BadConfigFormatException("Layout file is empty or improperly formatted.");
         }
         
         numRows = fileRows;
+        //initialize grid
         grid = new BoardCell[numRows][numColumns]; 
 
         int rows = 0;
+        
+        //populate the grid with BoardCell objects based on layout tokens
         try (Scanner myReaderNew = new Scanner(new FileReader(this.layoutConfigFiles))) {
             while (myReaderNew.hasNextLine()) {
                 String readLine = myReaderNew.nextLine().trim();
-                
+                //skip empty lines
                 if (readLine.isEmpty()) continue;  
                 
                 String[] locationInfo = readLine.split(",");
                 int cols = 0;  
 
                 for (String token : locationInfo) {
+                	
+                //check if the token references a valid room symbol
                     if (roomMap.containsKey(token.charAt(0))) {
                         grid[rows][cols] = new BoardCell(rows, cols);
                         grid[rows][cols].setCellInitial(token.charAt(0));
+                        
+                //mark as a room if not walkway or room
                         if(grid[rows][cols].getCellInitial() != ('W') && grid[rows][cols].getCellInitial() != 'X'){
                         	grid[rows][cols].setIsRoom(true);
                         }
                         
-                        
-                        
+               //handle second character features if exist
                         if (token.length() == 2) {
                             if (token.charAt(1) == '>') {
                                 grid[rows][cols].setDoorDirection(DoorDirection.RIGHT);
@@ -167,6 +193,7 @@ public class Board
                             }
                         }
                     } else {
+                    	//not in the setup config
                         throw new BadConfigFormatException("Invalid token: " + token);
                     }
                     ++cols;
@@ -180,25 +207,45 @@ public class Board
         }
     }
     
+    /**
+     * Calculates all reachable target cells from a starting cell given a path length.
+     * Initializes the visited and targets sets and calls the recursive helper.
+     * 
+     * @param someCell - the starting cell
+     * @param lengthToPath - the number of steps allowed
+     */
     public void calcTargets(BoardCell someCell, int lengthToPath)
     {
     	visited = new HashSet<>();
     	targets = new HashSet<>();
     	
+    	//start from the current cell
     	visited.add(someCell);
+    	//recursive call
     	findTargets(someCell, lengthToPath);
     }
     	
-    	
+    /**
+     * 	Recursively finds all target cells reachable from the current cell.
+     * 
+     * @param someCell - the current cell in the path
+     * @param lengthToPath - remaining steps allowed
+     */
     public void findTargets(BoardCell someCell, int lengthToPath) {
+    	//loop through the adjacent cells
     	 for (BoardCell adjCell : getAdjList(someCell.getRow(), someCell.getColumn())) {
+    		 //only consider cells that haven’t been visited and are either not occupied or are rooms
   			if(!visited.contains(adjCell) && (!adjCell.getIsOccupied() || adjCell.getIsRoom()) ) {
- 				visited.add(adjCell);
+ 				//mark cell as visited
+  				visited.add(adjCell);
+  				//add to targets if last step or room
  				if(lengthToPath == 1 || adjCell.getIsRoom()) {
  					targets.add(adjCell);
+ 					//recursively search subtracting one step
  				} else {
  					findTargets(adjCell, lengthToPath -1);
  				}
+ 				//unmark cell to allow for other paths
  				visited.remove(adjCell);
  			}
           }
@@ -221,7 +268,14 @@ public class Board
     	
 	 }
     
-
+    /**
+     * Gets the set of adjacent cells (adjacency list) for a given cell on the board.
+     * This accounts for walkways, doorways, and room centers with potential secret passages.
+     * 
+     * @param row - the row of the cell
+     * @param col - the column of the cell
+     * @return - a set of adjacent BoardCells
+     */
     public Set<BoardCell> getAdjList(int row, int col) {
         Set<BoardCell> adjList = new HashSet<>();
         BoardCell cell = getCell(row, col);
@@ -230,6 +284,7 @@ public class Board
         if (cell.isRoomCenter()) {
             // Secret Passage check
             char secret = cell.getSecretPassage();
+            //if no direct secret passage, check other cells in same room
             if (secret == '\0') {
                 for (int r = 0; r < numRows; r++) {
                     for (int c = 0; c < numColumns; c++) {
@@ -242,13 +297,14 @@ public class Board
                     if (secret != '\0') break;
                 }
             }
+            //Add destination room center from secret passage, if found
             if (secret != '\0') {
                 BoardCell destCenter = findRoomCenter(secret);
                 if (destCenter != null) {
                     adjList.add(destCenter);
                 }
             }
-            
+            //Add all doorways that lead into this room
             for (int r = 0; r < numRows; r++) {
                 for (int c = 0; c < numColumns; c++) {
                     BoardCell potentialDoor = getCell(r, c);
@@ -257,6 +313,8 @@ public class Board
                         int doorCol = potentialDoor.getColumn();
                         int insideRow = doorRow;
                         int insideCol = doorCol;
+                        
+                        //check which cell the door opens into
                         switch (potentialDoor.getDoorDirection()) {
                             case UP:    insideRow = doorRow - 1; break;
                             case DOWN:  insideRow = doorRow + 1; break;
@@ -264,6 +322,8 @@ public class Board
                             case RIGHT: insideCol = doorCol + 1; break;
                             default:    break;
                         }
+                        
+                        //If that adjacent cell is part of the same room, add the doorway
                         if (isValid(insideRow, insideCol)) {
                             BoardCell insideCell = getCell(insideRow, insideCol);
                             if (insideCell.getCellInitial() == cell.getCellInitial()) {
@@ -484,6 +544,9 @@ public class Board
 
     /**
      * Helper method: Checks if (r,c) is within board boundaries.
+     * @param r - int that represents row number
+     * @param c - int that represents the column number
+     * @return - true of false
      */
     private boolean isValid(int r, int c) {
         return r >= 0 && r < numRows && c >= 0 && c < numColumns;
@@ -491,6 +554,7 @@ public class Board
 
     /**
      * Helper method: Scans the grid for a room center cell with the given room initial.
+     * @param - char that represents the initial of the room
      */
     private BoardCell findRoomCenter(char roomInitial) {
         for (int r = 0; r < numRows; r++) {
