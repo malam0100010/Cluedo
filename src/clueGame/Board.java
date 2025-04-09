@@ -249,23 +249,7 @@ public class Board
  				visited.remove(adjCell);
  			}
           }
-//             if (visited.contains(adjCell) && (adjCell.getIsOccupied() || adjCell.getIsRoom())) {
-//                 continue;
-//                 
-//             }
-//             if (adjCell.getIsRoom()) {
-//                 targets.add(adjCell);
-//                 continue;
-//             }
-//             visited.add(adjCell);
-//             if (lengthToPath == 1) {
-//                 targets.add(adjCell);
-//             } else {
-//                 calcTargets(adjCell, lengthToPath - 1);
-//             }
-//             visited.remove(adjCell);
-
-    	
+	
 	 }
     
     /**
