@@ -44,8 +44,6 @@ class GameSetupTest {
 	
 	@Test
 	void testCardsInDeck() {
-		Set<Card> cards = board.getCards();
-		assertEquals()
 		
 	}
 	
