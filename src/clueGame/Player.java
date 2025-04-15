@@ -8,4 +8,6 @@ public abstract class Player {
 	public void updateHand(Card card) {
 		
 	}
+	
+	
 }

@@ -19,6 +19,7 @@ public class Board
     private Set<BoardCell> targets;
     private Set<BoardCell> visited;
     private Map<Character, Room> roomMap = new HashMap<>();
+    private Set<Player> players;
 
 
     /*
@@ -592,6 +593,10 @@ public class Board
     public Room getRoom(BoardCell someCell)
     {
         return roomMap.get(someCell.cellInitial);
+    }
+    
+    public Set<Player> getPlayers() {
+    	return players;
     }
 
     
