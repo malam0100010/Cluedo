@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import clueGame.*;
 
-class CardsTest {
+class GameSetupTest {
 	//constants
 	private static Board board;
 
@@ -39,10 +39,13 @@ class CardsTest {
 	@Test
 	void testPlayerAttributes() {
 		
+		
 	}
 	
 	@Test
-	void testCardsLoaded() {
+	void testCardsInDeck() {
+		Set<Card> cards = board.getCards();
+		assertEquals()
 		
 	}
 	
