@@ -15,7 +15,7 @@ public abstract class Player {
         this.color = color;
         this.row = row;
         this.col = col;
-        this.cards = new HashSet<>();
+      this.cards = new HashSet<>();
 //      this.seen = new HashSet<>();
     }
 	
