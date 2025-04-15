@@ -26,7 +26,14 @@ class CardsTest {
 	@Test
 	void testLoadCharacters() {
 		Set<Player> players = board.getPlayers();
+		//confirm 6 players
         assertEquals(6, players.size());
+        //confirm 1 human and 5 computer players
+        //assertEquals(1, humanCount);
+        //assertEquals(5, computerCount);
+        //confirm certain players are players
+        assertTrue(players.contains(""));
+		assertTrue(players.contains(""));
 	}
 	
 	@Test
