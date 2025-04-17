@@ -1891,3 +1891,495 @@ Author: malam0100010 <malam1@mines.edu>
 Date:   Thu Feb 27 17:01:41 2025 -0700
 
     Added necessary files
+commit 6324fb15ae09d461b466aba33c1d93f2d312532f
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Apr 16 23:23:49 2025 -0600
+
+    Got all C19 test cases to pass
+
+commit 72fd6d11a0def0a02cfdf53d9024a13514770c73
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Apr 14 19:33:50 2025 -0600
+
+    Driver: Musad. Made changes Human and Computer and Solution
+
+commit c5518dc8f254d64a76e60b19fcf47a2fc2f260ae
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Apr 14 19:26:39 2025 -0600
+
+    drvier valor
+
+commit dd95aafc0247fce64f210ea63cf21b1853531202
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Apr 14 19:15:07 2025 -0600
+
+    Changed test file to match requirements
+
+commit 2606efc7575ddec918364a9612f720b5176fe3f3
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Apr 14 19:01:52 2025 -0600
+
+    Changed test file to match requirements
+
+commit 050aade10e4fda9c13224b54af00c09cfcaa8b41
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Apr 14 19:01:12 2025 -0600
+
+    Changed test file to match requirements
+
+commit 4dc329159853c32b31eceb853ee608058581b323
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Apr 14 18:50:08 2025 -0600
+
+    added more methods to player
+
+commit c299934b5b1b5704515c878d43bf75d1afebe7cc
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Apr 14 18:26:46 2025 -0600
+
+    added methods to player class
+
+commit 0cf1bd1b7bc36e55ba026937d112cc5a223a4d3b
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Apr 14 18:05:56 2025 -0600
+
+    Cleared up problems from C17
+
+commit b4f94e70b0a6f195e1695296486de723310627ed
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Apr 14 18:04:47 2025 -0600
+
+    added to tests
+
+commit 8862ecd959269b0b2a906f693b4ac625c40fbda8
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Thu Apr 10 13:08:06 2025 -0600
+
+    added assertions to CardsTest
+
+commit 37d912083ca68b436667a458e9555f730930510e
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Apr 8 19:42:39 2025 -0600
+
+    created JUnit file for testing cards
+
+commit d4e1c03712ff7ebf3d6d6cc325e5677bac262ad1
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Apr 8 19:39:07 2025 -0600
+
+    created and started C19
+
+commit dc6710fdc2f474f5ab74198b222e1ae659ac81bd
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Apr 8 19:09:45 2025 -0600
+
+    finished refactoring
+
+commit d3743241d0e14b537ec5963cb6aa2905c757df88
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Apr 8 19:04:16 2025 -0600
+
+    add comments and cleaned up code
+
+commit 365960275f4f930827fa32af3f1cf0fb789e8b2c
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Apr 8 16:15:23 2025 -0600
+
+    Got all tests to pass
+
+commit a37350c2af07503b18d122985c5edccf89c15eff
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Apr 5 13:31:13 2025 -0600
+
+    Made additional test pass
+
+commit 029b6c1c2cb78970b6c17442dc6ade68b41d63b7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Apr 4 13:50:07 2025 -0600
+
+    Get adjWalkways tests to pass
+
+commit c318f4dacbed5cd70244623391933c2e51885805
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Apr 4 13:20:06 2025 -0600
+
+    Added walkway code
+
+commit 7759aef3531618cbb60ce489190d1cb298e9fd22
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Apr 4 13:02:32 2025 -0600
+
+    Made testAdjDoor pass
+
+commit bfd15058c53182c39d2fbbb759c91bf840276b37
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Apr 3 18:08:34 2025 -0600
+
+    Made major changes to getAdjList in regard to doors
+
+commit 344fdac8f79ef1ab4ae5041138a8769780416b75
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Apr 2 20:23:19 2025 -0600
+
+    Got one set of @tests to pass
+
+commit f5831554c7d61928ebbc840e90d8acc1dc5ca8ab
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Apr 2 19:18:13 2025 -0600
+
+    Added code to try and pass adjaceny tests
+
+commit d43b09cf79f719ad71fa076401eef79d1ceb338f
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Apr 2 14:56:43 2025 -0600
+
+    Made all test cases in FileInitTest.java pass
+
+commit bb5512c694836dcb866a67b7c8c31578b56c4b8f
+Merge: cbdb0cf 6fb601b
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Apr 2 14:20:23 2025 -0600
+
+    Merge branch 'main' of github.com:malam0100010/Cluedo
+
+commit 6fb601b8e7ce384b39e29f8575b833ff5585d7de
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Apr 1 13:49:44 2025 -0600
+
+    fixed our layout for init tests to pass
+
+commit cbdb0cfa42c42f0fe4e52408f24b044ebbd5343e
+Merge: e9b1fd3 8248e0c
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Apr 1 13:44:07 2025 -0600
+
+    Merge branch 'main' of github.com:malam0100010/Cluedo
+
+commit 8248e0ccc1ab1caca67d914e4b462e8ea9f9f952
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Apr 1 13:43:28 2025 -0600
+
+    init306 pass
+
+commit e9b1fd33056867c90f044baa6583c534c7820743
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 22:43:12 2025 -0600
+
+    Make logical change to getTargets
+
+commit 1861fc0d7bdc5c01e7fc7cfbdcf651c8f54a4955
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 22:39:58 2025 -0600
+
+    Made tests fail for C15A_2
+
+commit 2d3f39a600e8e66f0326857f3bca0f2791d02c33
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Sat Mar 29 22:09:44 2025 -0600
+
+    try it
+
+commit 5132755a6e5106a60abd3d35aa3fc07f31e42d10
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Sat Mar 29 22:00:32 2025 -0600
+
+    work on init test
+
+commit c97200444d12fdccd00f19da9372013202eebe24
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 21:43:50 2025 -0600
+
+    Correct csv?
+
+commit 92b019dac54d31c2ef4cd12d051d035cdd163686
+Merge: a6d94c5 39a1bf0
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 21:39:09 2025 -0600
+
+    Merge branch 'main' of github.com:malam0100010/Cluedo
+
+commit 39a1bf0fcf731e2a09195f8facae45cc5b8ec168
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Sat Mar 29 21:38:13 2025 -0600
+
+    updated file init
+
+commit a6d94c52a5a6025afeda6e204a607cc13db865e2
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 21:37:40 2025 -0600
+
+    Possibly made chages to CSV that will work
+
+commit 84ce77f6d21bbd549b7bc463fc324d843c90ac11
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 21:16:49 2025 -0600
+
+    Changed Clue_Layout to be correct
+
+commit 2c233cb6959592610b48f60a547bb7ff2177da50
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 21:06:52 2025 -0600
+
+    Fixed errors in CSV and txt
+
+commit 94bd709889855af660080b31b11ac92650f1707a
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Sat Mar 29 21:02:57 2025 -0600
+
+    made init tests pass
+
+commit 83187b45ac1cae2d5b0ab121fa67f10f239d9621
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Sat Mar 29 19:40:12 2025 -0600
+
+    Fixed load setup config
+
+commit 19ba65772b79f9a17bb77f06237adb1109afb837
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 19:10:56 2025 -0600
+
+    Fixed exception handling initalize
+
+commit e3f4d03fb96cbd4465d7afdd4de5a191ebc4b8cc
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 18:53:03 2025 -0600
+
+    Small tweak to f(x)
+
+commit 49db79cc49f3f60a71e6d9fe7009f683cc53aa2c
+Author: malam0100010 <malam1@mines.edu>
+Date:   Sat Mar 29 18:51:26 2025 -0600
+
+    Finished implementation of the test cases
+
+commit e68139bb9c338d5750e9927797c597396dc01422
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Mar 27 18:13:28 2025 -0600
+
+    Made fixes to loadSetupConfig
+
+commit ebcea69cd8cae4218a7bb866938d5e169e7808a0
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Mar 27 17:54:06 2025 -0600
+
+    TDD continuation
+
+commit eaf99c3c8b1e8afc7b655c6b2527d8351e0b6980
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 25 10:26:45 2025 -0600
+
+    Made changes to try and pass C15
+
+commit ea3f7996c9090b81103d34260366e1be52fd2ddb
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Fri Mar 7 17:59:30 2025 -0700
+
+    added to loadLayoutConfig
+
+commit cdf3a87fb8dd6c8e91e4e264f0412ce50b8cd150
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Mar 7 17:26:21 2025 -0700
+
+    Driver: Musad. All changes to IO not available on git
+
+commit 49934151f78234b978573e9deb26436fd26e3480
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Mar 7 17:07:13 2025 -0700
+
+    Mades changes to IO
+
+commit 20cdf23c46f9796b0cb6473f2ef112cd2c48c829
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Fri Mar 7 16:31:26 2025 -0700
+
+    Put clueGame into src
+
+commit cfa71adfa5aecfd6d1f728656b771fa81b0e357e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Fri Mar 7 16:13:50 2025 -0700
+
+    Began process of implementing File IO
+
+commit 4aed5644d9c1fcb57669634bb0c7fbfa13c5111c
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Mar 6 16:48:17 2025 -0700
+
+    Added tests.txt and ExceptionTests
+
+commit ddd2407aedbbb3bf9ff22807dd036bd55d05ad79
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Mar 6 15:57:32 2025 -0700
+
+    Failed all necessary test cases for TDD
+
+commit af8bf71f946cb17eafa370376d0ec2a68eb04c63
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Mar 5 12:29:46 2025 -0700
+
+    "Driver: Musad. Configured files and completed all test cases in FileInitTest306"
+
+commit 9f63dd753cffca8f566c503e79a83a07162fee50
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Mar 5 08:20:38 2025 -0700
+
+    Added necessary files for C14A_2
+
+commit 63ae132f752539f3876e00341f32bf2c9764e8c9
+Author: malam0100010 <malam1@mines.edu>
+Date:   Wed Mar 5 01:52:20 2025 -0700
+
+    Driver: Musad. Made testTargetsRoom pass
+
+commit a5ffe7da526f0320d854939d6bd443c597137de8
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 4 13:52:53 2025 -0700
+
+    Driver: Musad. Fixed typo
+
+commit fb2df4aaba70f460a51cfedcf8c9556dcc8d4b6f
+Merge: 218b888 f86f7df
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 4 13:51:57 2025 -0700
+
+    Merge branch 'main' of github.com:malam0100010/Cluedo
+
+commit 218b888bff053583b43350938134a0f6ac8afc1e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Tue Mar 4 13:50:59 2025 -0700
+
+    Driver: Musad. Fixed incompatabilities
+
+commit f86f7df7e5c6be60b06d6ae3b967172565225091
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Mar 4 13:49:39 2025 -0700
+
+    still working on that third test
+
+commit 5e03b6ac02b4aa0334f8816e1a30031de6a265db
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Mar 4 13:37:59 2025 -0700
+
+    two tests passing
+
+commit 1f3df74094f8a7f64329c72ec764e54e943c1cc8
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Tue Mar 4 13:19:17 2025 -0700
+
+    test JUnit
+
+commit 665931baaec9a451cd5c58efba93c0f5b6d19e16
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:56:15 2025 -0700
+
+    driver valor
+
+commit 91987ecb05c88aa3ac28765ae11885f3de0b6b5e
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:51:08 2025 -0700
+
+    got 5 tests to fail
+
+commit 2ca47bc3b8c3e3f0abd324e481e9dba3ef97d219
+Merge: e2968f8 c1a7856
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:16:35 2025 -0700
+
+    Merge branch 'main' of https://github.com/malam0100010/Cluedo
+
+commit e2968f8726bf78454e29094839896dbeb178139d
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:16:13 2025 -0700
+
+    Driver Valor
+
+commit 05ce78469dde17237c518cd02f7008768c8ea72b
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 18:11:38 2025 -0700
+
+    got tests to fail
+
+commit c1a785625c4f1898c1b367a3e46307c5243d122b
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 18:01:35 2025 -0700
+
+    Continued to fix merging conflicts in TestBoard
+
+commit 9210047abf274f6c43b8acec322f153e98a7fcb3
+Merge: b0b3747 9c5b22a
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 18:00:12 2025 -0700
+
+    Fixed merge conflict
+
+commit b0b3747dbd6c8c89db8e6c39b37e26ddea25bea3
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 17:58:34 2025 -0700
+
+    Made constructor changes for test board cell
+
+commit 693ab06b6694ee582b0e4be51643a86d80dc677d
+Merge: 68b84ff a9ea119
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 17:48:29 2025 -0700
+
+    Driver: Musad. Deleted unecessary JUnit test file
+
+commit 68b84ff77c896a66a1e0677b7be209e86f5803af
+Author: malam0100010 <malam1@mines.edu>
+Date:   Mon Mar 3 17:44:22 2025 -0700
+
+    Driver: Musad. Made necessary variables changes to src files
+
+commit 9c5b22a228edec62dee0da9d73aaedb82eb177be
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 17:43:31 2025 -0700
+
+    worked on TestBoard
+
+commit a9ea119f4e20be04f14c20fd31cde564fe1da615
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Mon Mar 3 17:15:26 2025 -0700
+
+    for submittal
+
+commit 77309bcf74f0e8202181df143c0c4fef5f56e44e
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 18:49:02 2025 -0700
+
+    Driver: Musad Alam. Made more function stubs and began adding JUnit tests
+
+commit 344b81520694446d258b65b63674ea6b77b0bb9c
+Author: valortbuck <valor_buck@mines.edu>
+Date:   Thu Feb 27 17:41:40 2025 -0700
+
+    drvier: Valor created test classes
+
+commit 4aa3a154775843ddbc1ba74164b1f086539392f7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:12:26 2025 -0700
+
+    Updated .gitignore
+
+commit 582e3d68a4f212eb877f4b7e0973043147f65715
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:11:49 2025 -0700
+
+    Removed .json files
+
+commit 761ef76d9810d77060040d5b41e2dbecb31fbad7
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:09:39 2025 -0700
+
+    Reconfiguring binary files
+
+commit 6bcfe307482f3911c9dd694cb694c4f89b7baf19
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:07:26 2025 -0700
+
+    Added .gitignore
+
+commit 325707c72d7617724af3109952a0f3bf719f059d
+Author: malam0100010 <malam1@mines.edu>
+Date:   Thu Feb 27 17:01:41 2025 -0700
+
+    Added necessary files

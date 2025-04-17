@@ -45,17 +45,14 @@ public abstract class Player {
 	//	}
 	
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true; 
-        if (o == null) return false;
+    public boolean equals(Object object) {
+        if (this == object) return true; 
+        if (object == null) return false;
         
-        if (!(o instanceof Player)) return false;
+        if (!(object instanceof Player)) return false;
 
-        Player other = (Player) o;
-        return row == other.row &&
-               col == other.col &&
-               Objects.equals(name,  other.name) &&
-               Objects.equals(color, other.color);
+        Player other = (Player) object;
+        return row == other.row && col == other.col && Objects.equals(name,  other.name) && Objects.equals(color, other.color);
     }
 	
 	public Set<Card> getCardsInHand() {

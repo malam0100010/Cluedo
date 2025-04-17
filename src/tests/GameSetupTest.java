@@ -105,7 +105,7 @@ class GameSetupTest {
     
 
     @Test
-    public void testAllPlayersHaveThreeCards() {
+    public void testEqualCards() {
         Set<Player> players = board.getPlayers();
         
         for (Player player : players) {

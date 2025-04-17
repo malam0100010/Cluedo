@@ -15,13 +15,11 @@ public class Solution {
     
     
     @Override 
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Solution)) return false;
-        Solution other = (Solution) o;
-        return Objects.equals(room,   other.room) &&
-               Objects.equals(person, other.person) &&
-               Objects.equals(weapon, other.weapon);
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Solution)) return false;
+        Solution other = (Solution) object;
+        return Objects.equals(room,   other.room) && Objects.equals(person, other.person) && Objects.equals(weapon, other.weapon);
     }
     
     @Override 
