@@ -1,8 +1,11 @@
 package clueGame;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -20,6 +23,10 @@ public class Board
     private Set<BoardCell> visited;
     private Map<Character, Room> roomMap = new HashMap<>();
     private Set<Player> players;
+    private Set<String> weapons;
+    private Set<Card> cards;
+    private Set<Card> cardHand;
+    private Solution solution;
 
 
     /*
@@ -38,8 +45,12 @@ public class Board
     * initialize the board (since we are using singleton pattern)
     */
     public void initialize() {
-        //targets = new HashSet<>();
-        //visited = new HashSet<>();
+//        targets   = new HashSet<>();
+//        visited   = new HashSet<>();
+        players   = new HashSet<>();
+        weapons   = new HashSet<>();
+        cards     = new HashSet<>();
+        cardHand  = new HashSet<>();
         try {
             loadSetupConfig();
             loadLayoutConfig();
@@ -49,6 +60,7 @@ public class Board
             System.out.println(e);
         }
         
+          
        
     }
     
@@ -70,20 +82,73 @@ public class Board
     				continue;
     			}
     			
-        		String[] locationInfo = readLine.split(",");
-        		String spaceType = locationInfo[0].trim();
-        		String spaceName = locationInfo[1].trim();
-        		char spaceSymbol = locationInfo[2].trim().charAt(0);
+        		String[] configInfo = readLine.split(",");
+//        		String spaceType = locationInfo[0].trim();
+//        		String spaceName = locationInfo[1].trim();
+//        		char spaceSymbol = locationInfo[2].trim().charAt(0);
+        		String cardName = "";
+        		String cardType = "";
+        		String humanOrComputer = "";
+        		char symbolOnBoard = ' ';
+        		int playerInitRow = 0;
+        		int playerInitCol = 0;
+        		String playerColor = "";
         		
-        		if(!spaceType.equals("Room") && !spaceType.equals("Space")) {
-        			myReader.close();
-        			throw new BadConfigFormatException(spaceType);
+        		
+        		
+        		if(configInfo.length == 2) {
+        			// Make weapon card
+        			cardName = configInfo[1].trim();
+        			cardType = configInfo[0].trim();
+        			
+        		} else if(configInfo.length == 3) {
+        			// Make Room Card
+        			cardName = configInfo[1].trim();
+        			cardType = configInfo[0].trim();
+        			symbolOnBoard = configInfo[2].trim().charAt(0);
+        			
+        		}else if(configInfo.length == 6) {
+        			// Make player Card
+        			// Ex. Player, Bruno Fernandez, 1,1, Purple, Human
+        			cardName = configInfo[1].trim();
+        			cardType = configInfo[0].trim();
+        			playerInitRow = Integer.parseInt(configInfo[2].trim());
+        			playerInitCol = Integer.parseInt(configInfo[3].trim());
+        			playerColor = configInfo[4].trim();
+        			humanOrComputer = configInfo[5].trim();
+        		}
+        		
+        		// Room
+        		if(cardType.equals("Room")) {
+        			roomMap.put(symbolOnBoard, new Room(cardName, symbolOnBoard, null, null));
+        			cards.add(new Card(cardName, CardType.ROOM));
+
+        		}
+        		// Space
+        		else if(cardType.equals("Space")) {
+        			roomMap.put(symbolOnBoard, new Room(cardName, symbolOnBoard, null, null));
+        		}
+        		// Player
+        		else if(cardType.equals("Player")) {
+        			if("Human".equals(humanOrComputer)) {
+        				players.add(new HumanPlayer(cardName, playerColor, playerInitRow, playerInitCol));
+        			}else {
+        				players.add(new ComputerPlayer(cardName, playerColor, playerInitRow, playerInitCol));
+        			}
+        			cards.add(new Card(cardName, CardType.PLAYER));
+        		}
+        		// Weapon
+        		else if(cardType.equals("Weapon")) {
+        			cards.add(new Card(cardName, CardType.WEAPON));
+        			weapons.add(cardName);
         		}else {
-        			roomMap.put(spaceSymbol, new Room(spaceName, spaceSymbol, null, null));
+        			myReader.close();
+        			throw new BadConfigFormatException(symbolOnBoard);
         		}
     			
     		}
     		
+    		myReader.close();
 
     	} catch(FileNotFoundException e) {
     		System.out.println(this.setupConfigFile + "could not be located");
@@ -334,13 +399,13 @@ public class Board
         		
         		
         		// Loop until cell initial && isRoomCenter
-        		for(int rows = 0; rows < numRows; ++rows) {
-        			for(int cols = 0; cols < numColumns; ++cols) {
-        				tempBoardCell = new BoardCell(rows, cols);
-        				if(tempBoardCell.getCellInitial() == targetCellInitial && tempBoardCell.isRoomCenter()) {
-        					adjList.add(tempBoardCell);
-        				}
-        			}
+        		for (int r = 0; r < numRows; r++) {
+        		    for (int c = 0; c < numColumns; c++) {
+        		        BoardCell tempCell = getCell(r, c);
+        		        if (tempCell.getCellInitial() == targetCellInitial && tempCell.isRoomCenter()) {
+        		            adjList.add(tempCell);
+        		        }
+        		    }
         		}
         		
         		// Add other walkway cells: check left, right, down
@@ -544,18 +609,84 @@ public class Board
     private BoardCell findRoomCenter(char roomInitial) {
         for (int r = 0; r < numRows; r++) {
             for (int c = 0; c < numColumns; c++) {
-                BoardCell candidate = getCell(r, c);
-                if (candidate.isRoomCenter() && candidate.getCellInitial() == roomInitial) {
-                    return candidate;
+                BoardCell tempBoardCell = getCell(r, c);
+                if (tempBoardCell.isRoomCenter() && tempBoardCell.getCellInitial() == roomInitial) {
+                    return tempBoardCell;
                 }
             }
         }
         return null;
     }
 
+    /**
+     * Chooses one room, one player, and one weapon card for the solution,
+     * then deals the remaining cards round‑robin to every player.
+     * 
+     * (Everything after the second Collections.shuffle(deck) call is unchanged.)
+     */
+    public void dealCards() {
+
+        List<Card> allPlayers = new ArrayList<>();
+        List<Card> allWeapons = new ArrayList<>();
+        List<Card> allRooms   = new ArrayList<>();
+
+        for (Card card : cards) {
+            if (card.getType() == CardType.ROOM) {
+                allRooms.add(card);
+            } else if (card.getType() == CardType.PLAYER) {
+                allPlayers.add(card);
+            } else {
+                allWeapons.add(card);
+            }
+        }
+
+        Collections.shuffle(allPlayers);
+        Collections.shuffle(allWeapons);
+        Collections.shuffle(allRooms);
 
 
+        this.solution = new Solution(
+                allRooms.get(allRooms.size()   - 1),
+                allPlayers.get(allPlayers.size() - 1),
+                allWeapons.get(allWeapons.size() - 1)
+        );
 
+        allRooms.remove(allRooms.size()     - 1);
+        allPlayers.remove(allPlayers.size() - 1);
+        allWeapons.remove(allWeapons.size() - 1);
+
+        List<Card> deck = new ArrayList<>();
+        deck.addAll(allRooms);
+        deck.addAll(allPlayers);
+        deck.addAll(allWeapons);
+        Collections.shuffle(deck);
+
+        for (Player p : players) {
+            p.getCardsInHand().clear();
+        }
+
+        Player[] playerArray = players.toArray(new Player[0]);
+        for (int i = 0; i < deck.size(); i++) {
+            playerArray[i % playerArray.length].updateHand(deck.get(i));
+        }
+    }
+
+    
+    public Solution getSolution() {
+    	return solution;
+    }
+    
+	public Set<Card> getCards() {
+		return cards;
+	}
+    
+	public Set<Card> getPlayerCards() {
+		return cardHand;
+	}
+	
+	public Set<String> getWeapons() {
+		return weapons;
+	}
 
     public Set<BoardCell> getTargets() {
     	return targets;
@@ -598,9 +729,8 @@ public class Board
     public Set<Player> getPlayers() {
     	return players;
     }
-
     
-
+    
 
 
 }

@@ -14,8 +14,8 @@ Space, Walkway, W
 // Players
 Player, Bruno Fernandez, 1,1, Purple, Human
 Player, Rueben Amorim, 1, 1, Blue, Computer
-Player, Muhammed Salah 1,1, Green, Computer
-Player, Alexander Isak 1,1, White, Computer
+Player, Muhammed Salah, 1,1, Green, Computer
+Player, Alexander Isak, 1,1, White, Computer
 Player, Alejandro Garnacho, 1, 1, Yellow, Computer
 Player, Fred the Red, 1, 1, Red, Computer
 // Weapons
@@ -23,6 +23,5 @@ Weapon, Poison Gatorade
 Weapon, Offsides Flag
 Weapon, Broken Pint Glass
 Weapon, Cleat
-Weapon,  Goalie Gloves
-Weapon, Goalie Net
-
+Weapon,  Whistle
+Weapon, Clipboard
