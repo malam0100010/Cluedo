@@ -18,8 +18,9 @@ public class Solution {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (!(object instanceof Solution)) return false;
-        Solution other = (Solution) object;
-        return Objects.equals(room,   other.room) && Objects.equals(person, other.person) && Objects.equals(weapon, other.weapon);
+        Solution potentialSolution = (Solution) object;
+               
+        return Objects.equals(room,   potentialSolution.room) && Objects.equals(person, potentialSolution.person) && Objects.equals(weapon, potentialSolution.weapon);
     }
     
     @Override 

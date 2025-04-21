@@ -1,7 +1,10 @@
 package clueGame;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 
 public abstract class Player {
@@ -9,7 +12,9 @@ public abstract class Player {
 	private String color;
 	private int row, col;
 	private Set<Card> cardsInHand;
-	//	private Set<Card> seen;
+	private Set<Card> seenCards;
+	
+	private static final Random randCard = new Random();
 	
 	public Player(String name, String color, int row, int col) {
         this.name = name;
@@ -22,6 +27,11 @@ public abstract class Player {
 	
 	public void updateHand(Card card) {
 		cardsInHand.add(card);
+	}
+	
+	public void updateSeen(Card seenCard) {
+		
+		return;
 	}
 	
 	public String getName() {
@@ -43,6 +53,27 @@ public abstract class Player {
 	//	public int getCol() {
 	//		return col;
 	//	}
+	
+    
+
+    public Card disproveSuggestion(Solution suggestedSolution) {
+        List<Card> matchesFound = new ArrayList<>();
+        
+        
+        for (Card card : cardsInHand) {
+            if (card.equals(suggestedSolution.getPerson()) || card.equals(suggestedSolution.getWeapon()) || card.equals(suggestedSolution.getRoom())) {
+                matchesFound.add(card);
+            }
+        }
+        
+        if (matchesFound.isEmpty()) {
+            return null;
+        } else if (matchesFound.size() == 1) {
+            return matchesFound.get(0);
+        } else {
+            return matchesFound.get(randCard.nextInt(matchesFound.size()));
+        }
+    }
 	
     @Override
     public boolean equals(Object object) {
@@ -71,5 +102,7 @@ public abstract class Player {
 	public int hashCode() {
 		return Objects.hash(this.name, this.color, this.row, this.col);
 	}
+	
+	
 	
 }

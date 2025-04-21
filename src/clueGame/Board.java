@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -670,7 +671,30 @@ public class Board
             playerArray[i % playerArray.length].updateHand(deck.get(i));
         }
     }
+    
+    public boolean checkAccusation(Solution providedAccusation) {
+    	
+    	return getSolution().equals(providedAccusation);
+    }
+    
+    
+    public Card handleSuggestion(Player playerAccusing, Solution playerSuggestion) {
+        List<Player> playersInOrder = new ArrayList<>(players);
 
+        int startPlayerIdx = playersInOrder.indexOf(playerAccusing);
+        int numPlayers = playersInOrder.size();
+        
+        
+        for (int i = 1; i < numPlayers; i++) {
+        	
+            Player thePlayer = playersInOrder.get((startPlayerIdx + i) % numPlayers);
+            Card cardDisproved = thePlayer.disproveSuggestion(playerSuggestion);
+            if (cardDisproved != null) {
+                return cardDisproved;
+            }
+        }
+        return null;
+    }
     
     public Solution getSolution() {
     	return solution;
@@ -728,6 +752,10 @@ public class Board
     
     public Set<Player> getPlayers() {
     	return players;
+    }
+    
+    public void setSolution(Card forceRoom, Card forcePerson, Card forceWeapon) {
+    	solution = new Solution(forceRoom, forcePerson, forceWeapon);
     }
     
     

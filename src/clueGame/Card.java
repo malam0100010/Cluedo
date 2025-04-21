@@ -10,12 +10,7 @@ public class Card {
         this.cardName = cardName;
         this.cardType = cardType;
     }
-	
-	public boolean equals(Card target) {
-		boolean bool = false;
-		return bool;
-	}
-	
+		
 	public String getName() {
         return this.cardName;
     }
