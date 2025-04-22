@@ -30,8 +30,17 @@ public abstract class Player {
 	}
 	
 	public void updateSeen(Card seenCard) {
-		
-		return;
+		if (seenCards == null) {
+	        seenCards = new HashSet<>();
+	    }
+	    seenCards.add(seenCard);
+	}
+	
+	public Set<Card> getSeenCards() {
+	    if (seenCards == null) {
+	        seenCards = new HashSet<>();
+	    }
+	    return seenCards;
 	}
 	
 	public String getName() {
@@ -87,7 +96,7 @@ public abstract class Player {
     }
 	
 	public Set<Card> getCardsInHand() {
-        return this.cardsInHand;
+        return cardsInHand;
     }
 	
 	//set location
