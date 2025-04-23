@@ -8,7 +8,7 @@ import java.util.*;
 
 
 public class ClueCardsPanel extends JPanel {
-	private static HumanPlayer humanPlayer;
+	static HumanPlayer humanPlayer;
 	
 	ArrayList<Card> yourHand;
 	ArrayList<Card> seenCards;
@@ -22,6 +22,7 @@ public class ClueCardsPanel extends JPanel {
 	private JTextField seenCardsBox;
 	
 	public ClueCardsPanel() {
+		board = Board.getInstance(); 
 		setLayout(new BorderLayout());
 		
 	//base panel

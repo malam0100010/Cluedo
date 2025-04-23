@@ -51,20 +51,7 @@ public abstract class Player {
 		return this.color;
 	}
 	
-	//	public BoardCell getStartingLocation(BoardCell startingCell) {
-	//		return startingCell;
-	//	}
-	//	
-	//	public int getRow() {
-	//		return row;
-	//	}
-	//	
-	//	public int getCol() {
-	//		return col;
-	//	}
 	
-    
-
     public Card disproveSuggestion(Solution suggestedSolution) {
         List<Card> matchesFound = new ArrayList<>();
         
@@ -110,6 +97,13 @@ public abstract class Player {
 	@Override
 	public int hashCode() {
 		return Objects.hash(this.name, this.color, this.row, this.col);
+	}
+	
+	public int getRow() { 
+		return row; 
+	}
+	public int getColumn() { 
+		return col; 
 	}
 	
 	
