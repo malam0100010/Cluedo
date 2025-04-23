@@ -12,12 +12,12 @@ Room, Press Box, P
 Space, Unused, X
 Space, Walkway, W
 // Players
-Player, Bruno Fernandez, 1,1, Purple, Human
-Player, Rueben Amorim, 10, 10, Blue, Computer
-Player, Muhammed Salah, 20,20, Green, Computer
-Player, Alexander Isak, 2,2, White, Computer
-Player, Alejandro Garnacho, 7, 7, Yellow, Computer
-Player, Fred the Red, 12, 12, Red, Computer
+Player, Bruno Fernandez, 2, 1, Purple, Human
+Player, Rueben Amorim, 5, 23, Blue, Computer
+Player, Muhammed Salah, 27,15, Green, Computer
+Player, Alexander Isak, 24,23, White, Computer
+Player, Alejandro Garnacho, 20, 0, Yellow, Computer
+Player, Fred the Red, 12, 0, Red, Computer
 // Weapons
 Weapon, Poison Gatorade
 Weapon, Offsides Flag
