@@ -9,8 +9,10 @@ import java.util.*;
 
 public class ClueCardsPanel extends JPanel {
 	private static HumanPlayer humanPlayer;
+	
 	ArrayList<Card> yourHand;
 	ArrayList<Card> seenCards;
+	
 	private static Board board;
 	
 	private JTextField playerHandBox;
@@ -33,6 +35,15 @@ public class ClueCardsPanel extends JPanel {
 	    
 	    add(basePanel, BorderLayout.CENTER);
 	}
+	
+    private String ownerColor(Card card) {
+        for (Player player : board.getPlayers()) {
+            if (player.getCardsInHand().contains(card)) {
+                return player.getColor();
+            }
+        }
+        return null;
+    }
 	
 	private JPanel buildPlayerSection() {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
@@ -57,7 +68,7 @@ public class ClueCardsPanel extends JPanel {
 	        if (card.getType() == CardType.PLAYER) {
 	            JTextField field = new JTextField(card.getName());
 	            field.setEditable(false);
-	            field.setBackground(getColorFromName("blue"));
+	            field.setBackground(getColorFromName(ownerColor(card)));
 	            panel.add(field);
 	        }
 	    }
@@ -88,7 +99,7 @@ public class ClueCardsPanel extends JPanel {
 	        if (card.getType() == CardType.ROOM) {
 	            JTextField field = new JTextField(card.getName());
 	            field.setEditable(false);
-	            field.setBackground(getColorFromName("red"));
+	            field.setBackground(getColorFromName(ownerColor(card)));
 	            panel.add(field);
 	        }
 	    }
@@ -107,7 +118,7 @@ public class ClueCardsPanel extends JPanel {
 	        if (card.getType() == CardType.WEAPON) {
 	            weaponsHandBox = new JTextField(card.getName());
 	            weaponsHandBox.setEditable(false);
-	            weaponsHandBox.setBackground(Color.WHITE);
+	            weaponsHandBox.setBackground(getColorFromName(ownerColor(card)));
 	            panel.add(weaponsHandBox);
 	        }
 	    }
@@ -119,7 +130,7 @@ public class ClueCardsPanel extends JPanel {
 	        if (card.getType() == CardType.WEAPON) {
 	            JTextField field = new JTextField(card.getName());
 	            field.setEditable(false);
-	            field.setBackground(getColorFromName("purple"));
+	            field.setBackground(getColorFromName(ownerColor(card)));
 	            panel.add(field);
 	        }
 	    }
@@ -129,6 +140,9 @@ public class ClueCardsPanel extends JPanel {
     
   //convert string color to display colors
     private Color getColorFromName(String colorName) {
+    	if (colorName == null) {
+    		return Color.GRAY;
+    	}
         switch (colorName.toLowerCase()) {
             case "purple":
                 return Color.MAGENTA;
@@ -143,7 +157,7 @@ public class ClueCardsPanel extends JPanel {
             case "red":
                 return Color.RED;
             default:
-                return Color.LIGHT_GRAY;
+                return Color.ORANGE;
         }
     }
     
@@ -155,6 +169,7 @@ public class ClueCardsPanel extends JPanel {
         humanPlayer.updateHand(new Card("Poison Gatorade", CardType.WEAPON));
         humanPlayer.updateHand(new Card("Kit Room", CardType.ROOM));
         humanPlayer.updateHand(new Card("Reuben Amorim", CardType.PLAYER));
+        
 
         humanPlayer.updateSeen(new Card("Offsides Flag", CardType.WEAPON));
         humanPlayer.updateSeen(new Card("Bathroom", CardType.ROOM));
@@ -162,6 +177,7 @@ public class ClueCardsPanel extends JPanel {
         humanPlayer.updateSeen(new Card("Broken Pint Glass", CardType.WEAPON));
         humanPlayer.updateSeen(new Card("Concession Stand", CardType.ROOM));
         humanPlayer.updateSeen(new Card("Alexander Isak", CardType.PLAYER));
+        
 
         // Show panel in frame
         ClueCardsPanel panel = new ClueCardsPanel();
@@ -185,3 +201,4 @@ public class ClueCardsPanel extends JPanel {
 	}
 	
 }
+

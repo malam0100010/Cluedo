@@ -100,12 +100,12 @@ public class GameControlPanel extends JPanel {
     // Test Main Method
     public static void main(String[] args) {
     	setUp();
-    	GameControlPanel panel = new GameControlPanel();  // create the panel
-		JFrame frame = new JFrame();  // create the frame 
-		frame.setContentPane(panel); // put the panel in the frame
-		frame.setSize(750, 180);  // size the frame
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // allow it to close
-		frame.setVisible(true); // make it visible
+    	GameControlPanel panel = new GameControlPanel();  
+		JFrame frame = new JFrame();  
+		frame.setContentPane(panel);
+		frame.setSize(750, 180); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 
         // test filling in the data
         panel.updateTurnInfo(new ComputerPlayer("Bruno Fernandez", "purple", 1, 1), 5);
