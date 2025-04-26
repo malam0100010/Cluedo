@@ -38,37 +38,34 @@ public class BoardCell {
 		else {
 			switch (cellInitial) {
 			case 'K':
-				graphics.setColor(new Color(0, 9, 180));
+				graphics.setColor(new Color(97, 182, 119));
 				break;
 			case 'B':
-				graphics.setColor(new Color(1, 10, 190));
+				graphics.setColor(new Color(92, 64, 51));
 				break;
 			case 'C':
-				graphics.setColor(new Color(2, 11, 200));
-				break;
-			case 'D':
-				graphics.setColor(new Color(3, 12, 210));
+				graphics.setColor(new Color(255, 255, 75));
 				break;
 			case 'I':
-				graphics.setColor(new Color(4, 13, 220));
+				graphics.setColor(new Color(203, 195, 227));
 				break;
 			case 'L':
-				graphics.setColor(new Color(5, 14, 230));
+				graphics.setColor(new Color(239, 231, 219));
 				break;
 			case 'S':
-				graphics.setColor(new Color(6, 15, 240));
-				break;
-			case 'H':
-				graphics.setColor(new Color(7, 16, 250));
-				break;
-			case 'O':
-				graphics.setColor(new Color(8, 17, 255));
+				graphics.setColor(new Color(212, 161, 42));
 				break;
 			case 'M':
-				graphics.setColor(new Color(200, 1, 1));
+				graphics.setColor(new Color(218, 41, 28));
+				break;
+			case 'P':
+				graphics.setColor(new Color(173, 216, 230));
+				break;
+			case 'T':
+				graphics.setColor(new Color(78, 87, 102));
 				break;
 			default:
-				graphics.setColor(new Color(255, 255, 255));
+				graphics.setColor(new Color(97, 182, 119));
 				break;
 			}
 		}
@@ -94,7 +91,7 @@ public class BoardCell {
 				graphics.fillRect(rowVal , colVal, doorWay, cellSize);
 				break;
 			case RIGHT:
-				graphics.fillRect(rowVal  + colVal - cellSize, colVal, doorWay, doorWay);
+				graphics.fillRect(rowVal  + cellSize - doorWay, colVal, doorWay, cellSize);
 				break;
 			}
 		}

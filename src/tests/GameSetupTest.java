@@ -32,13 +32,19 @@ class GameSetupTest {
 		Set<Player> players = board.getPlayers();
 		
 		assertEquals(6, players.size());
+//		Player, Bruno Fernandez, 2, 1, Purple, Human
+//		Player, Rueben Amorim, 5, 23, Blue, Computer
+//		Player, Muhammed Salah, 27,8, Green, Computer
+//		Player, Alexander Isak, 24,23, White, Computer
+//		Player, Alejandro Garnacho, 20, 0, Yellow, Computer
+//		Player, Fred the Red, 12, 0, Red, Computer
 
-		assertTrue(players.contains(new HumanPlayer("Bruno Fernandez", "Purple", 1, 1)));
-		assertTrue(players.contains(new ComputerPlayer("Rueben Amorim", "Blue", 1, 1)));
-		assertTrue(players.contains(new ComputerPlayer("Muhammed Salah", "Green", 1, 1)));
-		assertTrue(players.contains(new ComputerPlayer("Alexander Isak", "White", 1, 1)));
-		assertTrue(players.contains(new ComputerPlayer("Alejandro Garnacho", "Yellow", 1, 1)));
-		assertTrue(players.contains(new ComputerPlayer("Fred the Red", "Red", 1, 1)));
+		assertTrue(players.contains(new HumanPlayer("Bruno Fernandez", "Purple", 2, 1)));
+		assertTrue(players.contains(new ComputerPlayer("Rueben Amorim", "Blue", 5, 23)));
+		assertTrue(players.contains(new ComputerPlayer("Muhammed Salah", "Green", 27, 8)));
+		assertTrue(players.contains(new ComputerPlayer("Alexander Isak", "White", 24, 23)));
+		assertTrue(players.contains(new ComputerPlayer("Alejandro Garnacho", "Yellow", 20, 0)));
+		assertTrue(players.contains(new ComputerPlayer("Fred the Red", "Red", 12, 0)));
 		
 	}
 	

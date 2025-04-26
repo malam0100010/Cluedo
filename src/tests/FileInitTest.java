@@ -70,7 +70,7 @@ public class FileInitTest {
 		cell = board.getCell(7, 8);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.UP, cell.getDoorDirection());
-		cell = board.getCell(7, 18);
+		cell = board.getCell(11, 18);
 		assertTrue(cell.isDoorway());
 		assertEquals(DoorDirection.RIGHT, cell.getDoorDirection());
 		cell = board.getCell(2, 8);
@@ -92,7 +92,7 @@ public class FileInitTest {
 				if (cell.isDoorway())
 					numDoors++;
 			}
-		Assert.assertEquals(15, numDoors);
+		Assert.assertEquals(16, numDoors);
 	}
 
 	// Test a few room cells to ensure the room initial is correct.
