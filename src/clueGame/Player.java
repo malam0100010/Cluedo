@@ -25,6 +25,10 @@ public abstract class Player {
       //      this.seen = new HashSet<>();
     }
 	
+    public BoardCell selectTarget(BoardCell start, Set<BoardCell> targets) {
+        return null;
+    }
+	
 	public void updateHand(Card card) {
 		cardsInHand.add(card);
 	}
@@ -105,6 +109,7 @@ public abstract class Player {
 	public int getColumn() { 
 		return col; 
 	}
+
 	
 	
 	

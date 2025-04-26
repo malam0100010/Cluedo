@@ -18,6 +18,7 @@ public class BoardCell {
 	char secretPassage;
 	char cellInitial;
 	public Set<BoardCell> adjList;
+	private boolean highlightCell = false;
 
 	public BoardCell(int row, int col) {
 		this.row = row;
@@ -71,6 +72,11 @@ public class BoardCell {
 		}
 
 		graphics.fillRect(rowVal , colVal, cellSize, cellSize);
+		
+        if (highlightCell) {
+            graphics.setColor(new Color(212, 175, 55));
+            graphics.fillRect(rowVal, colVal, cellSize, cellSize);
+        }
 
 		// Outline eacht square
 		graphics.setColor(Color.BLACK);
@@ -95,6 +101,12 @@ public class BoardCell {
 				break;
 			}
 		}
+		
+	}
+	
+	public void highlightCell(boolean highlightBool) {
+		// TODO Auto-generated method stub
+		highlightCell = highlightBool;
 	}
 
 	public int getColumn() {
@@ -176,5 +188,10 @@ public class BoardCell {
 	public void setCellInitial(char roomInitial) {
 		cellInitial = roomInitial;
 	}
+
+
+
+
+
 
 }

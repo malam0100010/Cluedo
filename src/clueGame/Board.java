@@ -1,3 +1,10 @@
+/*
+ * Class: This is the board class which is responsible drawing the board and board functionality of players
+ * Authors: Musad Alam and Valor Buck
+ * Date: 2/25/2025
+ * Collaborators: Received help from Jack Brennan, Xandier Fermier, and Ivan Lopez-Rubio
+ * Sources: StackOverflow, W3 Schools, and ChatGPT
+ */
 package clueGame;
 
 import java.io.*;
@@ -8,8 +15,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.JOptionPane;
 
 import experiment.TestBoardCell;
 
@@ -28,23 +38,24 @@ public class Board
     private Set<Card> cards;
     private Set<Card> cardHand;
     private Solution solution;
+    private int  currIdx = -1;              
+    private boolean humanTurn = false;     
+    private Set<BoardCell> currTargets = new HashSet<>();
+    private BoardPanel boardPanel;
+    private final List<Player> playersInOrder = new ArrayList<>();
 
 
-    /*
-    * variable and methods used for singleton pattern
-    */
+
     private static Board theInstance = new Board();
     // constructor is private to ensure only one can be created
     private Board() {
         super();
     }
-    // this method returns the only Board
+
     public static Board getInstance() {
         return theInstance;
     }
-    /*
-    * initialize the board (since we are using singleton pattern)
-    */
+
     public void initialize() {
 //        targets   = new HashSet<>();
 //        visited   = new HashSet<>();
@@ -65,13 +76,6 @@ public class Board
        
     }
     
-    /**
-     * Loads room and space data from the setup config file into roomMap.
-     * Skips comments and throws BadConfigFormatException for invalid types.
-     * 
-     * @throws BadConfigFormatException if an unrecognized space type is found
-     */
-
     public void loadSetupConfig() throws BadConfigFormatException {
     	try {
     		Scanner myReader = new Scanner(new FileReader(this.setupConfigFile));
@@ -318,6 +322,7 @@ public class Board
           }
 	
 	 }
+
     
     /**
      * Gets the set of adjacent cells (adjacency list) for a given cell on the board.
@@ -694,6 +699,125 @@ public class Board
             }
         }
         return null;
+    }
+    
+    public void nextTurn(GameControlPanel panel, ClueCardsPanel cards) {
+    	
+        if (humanTurn) {
+            JOptionPane.showMessageDialog(panel, "Please select a move target first.", "Move required", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (targets != null) {
+            for (BoardCell prevCell : targets) {
+                prevCell.highlightCell(false);
+            }
+        }
+        
+        // Make player first in list as per guidelines
+        if (playersInOrder.isEmpty()) {
+            playersInOrder.addAll(players);
+
+            for (int i = 0; i < playersInOrder.size(); i++) {
+                if (playersInOrder.get(i) instanceof HumanPlayer) {
+                    Player human = playersInOrder.remove(i);
+                    playersInOrder.add(0, human);
+                    break;
+                }
+            }
+        }
+
+        currIdx = (currIdx + 1) % playersInOrder.size();
+        Player currPlayer = playersInOrder.get(currIdx);
+
+        int diceRoll = 1 + new Random().nextInt(6);
+        panel.updateTurnInfo(currPlayer, diceRoll);
+
+        BoardCell startCell = getCell(currPlayer.getRow(), currPlayer.getColumn());
+        calcTargets(startCell, diceRoll);
+        targets = getTargets();
+       
+        if (currPlayer instanceof HumanPlayer) {
+        	humanTurn = true;
+            for (BoardCell targetCells : targets) {
+                targetCells.highlightCell(true);
+            }
+            boardPanel.repaint();
+            
+            return;
+        }
+
+        BoardCell endCell = currPlayer.selectTarget(startCell, targets);
+        movePlayer(currPlayer, endCell);
+
+        for (BoardCell targetCells : targets) {
+        	targetCells.highlightCell(false);
+        }
+        boardPanel.repaint();
+   
+    }
+    
+    public boolean getHumanTurn() {
+    	return humanTurn;
+    }
+    
+    public void movePlayer(Player player, BoardCell finalCell) {
+
+        BoardCell start = getCell(player.getRow(), player.getColumn());
+        start.setOccupied(false);
+
+        BoardCell target = finalCell;
+
+        if (finalCell.isDoorway() && !start.getIsRoom()) {
+            Room room = getRoom(finalCell.getCellInitial());
+            
+            BoardCell centerOfRoom = room.getCenterCell();
+
+        }
+
+        target.setOccupied(true);
+        player.setLocation(target.getRow(), target.getColumn());
+    }
+    
+  
+    public void boardClick(BoardCell clickedCell) {
+
+        if (!humanTurn) {
+        	return;
+        }
+
+        BoardCell finalCell = clickedCell;
+        
+        if (clickedCell.isDoorway()) { 
+            Room room = getRoom(clickedCell.getCellInitial());
+            if (room.getCenterCell() != null) {
+            	finalCell = room.getCenterCell();
+            }
+        }
+
+        if (targets == null || !targets.contains(finalCell)) {
+            JOptionPane.showMessageDialog(boardPanel, "Please click one of the highlighted cells", "Invalid Cell Click", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Player humanPlayer = null;
+        for (Player player : players) {
+            if (player instanceof HumanPlayer) { 
+            	humanPlayer = player; break; 
+            }
+        }
+
+        movePlayer(humanPlayer, clickedCell);
+
+        for (BoardCell targetCells : targets) {
+        	targetCells.highlightCell(false);
+        }
+        boardPanel.repaint();
+        humanTurn = false;
+    }
+
+    public void setBoardPanel(BoardPanel boardPanel) {
+    	this.boardPanel = boardPanel;
     }
     
     public Solution getSolution() {

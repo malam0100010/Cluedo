@@ -22,69 +22,99 @@ public class ComputerPlayer extends Player {
 		return false;
 	}
 	
-    public Solution createSuggestion(Solution possibleSolution) {
-        Card computerRoom = possibleSolution.getRoom();
-        
-        List<Card> seenPersons = new ArrayList<>();
-        List<Card> seenWeapons = new ArrayList<>();
-        
-        for (Card card : unseenCards) {
-            if (card.getType() == CardType.PLAYER) {
-            	seenPersons.add(card);
-            } else if (card.getType() == CardType.WEAPON) {
-                seenWeapons.add(card);
-            }
-        }
+	public Solution createSuggestion(Solution roomOnly) {
+	    Card computerRoom = roomOnly.getRoom();
 
+	    List<Card> unseenPersons = new ArrayList<>();
+	    List<Card> unseenWeapons = new ArrayList<>();
 
-        Card personSuggestion = seenPersons.get(randCard.nextInt(seenPersons.size()));
-        Card weaponSuggestion = seenWeapons.get(randCard.nextInt(seenWeapons.size()));
+	    for (Card card : unseenCards) {
+	        if (card.getType() == CardType.PLAYER) {
+	            unseenPersons.add(card);
+	        } else if (card.getType() == CardType.WEAPON) {
+	            unseenWeapons.add(card);
+	        }
+	    }
+	    if (unseenPersons.isEmpty()) {
+	        for (Card card : Board.getInstance().getCards()) {
+	            if (card.getType() == CardType.PLAYER) {
+	            	unseenPersons.add(card);
+	            }
+	        }
+	    }
+	    if (unseenWeapons.isEmpty()) {
+	        for (Card card : Board.getInstance().getCards()) {
+	            if (card.getType() == CardType.WEAPON) {
+	            	unseenWeapons.add(card);
+	            }
+	        }
+	    }
+	    
+	    Card personSuggestion  = unseenPersons.get(randCard.nextInt(unseenPersons.size()));
+	    Card weaponSuggestion  = unseenWeapons.get(randCard.nextInt(unseenWeapons.size()));
 
-        return new Solution(computerRoom, personSuggestion, weaponSuggestion);
-    }
+	    return new Solution(computerRoom, personSuggestion, weaponSuggestion);
+	}
+
 	
     @Override
     public void updateSeen(Card seenCard) {
         super.updateSeen(seenCard);      
         unseenCards.remove(seenCard);
     }
+    
+    @Override
+    public BoardCell selectTarget(BoardCell startCell, Set<BoardCell> targets) {
 
-	
-    public BoardCell selectTarget(Set<BoardCell> targetList) {
-        List<BoardCell> unseenRoomDoors = new ArrayList<>();
+        List<BoardCell> unseenRooms = new ArrayList<>();
         Board board = Board.getInstance();
-        
-        for (BoardCell cell : targetList) {
-            if (!cell.isDoorway()) {
-            	continue;
+
+        for (BoardCell cell : targets) {
+            String roomName = null;
+
+            if (cell.getIsRoom()) {
+                roomName = board.getRoom(cell.getCellInitial()).getName();
+            } 
+            else if (cell.isDoorway()) {
+                int row = cell.getRow(), col = cell.getColumn();
+                switch (cell.getDoorDirection()) {
+                    case UP:    
+                    	++row; 
+                    	break;
+                    case DOWN:  
+                    	--row; 
+                    	break;
+                    case LEFT:  
+                    	++col; 
+                    	break;
+                    case RIGHT: 
+                    	--col; 
+                    	break;
+                }
+                BoardCell insideRoom = board.getCell(row, col);
+                roomName = board.getRoom(insideRoom.getCellInitial()).getName();
             }
 
-            int row = cell.getRow();
-            int col = cell.getColumn();
-            switch (cell.getDoorDirection()) {
-                case UP:    --row; break;
-                case DOWN:  ++row; break;
-                case LEFT:  --col; break;
-                case RIGHT: ++col; break;
-            }
-            
-            BoardCell insideRoom = board.getCell(row, col);
-            
-            Room someRoom = board.getRoom(insideRoom.getCellInitial());
-            
-            Card roomCard = new Card(someRoom.getName(), CardType.ROOM);
-
-            if (unseenCards.contains(roomCard)) {
-                unseenRoomDoors.add(cell);
+            if (roomName != null) {
+                boolean seenCard = false;
+                for (Card card : getSeenCards()) {
+                    if (card.getType() == CardType.ROOM &&
+                        card.getName().equals(roomName)) {
+                        seenCard = true;
+                        break;
+                    }
+                }
+                if (!seenCard) unseenRooms.add(cell);
             }
         }
 
-        Random randDoor = new Random();
-        if (!unseenRoomDoors.isEmpty()) {
-            return unseenRoomDoors.get(randDoor.nextInt(unseenRoomDoors.size()));
+        if (!unseenRooms.isEmpty()) {
+            return unseenRooms.get(randCard.nextInt(unseenRooms.size()));
         }
 
-        List<BoardCell> randTarget = new ArrayList<>(targetList);
-        return randTarget.get(randDoor.nextInt(randTarget.size()));
+        List<BoardCell> list = new ArrayList<>(targets);
+        return list.get(randCard.nextInt(list.size()));
     }
+
+
 }

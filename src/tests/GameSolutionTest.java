@@ -211,6 +211,7 @@ public class GameSolutionTest {
 	@Test
 	void testComputerSelectTarget() {
 	    ComputerPlayer computerPlayer = new ComputerPlayer("Alejandro Garnacho", "Green", 0, 0);
+	    BoardCell startCell = new BoardCell(0,0);
 
 	    // if no rooms in list, select randomly
 	    Set<BoardCell> miscTargets = new HashSet<>();
@@ -225,7 +226,7 @@ public class GameSolutionTest {
 	    }
 	    assertEquals(2, miscTargets.size());
 
-	    BoardCell targetChoice1 = computerPlayer.selectTarget(miscTargets);
+	    BoardCell targetChoice1 = computerPlayer.selectTarget(startCell, miscTargets);
 	    assertTrue(miscTargets.contains(targetChoice1));
 
 	    // if room in list that has not been seen, select it
@@ -248,7 +249,7 @@ public class GameSolutionTest {
 	    BoardCell walkwayCell = miscTargets.iterator().next();
 	    Set<BoardCell> targetsWithDoor = Set.of(walkwayCell, doorCell);
 
-	    BoardCell targetChoice2 = computerPlayer.selectTarget(targetsWithDoor);
+	    BoardCell targetChoice2 = computerPlayer.selectTarget(startCell, targetsWithDoor);
 	    assertEquals(doorCell, targetChoice2);
 
 	    // if room in list that has been seen, each target (including room) selected randomly
@@ -265,7 +266,7 @@ public class GameSolutionTest {
 	    Room miscRoom = board.getRoom(someRoom.getCellInitial());
 	    computerPlayer.updateSeen(new Card(miscRoom.getName(), CardType.ROOM));
 
-	    BoardCell targetChoice3 = computerPlayer.selectTarget(targetsWithDoor);
+	    BoardCell targetChoice3 = computerPlayer.selectTarget(startCell, targetsWithDoor);
 	    assertTrue(targetsWithDoor.contains(targetChoice3));
 	}
 

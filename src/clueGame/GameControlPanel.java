@@ -1,6 +1,8 @@
 package clueGame;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 public class GameControlPanel extends JPanel {
@@ -10,6 +12,7 @@ public class GameControlPanel extends JPanel {
     private JTextField diceRollBox;
     private JTextField currentGuessBox;
     private JTextField guessFeedbackBox;
+    private JButton nextTurnButton;
 
     public GameControlPanel() {
         setLayout(new GridLayout(2, 0));
@@ -34,10 +37,11 @@ public class GameControlPanel extends JPanel {
         upperSection.add(dicePanel);
 
         //buttons
-        JButton accusationBtn = new JButton("Accuse");
-        upperSection.add(accusationBtn);
-        JButton nextTurnBtn = new JButton("Next Turn");
-        upperSection.add(nextTurnBtn);
+        JButton accusationButton = new JButton("Accuse");
+        upperSection.add(accusationButton);
+        
+        nextTurnButton = new JButton("Next Turn");
+        upperSection.add(nextTurnButton);
 
         //bottom section
         JPanel lowerSection = new JPanel(new GridLayout(1, 2));
@@ -61,7 +65,14 @@ public class GameControlPanel extends JPanel {
         //add to main panel
         add(upperSection);
         add(lowerSection);
+        
+
     }
+    
+    public void addNextButtonListener(ActionListener actionListener) {
+        nextTurnButton.addActionListener(actionListener);
+    }
+
 
     //convert string color to display colors
     private Color getColorFromName(String colorName) {
@@ -83,10 +94,10 @@ public class GameControlPanel extends JPanel {
         }
     }
 
-    public void updateTurnInfo(ComputerPlayer player, int roll) {
-        playerNameBox.setText(player.getName());
-        playerNameBox.setBackground(getColorFromName(player.getColor()));
-        diceRollBox.setText(Integer.toString(roll));
+    public void updateTurnInfo(Player currentPos, int diceRoll) {
+        playerNameBox.setText(currentPos.getName());
+        playerNameBox.setBackground(getColorFromName(currentPos.getColor()));
+        diceRollBox.setText(Integer.toString(diceRoll));
     }
 
     public void updateGuess(String guess) {
@@ -108,9 +119,18 @@ public class GameControlPanel extends JPanel {
 		frame.setVisible(true);
 
         // test filling in the data
-        panel.updateTurnInfo(new ComputerPlayer("Bruno Fernandez", "purple", 1, 1), 5);
-        panel.updateGuess("I have no guess!");
-        panel.updateGuessFeedback("So you have nothing?");
+	    panel.updateTurnInfo(new ComputerPlayer("Bruno Fernandez", "purple", 1, 1), 5);
+	    panel.updateGuess("I have no guess!");
+	    panel.updateGuessFeedback("So you have nothing?");
+
+        ClueCardsPanel miscCards = new ClueCardsPanel();
+        panel.addNextButtonListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent actionEvent) {
+                Board.getInstance().nextTurn(panel, miscCards);
+            }
+        });
+    
     }
     
     public static void setUp() {
