@@ -37,6 +37,11 @@ public class ClueCardsPanel extends JPanel {
 	    add(basePanel, BorderLayout.CENTER);
 	}
 	
+	/**
+     * Helper method to find the color associated with the player who owns a card.
+     * @param card Card to find owner of
+     * @return color name as string
+     */
     private String ownerColor(Card card) {
         for (Player player : board.getPlayers()) {
             if (player.getCardsInHand().contains(card)) {
@@ -46,6 +51,11 @@ public class ClueCardsPanel extends JPanel {
         return null;
     }
 	
+    /**
+     * Builds the "People" section of the known cards panel.
+     * Displays both "In Hand" and "Seen" cards.
+     * @return JPanel containing player cards info
+     */
 	private JPanel buildPlayerSection() {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 	    panel.setBorder(new TitledBorder(new EtchedBorder(), "People"));
@@ -77,6 +87,10 @@ public class ClueCardsPanel extends JPanel {
 	    return panel;
     }
 	
+	/**
+     * Builds the "Rooms" section of the known cards panel.
+     * @return JPanel containing room cards info
+     */
 	private JPanel buildRoomSection() {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 	    panel.setBorder(new TitledBorder(new EtchedBorder(), "Rooms"));
@@ -108,6 +122,10 @@ public class ClueCardsPanel extends JPanel {
 	    return panel;
 	}
 	
+	/**
+     * Builds the "Weapons" section of the known cards panel.
+     * @return JPanel containing weapon cards info
+     */
 	private JPanel buildWeaponsSection() {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 	    panel.setBorder(new TitledBorder(new EtchedBorder(), "Weapons"));
@@ -165,7 +183,7 @@ public class ClueCardsPanel extends JPanel {
     
     //main for testing
     public static void main(String[] args) {
-    	//initialize board and setup
+    	//initialize board and setup game
     	setUp();
     	// Test cards
         humanPlayer = new HumanPlayer("Bruno Fernandez", "Red", 1, 1);
