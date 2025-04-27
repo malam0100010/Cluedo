@@ -60,7 +60,9 @@ Change 7: Changed variable name to be more understandable in Board.java
         for (Player player : players) {
         	player.getCardsInHand().clear();
         } 
-Change 8:      
+        
+Change 8: Moved main methods before getters and setters for maintainability and programming flow in Player.java
+      
 
     	
     	

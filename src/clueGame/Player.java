@@ -40,22 +40,6 @@ public abstract class Player {
 	    seenCards.add(seenCard);
 	}
 	
-	public Set<Card> getSeenCards() {
-	    if (seenCards == null) {
-	        seenCards = new HashSet<>();
-	    }
-	    return seenCards;
-	}
-	
-	public String getName() {
-		return this.name;
-	}
-	
-	public String getColor() {
-		return this.color;
-	}
-	
-	
     public Card disproveSuggestion(Solution suggestedSolution) {
         List<Card> matchesFound = new ArrayList<>();
         
@@ -87,6 +71,22 @@ public abstract class Player {
         boolean objectsCorrect = (Objects.equals(name,  other.name) && Objects.equals(color, other.color));
         return posCorrect && objectsCorrect;
     }
+	
+	public Set<Card> getSeenCards() {
+	    if (seenCards == null) {
+	        seenCards = new HashSet<>();
+	    }
+	    return seenCards;
+	}
+	
+	public String getName() {
+		return this.name;
+	}
+	
+	public String getColor() {
+		return this.color;
+	}
+	
 	
 	public Set<Card> getCardsInHand() {
         return cardsInHand;
