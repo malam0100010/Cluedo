@@ -79,25 +79,19 @@ public class BoardPanel extends JPanel {
 
 
     private Color colorFrom(String colorStr) {
-        colorStr = colorStr.toLowerCase();
-        if (colorStr.equals("purple")) {
-        	return Color.MAGENTA;
+        if (colorStr == null) {
+            return Color.GRAY;
         }
-        if (colorStr.equals("blue"))   {
-        	return Color.BLUE;
+        
+        switch (colorStr.toLowerCase()) {
+            case "purple": return Color.MAGENTA;
+            case "blue": return Color.BLUE;
+            case "green": return Color.GREEN;
+            case "white": return Color.WHITE;
+            case "yellow": return Color.YELLOW;
+            case "red": return Color.RED;
+            default: return Color.GRAY;
         }
-        if (colorStr.equals("green"))  {
-        	return Color.GREEN;
-        }
-        if (colorStr.equals("white"))  {
-        	return Color.WHITE;
-        }
-        if (colorStr.equals("yellow")) {
-        	return Color.YELLOW;
-        }
-        if (colorStr.equals("red"))    {
-        	return Color.RED;
-        }
-        return Color.GRAY;
     }
+
 }
