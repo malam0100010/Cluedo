@@ -2,7 +2,7 @@ change 1: in-line comments made
 change 2: java comments added before each method
 change 3: remodeled some of the logic in ClueCardsPanel
 change 4: deleted unused code and test print statements
-change 5: turned if/else into concise switch
+change 5: turned if/else into concise switch in BoardPanel.java
 	Before:
 	    private Color colorFrom(String colorStr) {
 	        colorStr = colorStr.toLowerCase();
