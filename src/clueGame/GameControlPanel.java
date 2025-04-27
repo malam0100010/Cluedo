@@ -1,6 +1,7 @@
 package clueGame;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
@@ -39,6 +40,48 @@ public class GameControlPanel extends JPanel {
         //buttons
         JButton accusationButton = new JButton("Accuse");
         upperSection.add(accusationButton);
+        
+        accusationButton.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent e) {
+        	    if (!Board.getInstance().getHumanTurn()) {
+        	        JOptionPane.showMessageDialog(
+        	            GameControlPanel.this,
+        	            "You can only make an accusation at the start of your turn.",
+        	            "Not Your Turn",
+        	            JOptionPane.ERROR_MESSAGE
+        	        );
+        	        return;
+        	    }
+        	    HumanPlayer humanPlayer = ClueCardsPanel.humanPlayer;
+        	    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(GameControlPanel.this);
+        	    AccusationDialog dialog = new AccusationDialog(parent);
+        	    Solution accusation = dialog.getResult();
+        	    if (accusation == null) {
+        	        return;
+        	    }
+        	    boolean humanPlayerWins = Board.getInstance().checkAccusation(accusation);
+        	    String message;
+        	    if (humanPlayerWins) {
+        	        message = "You accused:\n" 
+        	        		+ accusation.getPerson().getName() 
+        	        		+ " in " + accusation.getRoom().getName() 
+        	        		+ " with "+ accusation.getWeapon().getName() 
+        	        		+ "\n\nCorrect! You win the game.";
+        	    } else {
+        	        message = "You accused:\n" 
+        	        		+ accusation.getPerson().getName() 
+        	        		+ " in " + accusation.getRoom().getName() 
+        	        		+ " with the "+ accusation.getWeapon().getName() 
+        	        		+ "\n\nIncorrect. You lose the game.\n\nThe correct solution was " 
+        	        		+ board.getInstance().getSolution();
+        	    }
+        	    JOptionPane.showMessageDialog(GameControlPanel.this, message);
+        	    System.exit(0);
+        	}
+
+        });
+
         
         nextTurnButton = new JButton("Next Turn");
         upperSection.add(nextTurnButton);

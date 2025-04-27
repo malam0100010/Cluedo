@@ -32,7 +32,15 @@ public class Solution {
     	return room;  
     }
     
-    public Card getPerson() {
+    @Override
+    public String toString() {
+        
+        return room.getName() + ", " + person.getName() + ", " + weapon.getName();
+    }
+
+
+
+	public Card getPerson() {
     	return person; 
     }
     

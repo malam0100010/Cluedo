@@ -13,6 +13,8 @@ public abstract class Player {
 	private int row, col;
 	private Set<Card> cardsInHand;
 	private Set<Card> seenCards;
+	private boolean movedPlayer = false;
+	private boolean playerEliminated = false;
 	
 	private static final Random randCard = new Random();
 	
@@ -37,6 +39,7 @@ public abstract class Player {
 		if (seenCards == null) {
 	        seenCards = new HashSet<>();
 	    }
+		System.out.println("Human sees card: " + seenCard.getName());
 	    seenCards.add(seenCard);
 	}
 	
@@ -50,13 +53,18 @@ public abstract class Player {
             }
         }
         
+        Card cardShown;
         if (matchesFound.isEmpty()) {
             return null;
         } else if (matchesFound.size() == 1) {
-            return matchesFound.get(0);
+            cardShown = matchesFound.get(0);
         } else {
-            return matchesFound.get(randCard.nextInt(matchesFound.size()));
+            cardShown = matchesFound.get(randCard.nextInt(matchesFound.size()));
         }
+        
+        cardShown.setPlayerWhoShowedCard(this);
+        return cardShown;
+        
     }
 	
     @Override
@@ -70,6 +78,14 @@ public abstract class Player {
         boolean posCorrect = (row == other.row && col == other.col);
         boolean objectsCorrect = (Objects.equals(name,  other.name) && Objects.equals(color, other.color));
         return posCorrect && objectsCorrect;
+    }
+    
+    public boolean wasPlayerMoved() {
+    	return movedPlayer;
+    }
+    
+    public void setPulledMoved(boolean pullBool) {
+    	movedPlayer = pullBool;
     }
 	
 	public Set<Card> getSeenCards() {
@@ -105,14 +121,18 @@ public abstract class Player {
 		return Objects.hash(this.name, this.color, this.row, this.col);
 	}
 	
+    public boolean getEliminationStatus() {
+    	return playerEliminated;
+    }
+    
+    public void setEliminationStatus(boolean eliminatedBool) {
+    	playerEliminated = eliminatedBool;
+    }
+	
 	public int getRow() { 
 		return row; 
 	}
 	public int getColumn() { 
 		return col; 
 	}
-
-	
-	
-	
 }

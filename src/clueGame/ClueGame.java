@@ -31,11 +31,14 @@ public class ClueGame extends JFrame {
         board.initialize();
         board.dealCards();
 
-        boardPanel   = new BoardPanel(board);
-        board.setBoardPanel(boardPanel);
-        controlPanel = new GameControlPanel();
+        controlPanel = new GameControlPanel(); 
+
         ClueCardsPanel.humanPlayer = locatePlayer();
-        cardsPanel   = new ClueCardsPanel();
+        cardsPanel = new ClueCardsPanel();
+        System.out.println(">> created cardsPanel = " + cardsPanel);
+        
+        boardPanel   = new BoardPanel(board, controlPanel, cardsPanel);
+        board.setBoardPanel(boardPanel);
 
         add(boardPanel,   BorderLayout.CENTER);
         add(controlPanel, BorderLayout.SOUTH);

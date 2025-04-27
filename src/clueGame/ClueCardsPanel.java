@@ -18,11 +18,12 @@ public class ClueCardsPanel extends JPanel {
 	private JTextField playerHandBox;
 	private JTextField roomsHandBox;
 	private JTextField weaponsHandBox;
-	private JTextField currentCardBox;
-	private JTextField seenCardsBox;
+//	private JTextField currentCardBox;
+//	private JTextField seenCardsBox;
 	
 	public ClueCardsPanel() {
-		board = Board.getInstance(); 
+		board = Board.getInstance();
+		setPreferredSize(new Dimension(300, getPreferredSize().height));
 		setLayout(new BorderLayout());
 		
 	//base panel
@@ -59,7 +60,7 @@ public class ClueCardsPanel extends JPanel {
 	private JPanel buildPlayerSection() {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 	    panel.setBorder(new TitledBorder(new EtchedBorder(), "People"));
-//label for in hand cards
+	    //label for in hand cards
 	    JLabel handLabel = new JLabel("In Hand:");
 	    panel.add(handLabel);
 	    //add each player card that the human player holds
@@ -156,6 +157,24 @@ public class ClueCardsPanel extends JPanel {
 
 	    return panel;
 	}
+	
+    public void refresh() {
+    	System.out.println(">> ClueCardsPanel.refresh(): seen="
+    		    + humanPlayer.getSeenCards().size());
+        removeAll();
+
+        JPanel basePanel = new JPanel(new GridLayout(3, 1));
+        basePanel.setBorder(new TitledBorder(new EtchedBorder(), "Known Cards"));
+        basePanel.add(buildPlayerSection());
+        basePanel.add(buildRoomSection());
+        basePanel.add(buildWeaponsSection());
+
+        setLayout(new BorderLayout());
+        add(basePanel, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
+    }
     
   //convert string color to display colors
     private Color getColorFromName(String colorName) {
@@ -182,44 +201,44 @@ public class ClueCardsPanel extends JPanel {
     }
     
     //main for testing
-    public static void main(String[] args) {
-    	//initialize board and setup game
-    	setUp();
-    	// Test cards
-        humanPlayer = new HumanPlayer("Bruno Fernandez", "Red", 1, 1);
-        humanPlayer.updateHand(new Card("Poison Gatorade", CardType.WEAPON));
-        humanPlayer.updateHand(new Card("Kit Room", CardType.ROOM));
-        humanPlayer.updateHand(new Card("Reuben Amorim", CardType.PLAYER));
-        
-
-        humanPlayer.updateSeen(new Card("Offsides Flag", CardType.WEAPON));
-        humanPlayer.updateSeen(new Card("Bathroom", CardType.ROOM));
-        humanPlayer.updateSeen(new Card("Fred the Red", CardType.PLAYER));
-        humanPlayer.updateSeen(new Card("Broken Pint Glass", CardType.WEAPON));
-        humanPlayer.updateSeen(new Card("Concession Stand", CardType.ROOM));
-        humanPlayer.updateSeen(new Card("Alexander Isak", CardType.PLAYER));
-        
-
-        // Show panel in frame
-        ClueCardsPanel panel = new ClueCardsPanel();
-        JFrame frame = new JFrame("Clue Cards");
-        frame.setContentPane(panel);
-        frame.setSize(250, 750);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-    
-    public static void setUp() {
-		// Board is singleton, get the only instance
-		board = Board.getInstance();
-		// set the file names to use my config files
-		board.setConfigFiles("./data/Clue_Layout.csv", "./data/ClueSetup.txt");		
-		// Initialize will load config files 
-		board.initialize();
-		
-		board.dealCards();
-		
-	}
+//    public static void main(String[] args) {
+//    	//initialize board and setup game
+//    	setUp();
+//    	// Test cards
+//        humanPlayer = new HumanPlayer("Bruno Fernandez", "Red", 1, 1);
+//        humanPlayer.updateHand(new Card("Poison Gatorade", CardType.WEAPON));
+//        humanPlayer.updateHand(new Card("Kit Room", CardType.ROOM));
+//        humanPlayer.updateHand(new Card("Reuben Amorim", CardType.PLAYER));
+//        
+//
+//        humanPlayer.updateSeen(new Card("Offsides Flag", CardType.WEAPON));
+//        humanPlayer.updateSeen(new Card("Bathroom", CardType.ROOM));
+//        humanPlayer.updateSeen(new Card("Fred the Red", CardType.PLAYER));
+//        humanPlayer.updateSeen(new Card("Broken Pint Glass", CardType.WEAPON));
+//        humanPlayer.updateSeen(new Card("Concession Stand", CardType.ROOM));
+//        humanPlayer.updateSeen(new Card("Alexander Isak", CardType.PLAYER));
+//        
+//
+//        // Show panel in frame
+//        ClueCardsPanel panel = new ClueCardsPanel();
+//        JFrame frame = new JFrame("Clue Cards");
+//        frame.setContentPane(panel);
+//        frame.setSize(250, 750);
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setVisible(true);
+//    }
+//    
+//    public static void setUp() {
+//		// Board is singleton, get the only instance
+//		board = Board.getInstance();
+//		// set the file names to use my config files
+//		board.setConfigFiles("./data/Clue_Layout.csv", "./data/ClueSetup.txt");		
+//		// Initialize will load config files 
+//		board.initialize();
+//		
+//		board.dealCards();
+//		
+//	}
 	
 }
 

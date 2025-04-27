@@ -10,17 +10,29 @@ package clueGame;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 
 public class BoardPanel extends JPanel {
     private final Board board;
+    private final GameControlPanel gameControlPanel;
+    private final ClueCardsPanel cardsPanel;
 
-    public BoardPanel(Board board) { 
+    public BoardPanel(Board board, GameControlPanel gameControlPanel, ClueCardsPanel cardsPanel) { 
     	this.board = board;
-    	
+    	this.gameControlPanel = gameControlPanel;
+    	this.cardsPanel = cardsPanel;
     	
         addMouseListener(new java.awt.event.MouseAdapter() {
+
+        	
         	@Override
             public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
+            	HumanPlayer playerHuman = ClueCardsPanel.humanPlayer;
+            	if(playerHuman.getEliminationStatus()) {
+            		return;
+            	}
+            	
         		if(!board.getHumanTurn())
         		{
         			return;
@@ -37,7 +49,32 @@ public class BoardPanel extends JPanel {
                 if (row >= 0 && row < rows && col >= 0 && col < cols) {
                     BoardCell clickedCell = board.getCell(row, col);
                     board.boardClick(clickedCell);
+                    
+                    if(!board.getHumanTurn() && clickedCell.getIsRoom()) {
+                    	HumanPlayer humanPlayer = null;
+                    	for(Player player : board.getPlayers()) {
+                    		if(player instanceof HumanPlayer) {
+                    			humanPlayer = (HumanPlayer) player;
+                    			break;
+                    		}
+                    	}
+                    	
+                    	System.out.println(">> using cardsPanel = " + cardsPanel);
+                    	if(humanPlayer != null) {
+                    		JFrame parentFrame = (JFrame)
+                    			    SwingUtilities.getWindowAncestor(BoardPanel.this);
+
+                    			SuggestionDialog dialog = new SuggestionDialog(board.getRoom(clickedCell.getCellInitial()),parentFrame);
+                    			Solution humanSuggestion = dialog.getResult();
+                    		
+                    		if(humanSuggestion != null) {
+                    			board.processSuggestion(humanPlayer, humanSuggestion, gameControlPanel, cardsPanel);
+                    		}
+                    	}
+                    }
                 }
+                
+                repaint();
             }
         });
     }
@@ -75,7 +112,6 @@ public class BoardPanel extends JPanel {
         }
     }
     
-
 
 
     private Color colorFrom(String colorStr) {

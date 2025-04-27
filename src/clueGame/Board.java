@@ -694,23 +694,78 @@ public class Board
         return null;
     }
     
-    public void nextTurn(GameControlPanel panel, ClueCardsPanel cards) {
+    private void movePlayerAccused(Solution providedSolution) {
+    	Player accusedPlayer = null;
     	
+    	for(Player player : players) {
+    		if(player.getName().equalsIgnoreCase(providedSolution.getPerson().getName())) {
+    			accusedPlayer = player;
+    			break;
+    		}
+    	}
+    	
+    	Card roomCard = providedSolution.getRoom();
+    	char roomChar = roomCard.getName().charAt(0);
+    	Room roomOfJustice = getRoom(roomChar);
+    	BoardCell centerSolutionRoom = roomOfJustice.getCenterCell();
+    	
+    	movePlayer(accusedPlayer, centerSolutionRoom);
+    	accusedPlayer.setPulledMoved(true);
+    	
+    }
+    
+    Card processSuggestion(Player playerMakingSuggestion, Solution playerSuggestion, GameControlPanel panel, ClueCardsPanel cardsPanel) {
+
+    	movePlayerAccused(playerSuggestion);
+    	
+    	Card shownCard = handleSuggestion(playerMakingSuggestion, playerSuggestion);
+    	
+    	System.out.println(">> processSuggestion: suggester="
+    		    + playerMakingSuggestion.getName()
+    		    + ", shownCard=" + shownCard);
+    	
+        if (playerMakingSuggestion instanceof HumanPlayer && shownCard != null) {
+            ((HumanPlayer)playerMakingSuggestion).updateSeen(shownCard);
+        }
+    	
+    	cardsPanel.refresh();
+    	
+    	panel.updateGuess(playerSuggestion.toString());
+    	
+    	if(shownCard == null) {
+    		panel.updateGuessFeedback("No clue cards");
+    	}else if(playerMakingSuggestion instanceof HumanPlayer) {
+    		panel.updateGuessFeedback(shownCard.getName() + " provided by player: " + shownCard.getPlayerWhoShowedCard().getName());
+    	}else {
+    		panel.updateGuessFeedback("Suggestion disproved by " + shownCard.getPlayerWhoShowedCard().getName());
+    	}
+    	
+    	return shownCard;
+    }
+    
+    public void terminatePlayer(Player terminatedPlayer) {
+    	playersInOrder.remove(terminatedPlayer);
+    	
+    	if (terminatedPlayer instanceof HumanPlayer) {
+    		((HumanPlayer) terminatedPlayer).setEliminationStatus(true);
+    	}
+    }
+    
+    public void nextTurn(GameControlPanel panel, ClueCardsPanel cards) {
         if (humanTurn) {
-            JOptionPane.showMessageDialog(panel, "Please select a move target first.", "Move required", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(panel,
+                "Please select a move target first.",
+                "Move required",
+                JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
         if (targets != null) {
             for (BoardCell prevCell : targets) {
                 prevCell.highlightCell(false);
             }
         }
-        
-        // Make player first in list as per guidelines
         if (playersInOrder.isEmpty()) {
             playersInOrder.addAll(players);
-
             for (int i = 0; i < playersInOrder.size(); i++) {
                 if (playersInOrder.get(i) instanceof HumanPlayer) {
                     Player human = playersInOrder.remove(i);
@@ -719,36 +774,71 @@ public class Board
                 }
             }
         }
-
-        currIdx = (currIdx + 1) % playersInOrder.size();
-        Player currPlayer = playersInOrder.get(currIdx);
-
+        Player currPlayer;
+        do {
+            currIdx = (currIdx + 1) % playersInOrder.size();
+            currPlayer = playersInOrder.get(currIdx);
+        } while (currPlayer.getEliminationStatus());
         int diceRoll = 1 + new Random().nextInt(6);
         panel.updateTurnInfo(currPlayer, diceRoll);
-
         BoardCell startCell = getCell(currPlayer.getRow(), currPlayer.getColumn());
         calcTargets(startCell, diceRoll);
         targets = getTargets();
-       
         if (currPlayer instanceof HumanPlayer) {
-        	humanTurn = true;
+            humanTurn = true;
             for (BoardCell targetCells : targets) {
                 targetCells.highlightCell(true);
             }
             boardPanel.repaint();
-            
             return;
         }
-
+        ComputerPlayer computerPlayer = (ComputerPlayer) currPlayer;
+        if (computerPlayer.canMakeAccusation()) {
+            Solution accusation = computerPlayer.getCompPlayerAccusation();
+            boolean correct = checkAccusation(accusation);
+            String msg;
+            if (correct) {
+                msg = computerPlayer.getName() + " makes an accusation:\n"
+                    + accusation.toString() + "\n\n"
+                    + "That accusation is CORRECT! Game over.";
+            } else {
+                msg = computerPlayer.getName() + " makes an accusation:\n"
+                    + accusation.toString() + "\n\n"
+                    + "That accusation is INCORRECT! Game over.";
+            }
+            JOptionPane.showMessageDialog(panel, msg);
+            System.exit(0);
+        }
         BoardCell endCell = currPlayer.selectTarget(startCell, targets);
         movePlayer(currPlayer, endCell);
-
+        if (endCell.isDoorway()) {
+            computerPlayer.markVisitedRoom(endCell.getCellInitial());
+        }
         for (BoardCell targetCells : targets) {
-        	targetCells.highlightCell(false);
+            targetCells.highlightCell(false);
         }
         boardPanel.repaint();
-   
+        if (endCell.getIsRoom()) {
+            Room suggestionRoom = getRoom(endCell.getCellInitial());
+            Solution computerSuggestion = computerPlayer.computerCreatedSuggestion(suggestionRoom);
+            Card shownCard = processSuggestion(computerPlayer, computerSuggestion, panel, cards);
+            boolean noDisaprovesProvided = (shownCard == null);
+            boolean computerHasRoomCard = false;
+            for (Card card : computerPlayer.getCardsInHand()) {
+                if (card.equals(computerSuggestion.getRoom())) {
+                    computerHasRoomCard = true;
+                    break;
+                }
+            }
+            if (noDisaprovesProvided && !computerHasRoomCard) {
+                computerPlayer.setCompPlayerAccusationReady(true);
+            } else {
+                computerPlayer.setCompPlayerAccusationReady(false);
+            }
+            computerPlayer.setCompPlayerAccusation(computerSuggestion);
+        }
     }
+
     
     public boolean getHumanTurn() {
     	return humanTurn;
@@ -758,6 +848,7 @@ public class Board
 
         BoardCell start = getCell(player.getRow(), player.getColumn());
         start.setOccupied(false);
+        
 
         BoardCell target = finalCell;
 
@@ -770,6 +861,8 @@ public class Board
 
         target.setOccupied(true);
         player.setLocation(target.getRow(), target.getColumn());
+        
+        player.setPulledMoved(false);
     }
     
   

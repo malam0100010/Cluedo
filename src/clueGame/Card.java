@@ -5,11 +5,13 @@ import java.util.Objects;
 public class Card {
 	private String cardName;
 	private CardType cardType;
+	private Player cardShownByPlayer = null;
 	
 	public Card(String cardName, CardType cardType) {
         this.cardName = cardName;
         this.cardType = cardType;
     }
+	
 		
 	public String getName() {
         return this.cardName;
@@ -39,6 +41,14 @@ public class Card {
     @Override
     public String toString() {
     	return "Card [name=" + this.getName() + ", type=" + this.getType() + "]";
+    }
+    
+    public Player getPlayerWhoShowedCard() {
+    	return cardShownByPlayer;
+    }
+    
+    public void setPlayerWhoShowedCard(Player playerWhoShowed) {
+    	cardShownByPlayer = playerWhoShowed;
     }
     
 }
