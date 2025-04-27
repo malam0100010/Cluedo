@@ -59,7 +59,8 @@ Change 7: Changed variable name to be more understandable in Board.java
  	After: 
         for (Player player : players) {
         	player.getCardsInHand().clear();
-        }      
+        } 
+Change 8:      
 
     	
     	
