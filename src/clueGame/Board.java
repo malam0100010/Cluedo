@@ -57,8 +57,6 @@ public class Board
     }
 
     public void initialize() {
-//        targets   = new HashSet<>();
-//        visited   = new HashSet<>();
         players   = new HashSet<>();
         weapons   = new HashSet<>();
         cards     = new HashSet<>();
@@ -88,9 +86,6 @@ public class Board
     			}
     			
         		String[] configInfo = readLine.split(",");
-//        		String spaceType = locationInfo[0].trim();
-//        		String spaceName = locationInfo[1].trim();
-//        		char spaceSymbol = locationInfo[2].trim().charAt(0);
         		String cardName = "";
         		String cardType = "";
         		String humanOrComputer = "";
@@ -114,7 +109,6 @@ public class Board
         			
         		}else if(configInfo.length == 6) {
         			// Make player Card
-        			// Ex. Player, Bruno Fernandez, 1,1, Purple, Human
         			cardName = configInfo[1].trim();
         			cardType = configInfo[0].trim();
         			playerInitRow = Integer.parseInt(configInfo[2].trim());
@@ -271,7 +265,6 @@ public class Board
                 }
                 ++rows;
             }
-            //System.out.println(numDoorWays);
 
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());

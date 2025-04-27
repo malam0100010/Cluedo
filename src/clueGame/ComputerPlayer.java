@@ -78,18 +78,10 @@ public class ComputerPlayer extends Player {
             else if (cell.isDoorway()) {
                 int row = cell.getRow(), col = cell.getColumn();
                 switch (cell.getDoorDirection()) {
-                    case UP:    
-                    	++row; 
-                    	break;
-                    case DOWN:  
-                    	--row; 
-                    	break;
-                    case LEFT:  
-                    	++col; 
-                    	break;
-                    case RIGHT: 
-                    	--col; 
-                    	break;
+                    case UP:    ++row; break;
+                    case DOWN:  --row; break;
+                    case LEFT:  ++col; break;
+                    case RIGHT: --col; break;
                 }
                 BoardCell insideRoom = board.getCell(row, col);
                 roomName = board.getRoom(insideRoom.getCellInitial()).getName();
