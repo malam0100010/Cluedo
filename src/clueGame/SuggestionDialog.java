@@ -1,3 +1,10 @@
+/*
+ * Class: This is the suggestion dialog which is responsible for providing players with feedback on their suggestions
+ * Authors: Musad Alam and Valor Buck
+ * Date: 2/25/2025
+ * Collaborators: Received help from Jack Brennan, Xandier Fermier, and Ivan Lopez-Rubio
+ * Sources: StackOverflow, W3 Schools, ChatGPT
+ */
 package clueGame;
 
 import javax.swing.*;

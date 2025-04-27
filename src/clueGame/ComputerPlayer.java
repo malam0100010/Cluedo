@@ -1,3 +1,9 @@
+/*
+ * Class: This is the ComputerPlayer class which control the actions and decision making of the AI
+ * Date: 2/26/2025
+ * Collaborators: Received help from Jack Brennan, Xandier Fermier, and Ivan Lopez-Rubio
+ * Sources: StackOverflow, W3 Schools, and ChatGPT
+ */
 package clueGame;
 
 import java.util.ArrayList;
@@ -70,14 +76,15 @@ public class ComputerPlayer extends Player {
             if (cell.getIsRoom()) {
                 initial = cell.getCellInitial();
             } else if (cell.isDoorway()) {
-                int r = cell.getRow(), c = cell.getColumn();
+                int row = cell.getRow();
+                int col = cell.getColumn();
                 switch (cell.getDoorDirection()) {
-                    case UP:    r++; break;
-                    case DOWN:  r--; break;
-                    case LEFT:  c++; break;
-                    case RIGHT: c--; break;
+                    case UP:   ++row; break;
+                    case DOWN:  --row; break;
+                    case LEFT:  ++col; break;
+                    case RIGHT: --col; break;
                 }
-                initial = board.getCell(r, c).getCellInitial();
+                initial = board.getCell(row, col).getCellInitial();
             }
             if (initial != 0) {
                 String roomName = board.getRoom(initial).getName();
@@ -103,7 +110,8 @@ public class ComputerPlayer extends Player {
             return pickRandom(new ArrayList<>(targets));
         }
     }
-
+    
+    // Ensure AI doesn't keep entering same room
     public void markVisitedRoom(char roomInitial) {
         visitedRooms.add(roomInitial);
     }

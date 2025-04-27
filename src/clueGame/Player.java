@@ -1,3 +1,10 @@
+/*
+ * Class: This is the abstract Player class which defines the characteristics of all players (computer and human)
+ * Authors: Musad Alam and Valor Buck
+ * Date: 2/25/2025
+ * Collaborators: Received help from Jack Brennan, Xandier Fermier, and Ivan Lopez-Rubio
+ * Sources: StackOverflow, W3 Schools, and ChatGPT
+ */
 package clueGame;
 
 import java.util.ArrayList;
@@ -24,7 +31,6 @@ public abstract class Player {
         this.row = row;
         this.col = col;
         this.cardsInHand = new HashSet<>();
-      //      this.seen = new HashSet<>();
     }
 	
     public BoardCell selectTarget(BoardCell start, Set<BoardCell> targets) {

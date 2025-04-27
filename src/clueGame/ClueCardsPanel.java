@@ -1,3 +1,11 @@
+/*
+ * Class: This is the ClueCardPanel class which is responsible drawing and interfacing with the game to 
+ * keep provided information up to date
+ * Authors: Musad Alam and Valor Buck
+ * Date: 2/26/2025
+ * Collaborators: Received help from Jack Brennan, Xandier Fermier, and Ivan Lopez-Rubio
+ * Sources: StackOverflow, W3 Schools, and ChatGPT
+ */
 package clueGame;
 
 import java.awt.*;
@@ -199,46 +207,6 @@ public class ClueCardsPanel extends JPanel {
                 return Color.ORANGE;
         }
     }
-    
-    //main for testing
-//    public static void main(String[] args) {
-//    	//initialize board and setup game
-//    	setUp();
-//    	// Test cards
-//        humanPlayer = new HumanPlayer("Bruno Fernandez", "Red", 1, 1);
-//        humanPlayer.updateHand(new Card("Poison Gatorade", CardType.WEAPON));
-//        humanPlayer.updateHand(new Card("Kit Room", CardType.ROOM));
-//        humanPlayer.updateHand(new Card("Reuben Amorim", CardType.PLAYER));
-//        
-//
-//        humanPlayer.updateSeen(new Card("Offsides Flag", CardType.WEAPON));
-//        humanPlayer.updateSeen(new Card("Bathroom", CardType.ROOM));
-//        humanPlayer.updateSeen(new Card("Fred the Red", CardType.PLAYER));
-//        humanPlayer.updateSeen(new Card("Broken Pint Glass", CardType.WEAPON));
-//        humanPlayer.updateSeen(new Card("Concession Stand", CardType.ROOM));
-//        humanPlayer.updateSeen(new Card("Alexander Isak", CardType.PLAYER));
-//        
-//
-//        // Show panel in frame
-//        ClueCardsPanel panel = new ClueCardsPanel();
-//        JFrame frame = new JFrame("Clue Cards");
-//        frame.setContentPane(panel);
-//        frame.setSize(250, 750);
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setVisible(true);
-//    }
-//    
-//    public static void setUp() {
-//		// Board is singleton, get the only instance
-//		board = Board.getInstance();
-//		// set the file names to use my config files
-//		board.setConfigFiles("./data/Clue_Layout.csv", "./data/ClueSetup.txt");		
-//		// Initialize will load config files 
-//		board.initialize();
-//		
-//		board.dealCards();
-//		
-//	}
-	
+    	
 }
 
