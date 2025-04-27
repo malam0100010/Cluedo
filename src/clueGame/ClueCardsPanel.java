@@ -9,12 +9,12 @@ import java.util.*;
 
 public class ClueCardsPanel extends JPanel {
 	static HumanPlayer humanPlayer;
-	
+	//list for cards in hand and seen cards
 	ArrayList<Card> yourHand;
 	ArrayList<Card> seenCards;
 	
 	private static Board board;
-	
+	//texts fields for each section
 	private JTextField playerHandBox;
 	private JTextField roomsHandBox;
 	private JTextField weaponsHandBox;
@@ -29,11 +29,11 @@ public class ClueCardsPanel extends JPanel {
 		JPanel basePanel = new JPanel(new GridLayout(3, 1));
 	    basePanel.setBorder(new TitledBorder(new EtchedBorder(), "Known Cards"));
 	
-    //players, rooms, weapons sections
+    //build and add each section
 	    basePanel.add(buildPlayerSection());
 	    basePanel.add(buildRoomSection());
 	    basePanel.add(buildWeaponsSection());
-	    
+	//add the assembled base panel
 	    add(basePanel, BorderLayout.CENTER);
 	}
 	
@@ -49,10 +49,10 @@ public class ClueCardsPanel extends JPanel {
 	private JPanel buildPlayerSection() {
 		JPanel panel = new JPanel(new GridLayout(0, 1));
 	    panel.setBorder(new TitledBorder(new EtchedBorder(), "People"));
-
+//label for in hand cards
 	    JLabel handLabel = new JLabel("In Hand:");
 	    panel.add(handLabel);
-
+	    //add each player card that the human player holds
 	    for (Card card : humanPlayer.getCardsInHand()) {
 	        if (card.getType() == CardType.PLAYER) {
 	            playerHandBox = new JTextField(card.getName());
@@ -61,10 +61,10 @@ public class ClueCardsPanel extends JPanel {
 	            panel.add(playerHandBox);
 	        }
 	    }
-
+	    //label for seen cards
 	    JLabel seenLabel = new JLabel("Seen:");
 	    panel.add(seenLabel);
-
+	    //add each player card that the human player has seen
 	    for (Card card : humanPlayer.getSeenCards()) {
 	        if (card.getType() == CardType.PLAYER) {
 	            JTextField field = new JTextField(card.getName());
@@ -83,7 +83,7 @@ public class ClueCardsPanel extends JPanel {
 
 	    JLabel handLabel = new JLabel("In Hand:");
 	    panel.add(handLabel);
-
+	    //display rooms held in hand
 	    for (Card card : humanPlayer.getCardsInHand()) {
 	        if (card.getType() == CardType.ROOM) {
 	            roomsHandBox = new JTextField(card.getName());
@@ -95,7 +95,7 @@ public class ClueCardsPanel extends JPanel {
 
 	    JLabel seenLabel = new JLabel("Seen:");
 	    panel.add(seenLabel);
-
+	    //display rooms seen from other players
 	    for (Card card : humanPlayer.getSeenCards()) {
 	        if (card.getType() == CardType.ROOM) {
 	            JTextField field = new JTextField(card.getName());
@@ -114,7 +114,7 @@ public class ClueCardsPanel extends JPanel {
 
 	    JLabel handLabel = new JLabel("In Hand:");
 	    panel.add(handLabel);
-
+	    //display weapons held in hand
 	    for (Card card : humanPlayer.getCardsInHand()) {
 	        if (card.getType() == CardType.WEAPON) {
 	            weaponsHandBox = new JTextField(card.getName());
@@ -126,7 +126,7 @@ public class ClueCardsPanel extends JPanel {
 
 	    JLabel seenLabel = new JLabel("Seen:");
 	    panel.add(seenLabel);
-
+	    //display weapons seen from other players
 	    for (Card card : humanPlayer.getSeenCards()) {
 	        if (card.getType() == CardType.WEAPON) {
 	            JTextField field = new JTextField(card.getName());
@@ -142,6 +142,7 @@ public class ClueCardsPanel extends JPanel {
   //convert string color to display colors
     private Color getColorFromName(String colorName) {
     	if (colorName == null) {
+    		//default if no other color associated
     		return Color.GRAY;
     	}
         switch (colorName.toLowerCase()) {
@@ -164,8 +165,9 @@ public class ClueCardsPanel extends JPanel {
     
     //main for testing
     public static void main(String[] args) {
+    	//initialize board and setup
     	setUp();
-        // Set up a mock human player
+    	// Test cards
         humanPlayer = new HumanPlayer("Bruno Fernandez", "Red", 1, 1);
         humanPlayer.updateHand(new Card("Poison Gatorade", CardType.WEAPON));
         humanPlayer.updateHand(new Card("Kit Room", CardType.ROOM));
