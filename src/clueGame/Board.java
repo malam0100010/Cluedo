@@ -660,8 +660,8 @@ public class Board
         deck.addAll(allWeapons);
         Collections.shuffle(deck);
 
-        for (Player p : players) {
-            p.getCardsInHand().clear();
+        for (Player player : players) {
+            player.getCardsInHand().clear();
         }
 
         Player[] playerArray = players.toArray(new Player[0]);

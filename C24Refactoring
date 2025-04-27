@@ -51,8 +51,15 @@ Change 6: Made return statement more readable in Player.java.
         boolean objectsCorrect = (Objects.equals(name,  other.name) && Objects.equals(color, other.color));
         return posCorrect && objectsCorrect;
         
- Change 7:
- 	      
+Change 7: Changed variable name to be more understandable in Board.java
+	Before:
+        for (Player p : players) {
+        	p.getCardsInHand().clear();
+        }
+ 	After: 
+        for (Player player : players) {
+        	player.getCardsInHand().clear();
+        }      
 
     	
     	
