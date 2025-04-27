@@ -42,6 +42,17 @@ change 5: turned if/else into concise switch in BoardPanel.java
 	            default: return Color.GRAY;
 	        }
     	}
+Change 6: Made return statement more readable in Player.java.
+	Before:
+
+        return (row == other.row && col == other.col) && (Objects.equals(name,  other.name) && Objects.equals(color, other.color);
+	After:
+        boolean posCorrect = (row == other.row && col == other.col);
+        boolean objectsCorrect = (Objects.equals(name,  other.name) && Objects.equals(color, other.color));
+        return posCorrect && objectsCorrect;
+        
+ Change 7:
+ 	      
 
     	
     	
