@@ -83,7 +83,9 @@ public abstract class Player {
         if (!(object instanceof Player)) return false;
 
         Player other = (Player) object;
-        return row == other.row && col == other.col && Objects.equals(name,  other.name) && Objects.equals(color, other.color);
+        boolean posCorrect = (row == other.row && col == other.col);
+        boolean objectsCorrect = (Objects.equals(name,  other.name) && Objects.equals(color, other.color));
+        return posCorrect && objectsCorrect;
     }
 	
 	public Set<Card> getCardsInHand() {
