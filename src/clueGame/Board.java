@@ -310,7 +310,6 @@ public class Board
           }
 	
 	 }
-
     
     /**
      * Gets the set of adjacent cells (adjacency list) for a given cell on the board.
@@ -390,8 +389,7 @@ public class Board
         		char targetCellInitial = tempBoardCell.getCellInitial();
         		
         		adjList.add(getRoom(targetCellInitial).getCenterCell());
-        		
-        		
+        			
         		// Loop until cell initial && isRoomCenter
         		for (int r = 0; r < numRows; r++) {
         		    for (int c = 0; c < numColumns; c++) {
@@ -834,7 +832,6 @@ public class Board
         }
     }
 
-    
     public boolean getHumanTurn() {
     	return humanTurn;
     }
@@ -843,7 +840,6 @@ public class Board
 
         BoardCell start = getCell(player.getRow(), player.getColumn());
         start.setOccupied(false);
-        
 
         BoardCell target = finalCell;
 

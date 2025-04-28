@@ -19,26 +19,27 @@ public class BoardPanel extends JPanel {
     private final ClueCardsPanel cardsPanel;
 
     public BoardPanel(Board board, GameControlPanel gameControlPanel, ClueCardsPanel cardsPanel) { 
-    	this.board = board;
-    	this.gameControlPanel = gameControlPanel;
-    	this.cardsPanel = cardsPanel;
-    	
+        this.board = board;
+        this.gameControlPanel = gameControlPanel;
+        this.cardsPanel = cardsPanel;
+
         addMouseListener(new java.awt.event.MouseAdapter() {
 
-        	
-        	@Override
+            /**
+             * Handles mouse click events on the board.
+             * Determines if the click is valid, moves the player, and processes suggestions if needed.
+             */
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent mouseEvent) {
-            	HumanPlayer playerHuman = ClueCardsPanel.humanPlayer;
-            	if(playerHuman.getEliminationStatus()) {
-            		return;
-            	}
-            	
-        		if(!board.getHumanTurn())
-        		{
-        			return;
-        		}
-        		
-            	// Ensure in bounds
+                HumanPlayer playerHuman = ClueCardsPanel.humanPlayer;
+                if (playerHuman.getEliminationStatus()) {
+                    return;
+                }
+
+                if (!board.getHumanTurn()) {
+                    return;
+                }
+
                 int rows = board.getNumRows();
                 int cols = board.getNumColumns();
                 int cell = Math.min(getWidth() / cols, getHeight() / rows);
@@ -49,36 +50,38 @@ public class BoardPanel extends JPanel {
                 if (row >= 0 && row < rows && col >= 0 && col < cols) {
                     BoardCell clickedCell = board.getCell(row, col);
                     board.boardClick(clickedCell);
-                    
-                    if(!board.getHumanTurn() && clickedCell.getIsRoom()) {
-                    	HumanPlayer humanPlayer = null;
-                    	for(Player player : board.getPlayers()) {
-                    		if(player instanceof HumanPlayer) {
-                    			humanPlayer = (HumanPlayer) player;
-                    			break;
-                    		}
-                    	}
-                    	
-                    	System.out.println(">> using cardsPanel = " + cardsPanel);
-                    	if(humanPlayer != null) {
-                    		JFrame parentFrame = (JFrame)
-                    			    SwingUtilities.getWindowAncestor(BoardPanel.this);
 
-                    			SuggestionDialog dialog = new SuggestionDialog(board.getRoom(clickedCell.getCellInitial()),parentFrame);
-                    			Solution humanSuggestion = dialog.getResult();
-                    		
-                    		if(humanSuggestion != null) {
-                    			board.processSuggestion(humanPlayer, humanSuggestion, gameControlPanel, cardsPanel);
-                    		}
-                    	}
+                    if (!board.getHumanTurn() && clickedCell.getIsRoom()) {
+                        HumanPlayer humanPlayer = null;
+                        for (Player player : board.getPlayers()) {
+                            if (player instanceof HumanPlayer) {
+                                humanPlayer = (HumanPlayer) player;
+                                break;
+                            }
+                        }
+
+                        if (humanPlayer != null) {
+                            JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(BoardPanel.this);
+
+                            SuggestionDialog dialog = new SuggestionDialog(board.getRoom(clickedCell.getCellInitial()), parentFrame);
+                            Solution humanSuggestion = dialog.getResult();
+
+                            if (humanSuggestion != null) {
+                                board.processSuggestion(humanPlayer, humanSuggestion, gameControlPanel, cardsPanel);
+                            }
+                        }
                     }
                 }
-                
+
                 repaint();
             }
         });
     }
 
+    /**
+     * Draws the entire game board, including cells, room names, and player pieces.
+     * @param graphics The Graphics object to paint on.
+     */
     @Override
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
@@ -87,38 +90,46 @@ public class BoardPanel extends JPanel {
         int totalCols = board.getNumColumns();
         int cell = Math.min(getWidth() / totalCols, getHeight() / totalRows);
 
+        // Draw each cell on the board
         for (int numRows = 0; numRows < totalRows; ++numRows) {
             for (int numCols = 0; numCols < totalCols; ++numCols) {
-                	board.getCell(numRows, numCols).draw(graphics, numCols * cell, numRows * cell, cell);
-            	}
+                board.getCell(numRows, numCols).draw(graphics, numCols * cell, numRows * cell, cell);
+            }
         }
-        for (int numRows = 0; numRows < totalRows;  ++numRows) {
-            for (int numCols = 0; numCols < totalCols;  ++numCols) {
-                BoardCell bc = board.getCell(numRows,numCols);
+
+        // Draw room labels
+        for (int numRows = 0; numRows < totalRows; ++numRows) {
+            for (int numCols = 0; numCols < totalCols; ++numCols) {
+                BoardCell bc = board.getCell(numRows, numCols);
                 if (bc.isLabel()) {
                     graphics.setColor(Color.BLACK);
                     graphics.drawString(board.getRoom(bc).getName(),
-                                 numCols * cell + 2, (numRows + 1) * cell - 4);
+                            numCols * cell + 2, (numRows + 1) * cell - 4);
                 }
             }
         }
 
+        // Draw players
         for (Player player : board.getPlayers()) {
-            int x = player.getColumn()* cell, y = player.getRow() * cell;
+            int x = player.getColumn() * cell;
+            int y = player.getRow() * cell;
             graphics.setColor(colorFrom(player.getColor()));
             graphics.fillOval(x + 2, y + 2, cell - 4, cell - 4);
             graphics.setColor(Color.BLACK);
             graphics.drawOval(x + 2, y + 2, cell - 4, cell - 4);
         }
     }
-    
 
-
+    /**
+     * Converts a string representing a color name to an actual Color object.
+     * @param colorStr The name of the color (e.g., "red", "blue").
+     * @return The corresponding Color object, or gray if unknown.
+     */
     private Color colorFrom(String colorStr) {
         if (colorStr == null) {
             return Color.GRAY;
         }
-        
+
         switch (colorStr.toLowerCase()) {
             case "purple": return Color.MAGENTA;
             case "blue": return Color.BLUE;
@@ -129,5 +140,4 @@ public class BoardPanel extends JPanel {
             default: return Color.GRAY;
         }
     }
-
 }
