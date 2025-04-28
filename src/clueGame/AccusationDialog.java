@@ -14,60 +14,56 @@ public class AccusationDialog extends JDialog {
         super(parent, "Make an Accusation", true);
         setLayout(new GridLayout(4, 2));
 
+        // Initialize dropdowns
+        roomBox = createComboBox(CardType.ROOM);
+        personBox = createComboBox(CardType.PLAYER);
+        weaponBox = createComboBox(CardType.WEAPON);
+
         add(new JLabel("Room:"));
-        roomBox = new JComboBox<>();
-        for (Card card : Board.getInstance().getCards()) {
-            if (card.getType() == CardType.ROOM) {
-                roomBox.addItem(card.getName());
-            }
-        }
         add(roomBox);
 
         add(new JLabel("Person:"));
-        personBox = new JComboBox<>();
-        for (Card card : Board.getInstance().getCards()) {
-            if (card.getType() == CardType.PLAYER) {
-                personBox.addItem(card.getName());
-            }
-        }
         add(personBox);
 
         add(new JLabel("Weapon:"));
-        weaponBox = new JComboBox<>();
-        for (Card card : Board.getInstance().getCards()) {
-            if (card.getType() == CardType.WEAPON) {
-                weaponBox.addItem(card.getName());
-            }
-        }
         add(weaponBox);
 
+        // Buttons
         JButton okBtn = new JButton("OK");
-        okBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Card roomCard   = new Card((String)roomBox.getSelectedItem(), CardType.ROOM);
-                Card personCard = new Card((String)personBox.getSelectedItem(), CardType.PLAYER);
-                Card weaponCard = new Card((String)weaponBox.getSelectedItem(), CardType.WEAPON);
-                result = new Solution(roomCard, personCard, weaponCard);
-                setVisible(false);
-            }
-        });
+        okBtn.addActionListener(e -> submitAccusation());
+        add(okBtn);
 
         JButton cancelBtn = new JButton("Cancel");
-        cancelBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                result = null;
-                setVisible(false);
-            }
-        });
-
-        add(okBtn);
+        cancelBtn.addActionListener(e -> cancelAccusation());
         add(cancelBtn);
 
         pack();
         setLocationRelativeTo(parent);
         setVisible(true);
+    }
+
+    private JComboBox<String> createComboBox(CardType type) {
+        JComboBox<String> comboBox = new JComboBox<>();
+        for (Card card : Board.getInstance().getCards()) {
+            if (card.getType() == type) {
+                comboBox.addItem(card.getName());
+            }
+        }
+        return comboBox;
+    }
+
+    private void submitAccusation() {
+        result = new Solution(
+            new Card((String) roomBox.getSelectedItem(), CardType.ROOM),
+            new Card((String) personBox.getSelectedItem(), CardType.PLAYER),
+            new Card((String) weaponBox.getSelectedItem(), CardType.WEAPON)
+        );
+        setVisible(false);
+    }
+
+    private void cancelAccusation() {
+        result = null;
+        setVisible(false);
     }
 
     public Solution getResult() {

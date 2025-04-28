@@ -10,15 +10,6 @@ public class HumanPlayer extends Player {
     public HumanPlayer(String name, String color, int row, int column) {
         super(name, color, row, column);
     }
-    
-//	public Solution suggestionDialogOption(Room suggestedRoom) {
-//		return null;
-//	}
-//	
-//	public Solution accusationDialogOption() {
-//		return null;
-//	}
-
 
 	@Override
 	public boolean isHuman() {

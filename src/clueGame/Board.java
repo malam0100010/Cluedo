@@ -69,9 +69,6 @@ public class Board
         } catch (BadConfigFormatException e) {
             System.out.println(e);
         }
-        
-          
-       
     }
     
     public void loadSetupConfig() throws BadConfigFormatException {
@@ -93,8 +90,6 @@ public class Board
         		int playerInitRow = 0;
         		int playerInitCol = 0;
         		String playerColor = "";
-        		
-        		
         		
         		if(configInfo.length == 2) {
         			// Make weapon card
